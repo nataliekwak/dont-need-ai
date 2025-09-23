@@ -1,10 +1,19 @@
+import dotenv from 'dotenv';
 import express from 'express';
-import assignmentRoutes from './routes/assignmentRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import { connectDB } from './db/connectDB.js';
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5001;
 
-app.use('/api/assignments', assignmentRoutes);
+app.use(express.json()); // Middleware to parse JSON request bodies
 
-app.listen(5001, () => {
-    console.log('Server is running on port 5001');
+app.use('/api/auth', authRoutes);
+
+// Start the backend server
+app.listen(PORT, () => {
+    connectDB(); // Connect to the MongoDB database
+    console.log(`Server is running on port ${PORT}`);
 });
