@@ -7,3 +7,4 @@ Senior project of Kwak Labs
 - npm install
 - npm run dev
 
+## Run the Frontend Locally
