@@ -1,7 +1,8 @@
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import { User } from "../models/User.js";
 import { generateVerificationToken, generateTokenAndSetCookie } from "../utils/verification.js";
-import { sendVerificationEmail } from "../utils/mailtrap/emails.js";
+import { sendVerificationEmail, sendPasswordResetEmail } from "../utils/mailtrap/emails.js";
 
 export const register = async (req, res) => {
     const { email, password, name } = req.body;
@@ -119,4 +120,32 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
     res.clearCookie("authToken");
     res.status(200).send("User logged out");
+}
+
+export const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User with this email does not exist." });
+        }
+
+        // Generate a reset token and its expiry time
+        const resetToken = crypto.randomBytes(20).toString("hex");
+        const resetTokenExpiresAt = Date.now() + 3600000; // 1 hour from now
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpiresAt = resetTokenExpiresAt;
+
+        await user.save();
+
+        // Send reset email
+        await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+    
+        res.status(200).json({ success: true, message: "Password reset email sent." });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error. Please try again later." });
+    }
 }
