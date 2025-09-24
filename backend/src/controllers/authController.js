@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { User } from "../models/User.js";
 import { generateVerificationToken, generateTokenAndSetCookie } from "../utils/verification.js";
-import { sendVerificationEmail, sendPasswordResetEmail } from "../utils/mailtrap/emails.js";
+import { sendVerificationEmail, sendPasswordResetEmail, sendResetSuccessEmail } from "../utils/mailtrap/emails.js";
 
 export const register = async (req, res) => {
     const { email, password, name } = req.body;
@@ -146,6 +146,52 @@ export const forgotPassword = async (req, res) => {
     
         res.status(200).json({ success: true, message: "Password reset email sent." });
     } catch (error) {
+        res.status(500).json({ success: false, message: "Server error. Please try again later." });
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpiresAt: { $gt: Date.now() } // Check if token is not expired
+        });
+
+        if (!user) {
+            return res.status(400).json({ success: false, message: "Invalid or expired password reset token." });
+        }
+
+        // Update password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpiresAt = undefined;
+
+        await user.save();
+
+        await sendResetSuccessEmail(user.email);
+
+        res.status(200).json({ success: true, message: "Password has been reset successfully." });
+    } catch (error) {
+        console.error("Error resetting password:", error);
+        res.status(500).json({ success: false, message: "Server error. Please try again later." });
+    }
+}
+
+export const checkAuth = async (req, res) => {
+    try {
+       const user = await User.findById(req.userId);
+       
+       if(!user) {
+        return res.status(400).json({ success: false, message: "User not found." });
+       }
+
+    res.status(200).json({ success: true, user: { ...user._doc, password: undefined } });
+    } catch (error) {
+        console.error("Error checking authentication:", error);
         res.status(500).json({ success: false, message: "Server error. Please try again later." });
     }
 }
