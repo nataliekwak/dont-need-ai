@@ -11,16 +11,28 @@ import {
 } from "@heroui/react";
 import { Lock, Mail, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter.jsx";
+import { useAuthStore } from "../store/authStore.js";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signup, error, isLoading } = useAuthStore();
 
-  const handleRegister = (e) => {
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
     e.preventDefault();
+
+    try {
+      await signup(name, email, password);
+      navigate("/verify-email");
+    } catch (error) {
+      console.error("Registration error:", error);
+    }
   };
 
   return (
@@ -42,6 +54,7 @@ const RegisterPage = () => {
             variant="bordered"
             startContent={<User />}
             onChange={(e) => setName(e.target.value)}
+            isRequired
           />
           <Input
             type="email"
@@ -50,6 +63,7 @@ const RegisterPage = () => {
             variant="bordered"
             startContent={<Mail />}
             onChange={(e) => setEmail(e.target.value)}
+            isRequired
           />
           <Input
             type="password"
@@ -58,14 +72,16 @@ const RegisterPage = () => {
             variant="bordered"
             startContent={<Lock />}
             onChange={(e) => setPassword(e.target.value)}
+            isRequired
           />
+          {error && <p className="text-red-500 font-semibold">{error}</p>}
           <PasswordStrengthMeter password={password} />
-          <Button type="submit">Register</Button>
+          <Button type="submit" isLoading={isLoading}>Register</Button>
         </Form>
       </CardBody>
       <Divider />
       <CardFooter className="text-sm text-center">
-        Already have an account? {" "}
+        Already have an account?{" "}
         <Link to="/login" className="text-blue-500 hover:underline">
           Login
         </Link>
