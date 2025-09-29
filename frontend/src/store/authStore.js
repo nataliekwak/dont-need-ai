@@ -19,8 +19,8 @@ export const useAuthStore = create((set) => ({
             const res = await axios.get(`${API_URL}/check-auth`);
             set({ user: res.data.user, isAuthenticated: true, isCheckingAuth: false });
         } catch (error) {
-            set({ error: error.response.data.message, isCheckingAuth: false, isAuthenticated: false });
-            throw error;
+            set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+            console.error("User is not authenticated:", error);
         }
     },
 
@@ -49,6 +49,18 @@ export const useAuthStore = create((set) => ({
         } catch (error) {
             set({ error: error.response.data.message || "Error logging in", isLoading: false });
             throw error;
+        }
+    },
+
+    logout: async () => {
+        set({ isLoading: true, error: null }); 
+
+        try {
+            await axios.post(`${API_URL}/logout`);
+            set({ user: null, isAuthenticated: false, error: null, isLoading: false });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error logging out", isLoading: false });
+            throw error;  
         }
     },
 

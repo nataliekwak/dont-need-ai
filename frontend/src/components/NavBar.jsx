@@ -6,15 +6,16 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@heroui/react";
 
 import { useAuthStore } from "../store/authStore.js";
 
 const NavBar = () => {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <Navbar isBordered>
@@ -36,7 +37,13 @@ const NavBar = () => {
         ) : (
           <>
             <NavbarItem>
-              <Button as={Link} color="primary" href="/logout" variant="flat">
+              <Button
+                as={Link}
+                onPress={handleLogout}
+                color="primary"
+                href="/"
+                variant="flat"
+              >
                 Logout
               </Button>
             </NavbarItem>

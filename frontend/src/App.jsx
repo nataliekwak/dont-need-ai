@@ -36,7 +36,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
+  const { isCheckingAuth, checkAuth, isAuthenticated } = useAuthStore();
 
   // See if the user is authenticated
   useEffect(() => {
@@ -53,7 +53,7 @@ const App = () => {
           element={
             <ProtectedRoute>
               {/* If the user is verified show the landing page, else show the home page */}
-              {user.isVerified && isAuthenticated ? <LandingPage /> : <HomePage />}
+              {isAuthenticated ? <LandingPage /> : <HomePage />}
             </ProtectedRoute>
           }
         />
