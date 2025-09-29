@@ -12,12 +12,18 @@ import {
 import { Lock, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { useAuthStore } from "../store/authStore.js";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const { login, error, isLoading } = useAuthStore();
+
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    await login(email, password);
   };
 
   return (
@@ -47,20 +53,27 @@ const LoginPage = () => {
             variant="bordered"
             startContent={<Lock />}
             onChange={(e) => setPassword(e.target.value)}
-          /> 
+          />
 
-            <div className="flex items-center mb-6">
-                <Link to='/forgot-password' className="text-sm text-blue-400 hover:underline">
-                  Forgot your password?
-                </Link>
-            </div>
+          <div className="flex items-center mb-6">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Forgot your password?
+            </Link>
+          </div>
 
-          <Button type="submit">Login</Button>
+          {error && <p className="text-red-500 font-semibold">{error}</p>}
+
+          <Button type="submit" isLoading={isLoading}>
+            Login
+          </Button>
         </Form>
       </CardBody>
       <Divider />
       <CardFooter className="text-sm text-center">
-        Don't have an account yet? {" "}
+        Don't have an account yet?{" "}
         <Link to="/register" className="text-blue-500 hover:underline">
           Register
         </Link>

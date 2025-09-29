@@ -119,7 +119,7 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
     res.clearCookie("authToken");
-    res.status(200).send("User logged out");
+    res.status(200).json({ success: true, message: "Logged out successfully" });
 }
 
 export const forgotPassword = async (req, res) => {
@@ -183,7 +183,7 @@ export const resetPassword = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
     try {
-       const user = await User.findById(req.userId);
+       const user = await User.findById(req.userId).select("-password");
        
        if(!user) {
         return res.status(400).json({ success: false, message: "User not found." });

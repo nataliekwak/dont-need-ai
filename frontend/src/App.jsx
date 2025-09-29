@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import RegisterPage from "./pages/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -6,12 +6,13 @@ import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage.jsx";
+import { Spinner } from "@heroui/react";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
-  if (isAuthenticated && user.isVerificed) {
+  if (isAuthenticated && user.isVerified) {
     return <Navigate to="/" replace />;
   }
 
@@ -26,7 +27,7 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user.isVerificed) {
+  if (!user.isVerified) {
     return <Navigate to="/verify-email" replace />;
   }
 
@@ -34,12 +35,14 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const { checkAuth } = useAuthStore();
+  const { isCheckingAuth, checkAuth } = useAuthStore();
 
   // See if the user is authenticated
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (isCheckingAuth) return <Spinner size="lg" />;
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -68,7 +71,16 @@ const App = () => {
             </RedirectAuthenticatedUser>
           }
         />
-        <Route path="/verify-email" element={<EmailVerificationPage />} />
+        <Route
+          path="/verify-email"
+          element={
+            <RedirectAuthenticatedUser>
+              <EmailVerificationPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        {/* catch all routes */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
