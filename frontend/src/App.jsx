@@ -7,6 +7,7 @@ import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage.jsx";
 import { Spinner } from "@heroui/react";
+import LandingPage from "./pages/LandingPage.jsx";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -35,7 +36,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const App = () => {
-  const { isCheckingAuth, checkAuth } = useAuthStore();
+  const { isCheckingAuth, checkAuth, user, isAuthenticated } = useAuthStore();
 
   // See if the user is authenticated
   useEffect(() => {
@@ -45,13 +46,14 @@ const App = () => {
   if (isCheckingAuth) return <Spinner size="lg" />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div >
       <Routes>
         <Route
           path="/"
           element={
             <ProtectedRoute>
-              <HomePage />
+              {/* If the user is verified show the landing page, else show the home page */}
+              {user.isVerified && isAuthenticated ? <LandingPage /> : <HomePage />}
             </ProtectedRoute>
           }
         />
