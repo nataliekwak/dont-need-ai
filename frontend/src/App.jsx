@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import HomePage from "./pages/HomePage.jsx";
 import { Spinner } from "@heroui/react";
 import LandingPage from "./pages/LandingPage.jsx";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -46,15 +48,15 @@ const App = () => {
   if (isCheckingAuth) return <Spinner size="lg" />;
 
   return (
-    <div >
+    <div>
       <Routes>
         <Route
           path="/"
           element={
-            <ProtectedRoute>
+            <>
               {/* If the user is verified show the landing page, else show the home page */}
               {isAuthenticated ? <LandingPage /> : <HomePage />}
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
@@ -78,6 +80,22 @@ const App = () => {
           element={
             <RedirectAuthenticatedUser>
               <EmailVerificationPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <RedirectAuthenticatedUser>
+              <ForgotPasswordPage />
+            </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path='/reset-password/:token'
+          element={
+            <RedirectAuthenticatedUser>
+              <ResetPasswordPage />
             </RedirectAuthenticatedUser>
           }
         />
