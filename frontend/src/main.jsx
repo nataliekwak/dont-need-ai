@@ -5,14 +5,17 @@ import App from "./App.jsx";
 import { HeroUIProvider } from "@heroui/react";
 import { BrowserRouter } from "react-router-dom";
 import { ToastProvider } from "@heroui/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <HeroUIProvider>
-      <ToastProvider />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
+        <ToastProvider />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </NextThemesProvider>
     </HeroUIProvider>
   </StrictMode>
 );

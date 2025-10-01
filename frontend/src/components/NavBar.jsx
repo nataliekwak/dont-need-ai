@@ -9,6 +9,7 @@ import {
 } from "@heroui/react";
 
 import { useAuthStore } from "../store/authStore.js";
+import ThemeToggle from "./ThemeToggle.jsx";
 
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuthStore();
@@ -18,18 +19,33 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar isBordered>
-      <NavbarBrand>
+    <Navbar isBordered className="navbar bg-base-100 shadow-sm">
+      <NavbarBrand className="navbar-start">
         <p className="font-bold text-inherit">You don't need AI.</p>
       </NavbarBrand>
-      <NavbarContent justify="end">
+      <NavbarContent className="navbar-end" justify="end">
+        <ThemeToggle />
         {!isAuthenticated || !user.isVerified ? (
           <>
             <NavbarItem className="hidden lg:flex">
-              <Link href="/login">Login</Link>
+              <Button
+                className="btn"
+                as={Link}
+                color="primary"
+                href="/login"
+                variant="light"
+              >
+                Login
+              </Button>
             </NavbarItem>
             <NavbarItem>
-              <Button as={Link} color="primary" href="/register" variant="flat">
+              <Button
+                className="btn"
+                as={Link}
+                color="primary"
+                href="/register"
+                variant="flat"
+              >
                 Register
               </Button>
             </NavbarItem>
@@ -38,6 +54,7 @@ const NavBar = () => {
           <>
             <NavbarItem>
               <Button
+                className="btn"
                 as={Link}
                 onPress={handleLogout}
                 color="primary"

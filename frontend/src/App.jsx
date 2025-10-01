@@ -48,61 +48,59 @@ const App = () => {
   if (isCheckingAuth) return <Spinner size="lg" />;
 
   return (
-    <div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              {/* If the user is verified show the landing page, else show the home page */}
-              {isAuthenticated ? <LandingPage /> : <HomePage />}
-            </>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <RedirectAuthenticatedUser>
-              <RegisterPage />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <RedirectAuthenticatedUser>
-              <LoginPage />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/verify-email"
-          element={
-            <RedirectAuthenticatedUser>
-              <EmailVerificationPage />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <RedirectAuthenticatedUser>
-              <ForgotPasswordPage />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        <Route
-          path='/reset-password/:token'
-          element={
-            <RedirectAuthenticatedUser>
-              <ResetPasswordPage />
-            </RedirectAuthenticatedUser>
-          }
-        />
-        {/* catch all routes */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            {/* If the user is verified show the landing page, else show the home page */}
+            {isAuthenticated ? <LandingPage /> : <HomePage />}
+          </>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <RedirectAuthenticatedUser>
+            <RegisterPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <RedirectAuthenticatedUser>
+            <LoginPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+      <Route
+        path="/verify-email"
+        element={
+          <RedirectAuthenticatedUser>
+            <EmailVerificationPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <RedirectAuthenticatedUser>
+            <ForgotPasswordPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+      <Route
+        path="/reset-password/:token"
+        element={
+          <RedirectAuthenticatedUser>
+            <ResetPasswordPage />
+          </RedirectAuthenticatedUser>
+        }
+      />
+      {/* catch all routes */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };
 
