@@ -9,13 +9,13 @@ import {
   Input,
   Button,
 } from "@heroui/react";
-import { Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, MoveLeft, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import PasswordStrengthMeter from "../components/PasswordStrengthMeter.jsx";
-import { useAuthStore } from "../store/authStore.js";
-import NavBar from "../components/Navbar.jsx";
+import PasswordStrengthMeter from "../../components/PasswordStrengthMeter.jsx";
+import { useAuthStore } from "../../store/authStore.js";
+import NavBar from "../../components/Navbar.jsx";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -46,6 +46,9 @@ const RegisterPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-md w-full bg-opacity-50 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden p-12"
         >
+          <Link to="/">
+            <MoveLeft />
+          </Link>
           <CardHeader title="Register" className="flex gap-3 mb-4">
             <h1 className="text-3xl font-bold">Register</h1>
           </CardHeader>
@@ -80,7 +83,7 @@ const RegisterPage = () => {
               />
               {error && <p className="text-red-500 font-semibold">{error}</p>}
               <PasswordStrengthMeter password={password} />
-              <Button type="submit" isLoading={isLoading}>
+              <Button type="submit" color="primary" isLoading={isLoading}>
                 Register
               </Button>
             </Form>

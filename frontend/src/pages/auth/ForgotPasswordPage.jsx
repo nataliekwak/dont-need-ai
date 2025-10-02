@@ -12,8 +12,8 @@ import {
 import { Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { useAuthStore } from "../store/authStore.js";
-import NavBar from "../components/Navbar.jsx";
+import { useAuthStore } from "../../store/authStore.js";
+import NavBar from "../../components/Navbar.jsx";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");

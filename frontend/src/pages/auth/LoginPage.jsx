@@ -9,11 +9,11 @@ import {
   Input,
   Button,
 } from "@heroui/react";
-import { Lock, Mail } from "lucide-react";
+import { MoveLeft, Lock, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import { useAuthStore } from "../store/authStore.js";
-import NavBar from "../components/Navbar.jsx";
+import { useAuthStore } from "../../store/authStore.js";
+import NavBar from "../../components/Navbar.jsx";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -37,6 +37,9 @@ const LoginPage = () => {
           transition={{ duration: 0.5 }}
           className="max-w-md w-full bg-opacity-50 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden p-12"
         >
+          <Link to="/">
+            <MoveLeft />
+          </Link>
           <CardHeader title="Login" className="flex gap-3 mb-4">
             <h1 className="text-3xl font-bold">Login</h1>
           </CardHeader>
@@ -70,7 +73,7 @@ const LoginPage = () => {
 
               {error && <p className="text-red-500 font-semibold">{error}</p>}
 
-              <Button type="submit" isLoading={isLoading}>
+              <Button type="submit" color="primary" isLoading={isLoading}>
                 Login
               </Button>
             </Form>

@@ -1,15 +1,15 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import RegisterPage from "./pages/RegisterPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/auth/RegisterPage.jsx";
+import LoginPage from "./pages/auth/LoginPage.jsx";
 import EmailVerificationPage from "./pages/auth/EmailVerificationPage.jsx";
 import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage.jsx";
 import { Spinner } from "@heroui/react";
 import LandingPage from "./pages/LandingPage.jsx";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
-import ResetPasswordPage from "./pages/ResetPasswordPage.jsx";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage.jsx";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {

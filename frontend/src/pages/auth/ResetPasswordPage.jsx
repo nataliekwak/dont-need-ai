@@ -12,8 +12,8 @@ import { Lock } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { useAuthStore } from "../store/authStore.js";
-import NavBar from "../components/Navbar.jsx";
+import { useAuthStore } from "../../store/authStore.js";
+import NavBar from "../../components/Navbar.jsx";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
