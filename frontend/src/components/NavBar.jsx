@@ -21,14 +21,14 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar isBordered className="navbar bg-base-100 shadow-sm">
-      <NavbarBrand className="navbar-start">
+    <Navbar isBordered position="sticky" className="bg-black fixed shadow-sm">
+      <NavbarBrand>
         <RouterLink to="/" className="flex items-center">
           <img src={Logo} alt="Logo" className="h-8 mr-2" />
           <h1 className="font-bold text-2xl">You don't need AI.</h1>
         </RouterLink>
       </NavbarBrand>
-      <NavbarContent className="navbar-end" justify="end">
+      <NavbarContent justify="end">
         <ThemeToggle />
         {!isAuthenticated || !user.isVerified ? (
           <>

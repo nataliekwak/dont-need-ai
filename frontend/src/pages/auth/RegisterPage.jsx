@@ -37,9 +37,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="flex items-center justify-center min-h-screen relative overflow-hidden">
+      <div className="bg-zinc-900 flex items-center justify-center min-h-screen relative overflow-hidden">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,7 +97,7 @@ const RegisterPage = () => {
           </CardFooter>
         </Card>
       </div>
-    </>
+    </div>
   );
 };
 

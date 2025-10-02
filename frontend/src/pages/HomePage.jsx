@@ -28,9 +28,9 @@ function HomePage() {
   }, [tagline, taglines.length]);
 
   return (
-    <>
+    <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden flex-col">
+      <div className="bg-zinc-900 min-h-screen w-full flex items-center justify-center relative">
         <h1 className="ml-5 mr-5 text-7xl font-bold text-center">
           You don't need AI.
         </h1>
@@ -75,7 +75,7 @@ function HomePage() {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

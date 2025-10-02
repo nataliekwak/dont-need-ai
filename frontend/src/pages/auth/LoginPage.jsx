@@ -28,9 +28,9 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="bg-zinc-900 min-h-screen flex items-center justify-center relative overflow-hidden">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,7 +87,7 @@ const LoginPage = () => {
           </CardFooter>
         </Card>
       </div>
-    </>
+    </div>
   );
 };
 
