@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Button,
   Link,
@@ -7,6 +6,9 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@heroui/react";
+import { Link as RouterLink } from "react-router-dom";
+
+import Logo from '../assets/logo.png';
 
 import { useAuthStore } from "../store/authStore.js";
 import ThemeToggle from "./ThemeToggle.jsx";
@@ -21,7 +23,10 @@ const NavBar = () => {
   return (
     <Navbar isBordered className="navbar bg-base-100 shadow-sm">
       <NavbarBrand className="navbar-start">
-        <p className="font-bold text-inherit">You don't need AI.</p>
+        <RouterLink to="/" className="flex items-center">
+          <img src={Logo} alt="Logo" className="h-8 mr-2" />
+          <h1 className="font-bold text-2xl">You don't need AI.</h1>
+        </RouterLink>
       </NavbarBrand>
       <NavbarContent className="navbar-end" justify="end">
         <ThemeToggle />
