@@ -11,7 +11,7 @@ import {
   Form,
 } from "@heroui/react";
 
-import { useAuthStore } from "../store/authStore.js";
+import { useAuthStore } from "../../store/authStore.js";
 
 const EmailVerificationPage = () => {
   const [code, setCode] = useState("");

@@ -2,7 +2,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import RegisterPage from "./pages/RegisterPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
+import EmailVerificationPage from "./pages/auth/EmailVerificationPage.jsx";
 import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
 import HomePage from "./pages/HomePage.jsx";
