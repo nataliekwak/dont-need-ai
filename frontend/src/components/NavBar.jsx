@@ -21,7 +21,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar isBordered position="sticky" className="bg-black fixed shadow-sm">
+    <Navbar isBordered position="sticky" className="fixed shadow-xs">
       <NavbarBrand>
         <RouterLink to="/" className="flex items-center">
           <img src={Logo} alt="Logo" className="h-8 mr-2" />

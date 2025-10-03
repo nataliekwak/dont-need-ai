@@ -30,7 +30,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="bg-zinc-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,13 +65,13 @@ const LoginPage = () => {
               <div className="flex items-center mb-6">
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-blue-400 hover:underline"
+                  className="text-sm text-secondary hover:underline"
                 >
                   Forgot your password?
                 </Link>
               </div>
 
-              {error && <p className="text-red-500 font-semibold">{error}</p>}
+              {error && <p className="text-danger font-semibold">{error}</p>}
 
               <Button type="submit" color="primary" isLoading={isLoading}>
                 Login
@@ -81,7 +81,7 @@ const LoginPage = () => {
           <Divider />
           <CardFooter className="text-sm text-center">
             Don't have an account yet?{" "}
-            <Link to="/register" className="text-blue-500 hover:underline">
+            <Link to="/register" className="text-secondary hover:underline">
               Register
             </Link>
           </CardFooter>

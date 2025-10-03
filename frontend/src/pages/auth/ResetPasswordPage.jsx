@@ -52,7 +52,7 @@ const ResetPasswordPage = () => {
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="bg-zinc-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,7 +83,7 @@ const ResetPasswordPage = () => {
                 isRequired
               />
 
-              {error && <p className="text-red-500 font-semibold">{error}</p>}
+              {error && <p className="text-danger font-semibold">{error}</p>}
 
               <Button type="submit" isLoading={isLoading}>
                 Set New Password

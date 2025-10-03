@@ -39,7 +39,7 @@ const EmailVerificationPage = () => {
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="bg-zinc-900 min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <Card className="max-w-md w-full bg-opacity-50 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden p-12 flex items-center justify-center">
           <CardHeader
             title="Email Verification"
@@ -50,7 +50,7 @@ const EmailVerificationPage = () => {
             </h2>
           </CardHeader>
           <CardBody className="flex justify-center">
-            <p className="text-center text-gray-300 mb-6">
+            <p className="text-center mb-6">
               Enter the 6-digit code sent to your email address.
             </p>
             <Form
@@ -64,7 +64,7 @@ const EmailVerificationPage = () => {
                 variant={"bordered"}
                 size="md"
               />
-              {error && <p className="text-red-500 font-semibold">{error}</p>}
+              {error && <p className="text-danger font-semibold">{error}</p>}
               <Button
                 className="max-w-fit"
                 type="submit"

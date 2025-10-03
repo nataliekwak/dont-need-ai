@@ -39,7 +39,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="bg-zinc-900 flex items-center justify-center min-h-screen relative overflow-hidden">
+      <div className="flex items-center justify-center min-h-screen relative overflow-hidden">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ const RegisterPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 isRequired
               />
-              {error && <p className="text-red-500 font-semibold">{error}</p>}
+              {error && <p className="text-danger font-semibold">{error}</p>}
               <PasswordStrengthMeter password={password} />
               <Button type="submit" color="primary" isLoading={isLoading}>
                 Register
@@ -91,7 +91,7 @@ const RegisterPage = () => {
           <Divider />
           <CardFooter className="text-sm text-center">
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-500 hover:underline">
+            <Link to="/login" className="text-secondary hover:underline">
               Login
             </Link>
           </CardFooter>

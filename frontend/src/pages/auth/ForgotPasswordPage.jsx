@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
-      <div className="bg-zinc-900 min-h-screen w-full flex items-center justify-center relative">
+      <div className="min-h-screen w-full flex items-center justify-center relative">
         <Card
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
