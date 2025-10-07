@@ -1,9 +1,11 @@
 import express from 'express';
-import { createAssignment, deleteAssignment, getAllAssignments, updateAssignment } from '../controllers/writingGuideController.js';
+import { createAssignment, deleteAssignment, getAllAssignments, getAssignmentById, updateAssignment } from '../controllers/writingGuideController.js';
 
 const router = express.Router();
 
 router.get('/', getAllAssignments);
+
+router.get('/:id', getAssignmentById);
 
 router.post('/', createAssignment);
 
