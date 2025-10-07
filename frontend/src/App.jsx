@@ -10,6 +10,7 @@ import { Spinner } from "@heroui/react";
 import LandingPage from "./pages/LandingPage.jsx";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage.jsx";
+import WritingGuide from "./pages/WritingGuide.jsx";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -96,6 +97,14 @@ const App = () => {
           <RedirectAuthenticatedUser>
             <ResetPasswordPage />
           </RedirectAuthenticatedUser>
+        }
+      />
+      <Route
+        path="/writing-guide"
+        element={
+          <ProtectedRoute>
+            <WritingGuide />
+          </ProtectedRoute>
         }
       />
       {/* catch all routes */}

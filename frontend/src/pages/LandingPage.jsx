@@ -1,9 +1,12 @@
 import { Button, Card, CardBody, CardHeader, CardFooter } from "@heroui/react";
 import { NotebookPen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import NavBar from "../components/Navbar.jsx";
 
 function LandingPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex overflow-hidden flex-col">
       <NavBar />
@@ -16,7 +19,7 @@ function LandingPage() {
             How can we help?
           </h2>
         </div>
-        <Card className="flex flex-col  shadow-xl border-1.5 border-default-500 p-5 justify-center text-center max-w-md">
+        <Card isPressable onPress={() => navigate("/writing-guide")} className="flex flex-col  shadow-xl border-1.5 border-default-500 p-5 justify-center text-center max-w-md">
           <CardHeader className="flex justify-center">
             <NotebookPen className="size-10"  />
           </CardHeader>
