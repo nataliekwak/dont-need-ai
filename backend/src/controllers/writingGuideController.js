@@ -5,7 +5,7 @@ export const getAllAssignments = async (req, res) => {
 
     try {
         // Get all assignments belonging to the authenticated user
-        const assignments = await Assignment.find({ userId: req.user.id }).sort({ createdAt: -1 }); // Show newest first
+        const assignments = await Assignment.find({ userId: req.userId }).sort({ createdAt: -1 }); // Show newest first
         res.status(200).json(assignments);
     } catch (error) {
         console.error("Error fetching assignments: ", error);
@@ -16,7 +16,7 @@ export const getAllAssignments = async (req, res) => {
 export const getAssignmentById = async (req, res) => {
     try {
         // Get assignment by ID and by the authenticated user
-        const assignment = await Assignment.findOne({ _id: req.params.id, userId: req.user.id });
+        const assignment = await Assignment.findOne({ _id: req.params.id, userId: req.userId });
 
         if (!assignment) {
             return res.status(404).json({ message: "Assignment not found" });
@@ -33,14 +33,14 @@ export const createAssignment = async (req, res) => {
     try {
         // Create a new assignment
         const newAssignment = new Assignment({
-            userId: req.user.id,
+            userId: req.userId,
             title: req.body.title,
         });
         await newAssignment.save();
 
         // Add assignment reference to User model
         await User.findByIdAndUpdate(
-            req.user.id,
+            req.userId,
             { $push: { assignments: newAssignment._id } }
         );
 
