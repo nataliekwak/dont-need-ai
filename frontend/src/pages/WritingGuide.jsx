@@ -1,5 +1,14 @@
-import { Card, CardHeader, CardBody, Divider, Spinner } from "@heroui/react";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  Divider,
+  Spinner,
+  Tooltip,
+} from "@heroui/react";
 import { useEffect } from "react";
+import { Plus } from "lucide-react";
 
 import { useAssignmentStore } from "../store/assignmentsStore.js";
 import NavBar from "../components/Navbar.jsx";
@@ -16,12 +25,24 @@ const WritingGuide = () => {
   }, [getAllAssignments]);
 
   return (
-    <div className="min-h-screen flex overflow-hidden flex-col">
+    <div className="min-h-screen flex overflow-hidden flex-col items-center">
       <NavBar />
-      <div className="w-full relative flex flex-col min-h-screen items-center justify-center">
-        <Card>
-          <CardHeader>
-            <h1>Assignments</h1>
+      <div className="max-w-lg w-full flex flex-col items-center mt-35">
+        <Card fullWidth className="h-auto">
+          <CardHeader className="flex justify-between items-center pl-6 pr-6">
+            <h1 className="text-2xl font-bold">Assignments</h1>
+            <Tooltip content="Create Assignment" showArrow color="foreground">
+              <Button
+                variant="ghost"
+                isIconOnly
+                aria-label="Create New Assignment"
+                onTouchStart={() => {
+                  console.log("button touched");
+                }}
+              >
+                <Plus />
+              </Button>
+            </Tooltip>
           </CardHeader>
           <Divider />
           <CardBody>
@@ -36,7 +57,8 @@ const WritingGuide = () => {
                 ))}
               </>
             ) : (
-              <p>No assignments found.</p>
+              <p>You currently have no assignments...</p>
+              // TO DO: Add a button to create a new assignment
             )}
           </CardBody>
         </Card>
