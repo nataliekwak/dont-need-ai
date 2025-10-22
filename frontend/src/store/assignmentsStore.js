@@ -21,4 +21,16 @@ export const useAssignmentStore = create((set) => ({
             console.error("Error fetching assignments:", error);
         }
     },
+
+    createAssignment: async (title) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.post(`${API_URL}/`, { title });
+            set((state) => ({ assignments: [...state.assignments, res.data], isLoading: false }));
+        } catch (error) {
+            set({ error: null, isLoading: false });
+            console.error("Error creating assignment:", error);
+        }
+    }
 }));

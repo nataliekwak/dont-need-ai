@@ -7,8 +7,25 @@ import {
   ModalBody,
   ModalFooter,
 } from "@heroui/react";
+import { useState } from "react";
+
+import { useAssignmentStore } from "../store/assignmentsStore.js";
 
 const CreateAssignmentModal = ({ isModalOpen, onOpenChange }) => {
+  const { createAssignment } = useAssignmentStore();
+
+  const [title, setTitle] = useState("");
+
+  const handleCreate = async () => {
+    try {
+      await createAssignment(title);
+      setTitle("");
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Error creating assignment:", error);
+    }
+  };
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -25,10 +42,12 @@ const CreateAssignmentModal = ({ isModalOpen, onOpenChange }) => {
                 placeholder="Enter assignment title"
                 label="Assignment Title"
                 variant="bordered"
-              ></Input>
+                isRequired
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </ModalBody>
             <ModalFooter>
-                <Button>Create</Button>
+              <Button onPress={handleCreate}>Create</Button>
             </ModalFooter>
           </>
         )}
