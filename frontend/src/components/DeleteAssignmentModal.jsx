@@ -17,7 +17,7 @@ const DeleteAssignmentModal = ({ isModalOpen, onOpenChange, assignment }) => {
   const { deleteAssignment, isLoading } = useAssignmentStore();
 
   const [title, setTitle] = useState("");
-  const [isTitleValid, setIsTitleValid] = useState(true);
+  const [isTitleValid, setIsTitleValid] = useState(false);
 
   const handleDelete = async () => {
     try {
@@ -41,6 +41,8 @@ const DeleteAssignmentModal = ({ isModalOpen, onOpenChange, assignment }) => {
   useEffect(() => {
     if (title.length > 0) {
       setIsTitleValid(title === assignment.title);
+    } else {
+        setIsTitleValid(false);
     }
   }, [title, assignment.title]);
 
@@ -55,14 +57,13 @@ const DeleteAssignmentModal = ({ isModalOpen, onOpenChange, assignment }) => {
         <ModalHeader>Delete Assignment</ModalHeader>
         <ModalBody>
           <p>
-            Are you sure you want to delete <b>{assignment.title}</b>?
+            Are you sure you want to delete <b>{assignment.title}</b> ?
           </p>
           <Input
             label="Re-enter the assignment title to confirm"
             labelPlacement="outside-top"
             variant="bordered"
             onChange={(e) => setTitle(e.target.value)}
-            isRequired
           />
         </ModalBody>
         <ModalFooter>
