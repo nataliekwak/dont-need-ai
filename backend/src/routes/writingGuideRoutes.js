@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', verifyUser, getAllAssignments);
 
-router.get('/:id', verifyUser, getAssignmentById);
+router.get('/:assignmentId', verifyUser, getAssignmentById);
 
 router.post('/', verifyUser, createAssignment);
 

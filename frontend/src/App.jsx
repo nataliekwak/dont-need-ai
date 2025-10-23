@@ -11,6 +11,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage.jsx";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage.jsx";
 import WritingGuide from "./pages/WritingGuide.jsx";
+import AssignmentPage from "./pages/AssignmentPage.jsx";
 
 // redirect authenticated users to the home page
 const RedirectAuthenticatedUser = ({ children }) => {
@@ -104,6 +105,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <WritingGuide />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/writing-guide/:assignmentId"
+        element={
+          <ProtectedRoute>
+            <AssignmentPage />
           </ProtectedRoute>
         }
       />
