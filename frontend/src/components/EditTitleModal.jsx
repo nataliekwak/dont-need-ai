@@ -43,9 +43,8 @@ const EditTitleModal = ({ isModalOpen, onOpenChange, assignment }) => {
         <ModalHeader>Edit Assignment Title</ModalHeader>
         <ModalBody>
           <Input
-            placeholder="Enter new title"
-            label="Assignment Title"
-            labelPlacement="outside"
+            label="New Assignment Title"
+            labelPlacement="outside-top"
             variant="bordered"
             onChange={(e) => setTitle(e.target.value)}
           />
