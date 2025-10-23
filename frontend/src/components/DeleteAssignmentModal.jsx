@@ -42,7 +42,7 @@ const DeleteAssignmentModal = ({ isModalOpen, onOpenChange, assignment }) => {
     if (title.length > 0) {
       setIsTitleValid(title === assignment.title);
     } else {
-        setIsTitleValid(false);
+      setIsTitleValid(false);
     }
   }, [title, assignment.title]);
 

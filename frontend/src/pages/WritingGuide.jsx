@@ -71,8 +71,19 @@ const WritingGuide = () => {
                   ))}
                 </>
               ) : (
-                <p>You currently have no assignments...</p>
-                // TO DO: Add a button to create a new assignment
+                // If there are no assignments, show a message and a 'Create Assignment' button
+                <div className="flex flex-col items-center min-h-60 gap-5 pt-10 width-10">
+                  <p className="font-semibold">
+                    You currently have no assignments...
+                  </p>
+                  <Button
+                    onPress={onOpen}
+                    variant="ghost"
+                    startContent={<Plus />}
+                  >
+                    Create a New Assignment
+                  </Button>
+                </div>
               )}
             </CardBody>
           </Card>
