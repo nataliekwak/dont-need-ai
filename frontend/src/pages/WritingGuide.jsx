@@ -50,7 +50,10 @@ const WritingGuide = () => {
               {/* Custom modal component to create a new assignment */}
               <CreateAssignmentModal
                 isModalOpen={isOpen}
-                onOpenChange={onOpenChange}
+                onOpenChange={() => {
+                  onOpenChange();
+                  getAllAssignments();
+                }}
               />
             </CardHeader>
             <Divider />

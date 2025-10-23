@@ -12,12 +12,15 @@ import { Ellipsis, SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import EditTitleModal from "./EditTitleModal.jsx";
+import DeleteAssignmentModal from "./DeleteAssignmentModal.jsx";
+import { useAssignmentStore } from "../store/assignmentsStore.js";
 
 // This custom component takes in an assignment prop
 // and displays the assignment title inside a styled card.
 
 const AssignmentCard = ({ assignment }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { getAllAssignments } = useAssignmentStore();
 
   const [modalType, setModalType] = useState("");
 
@@ -49,6 +52,10 @@ const AssignmentCard = ({ assignment }) => {
               className="text-danger"
               color="danger"
               startContent={<Trash2 />}
+              onAction={() => {
+                onOpen();
+                setModalType("delete");
+              }}
             >
               Delete
             </ListboxItem>
@@ -58,7 +65,19 @@ const AssignmentCard = ({ assignment }) => {
 
       <EditTitleModal
         isModalOpen={isOpen && modalType === "edit"}
-        onOpenChange={onOpenChange}
+        onOpenChange={() => {
+          onOpenChange();
+          getAllAssignments();
+        }}
+        assignment={assignment}
+      />
+
+      <DeleteAssignmentModal
+        isModalOpen={isOpen && modalType === "delete"}
+        onOpenChange={() => {
+          onOpenChange();
+          getAllAssignments();
+        }}
         assignment={assignment}
       />
     </Card>

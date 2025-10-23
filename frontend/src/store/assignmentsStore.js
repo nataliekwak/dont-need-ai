@@ -64,5 +64,23 @@ export const useAssignmentStore = create((set) => ({
             set({ error: error.response.data.message || "Error updating assignment", isLoading: false });
             console.error("Error updating assignment:", error);
         }
+    },
+
+    deleteAssignment: async (assignmentId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.delete(`${API_URL}/${assignmentId}`);
+
+            // Remove the assignment from the local state
+            set((state) => ({
+                assignments: state.assignments.filter((assignment) => assignment._id !== assignmentId),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error deleting assignment", isLoading: false });
+            console.error("Error deleting assignment:", error);
+        }
     }
 }));

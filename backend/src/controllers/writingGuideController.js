@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import { Assignment } from '../models/Assignment.js';
 import { User } from '../models/User.js';
 
+// Get all assignments belonging to the authenticated user
 export const getAllAssignments = async (req, res) => {
-
     try {
-        // Get all assignments belonging to the authenticated user
-        const assignments = await Assignment.find({ userId: req.userId }).sort({ createdAt: -1 }); // Show newest first
+        // TO DO: change to sort by last edited
+        const assignments = await Assignment.find({ userId: req.userId }).sort({ updatedAt: -1 }); // Show last edited first
         res.status(200).json(assignments);
     } catch (error) {
         console.error("Error fetching assignments: ", error);
@@ -15,10 +15,17 @@ export const getAllAssignments = async (req, res) => {
     }
 };
 
+// Get an assignment by ID and by the authenticated user  
 export const getAssignmentById = async (req, res) => {
     try {
-        // Get assignment by ID and by the authenticated user
-        const assignment = await Assignment.findOne({ _id: req.params.id, userId: req.userId });
+        const { assignmentId } = req.params;
+
+        // Validate assignmentId
+        if (!mongoose.isValidObjectId(assignmentId)) {
+            return res.status(400).json({ error: "Invalid assignment ID" });
+        }
+
+        const assignment = await Assignment.findOne({ _id: assignmentId, userId: req.userId });
 
         if (!assignment) {
             return res.status(404).json({ message: "Assignment not found" });
@@ -57,6 +64,7 @@ export const updateAssignment = async (req, res) => {
     try {
         const { assignmentId } = req.params;
 
+        // Validate assignmentId
         if (!mongoose.isValidObjectId(assignmentId)) {
             return res.status(400).json({ error: "Invalid assignment ID" });
         }
@@ -80,7 +88,13 @@ export const updateAssignment = async (req, res) => {
 
 export const deleteAssignment = async (req, res) => {
     try {
-        const deletedAssignment = await Assignment.findByIdAndDelete(req.params.id);
+        const { assignmentId } = req.params;
+
+        // Validate assignmentId
+        if (!mongoose.isValidObjectId(assignmentId)) {
+            return res.status(400).json({ error: "Invalid assignment ID" });
+        }
+        const deletedAssignment = await Assignment.findByIdAndDelete(assignmentId);
 
         if (!deletedAssignment) {
             return res.status(404).json({ message: "Assignment not found" });
@@ -89,7 +103,7 @@ export const deleteAssignment = async (req, res) => {
         // Remove assignment reference from User model
         await User.findByIdAndUpdate(
             deletedAssignment.userId,
-            { $pull: { assignments: deletedAssignment._id } }
+            { $pull: { assignments: assignmentId } }
         );
 
         res.json({ message: "Assignment deleted successfully." });
