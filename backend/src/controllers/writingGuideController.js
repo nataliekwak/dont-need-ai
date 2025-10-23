@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import { Assignment } from '../models/Assignment.js';
 import { User } from '../models/User.js';
 
@@ -53,12 +55,20 @@ export const createAssignment = async (req, res) => {
 
 export const updateAssignment = async (req, res) => {
     try {
-        const { title } = req.body;
+        const { assignmentId } = req.params;
 
-        const updatedAssignment = await Assignment.findByIdAndUpdate(req.params.id, { title });
+        if (!mongoose.isValidObjectId(assignmentId)) {
+            return res.status(400).json({ error: "Invalid assignment ID" });
+        }
+
+        const updatedAssignment = await Assignment.findByIdAndUpdate(
+            assignmentId,
+            req.body,
+            { new: true }
+        );
 
         if (!updatedAssignment) {
-            return res.status(404).json({ message: "Assignment not found" });
+            return res.status(404).json({ error: "Assignment not found" });
         }
 
         res.status(200).json({ message: "Assignment updated successfully." });

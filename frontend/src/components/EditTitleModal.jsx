@@ -12,23 +12,23 @@ import { useState } from "react";
 
 import { useAssignmentStore } from "../store/assignmentsStore.js";
 
-const CreateAssignmentModal = ({ isModalOpen, onOpenChange }) => {
-  const { createAssignment, isLoading, error } = useAssignmentStore();
+const EditTitleModal = ({ isModalOpen, onOpenChange, assignment }) => {
+  const { updateAssignment, isLoading } = useAssignmentStore();
 
   const [title, setTitle] = useState("");
 
-  const handleCreate = async () => {
+  const handleUpdate = async () => {
     try {
-      await createAssignment(title);
+      await updateAssignment(assignment._id, { title });
       setTitle("");
       onOpenChange(false);
     } catch (error) {
       addToast({
-        title: "Error creating assignment",
+        title: "Error updating assignment",
         description: error.message,
         color: "danger",
       });
-      console.error("Error creating assignment:", error);
+      console.error("Error updating assignment:", error);
     }
   };
 
@@ -40,25 +40,23 @@ const CreateAssignmentModal = ({ isModalOpen, onOpenChange }) => {
       backdrop="blur"
     >
       <ModalContent>
-        <ModalHeader>Create New Assignment</ModalHeader>
+        <ModalHeader>Edit Assignment Title</ModalHeader>
         <ModalBody>
           <Input
-            placeholder="Enter assignment title"
+            placeholder="Enter new title"
             label="Assignment Title"
             labelPlacement="outside"
             variant="bordered"
-            isRequired
             onChange={(e) => setTitle(e.target.value)}
           />
         </ModalBody>
         <ModalFooter>
-          {error && <p className="text-danger font-semibold">{error}</p>}
           <Button
-            onPress={handleCreate}
+            onPress={handleUpdate}
             isLoading={isLoading}
             isDisabled={!title.trim()}
           >
-            Create
+            Save
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -66,4 +64,4 @@ const CreateAssignmentModal = ({ isModalOpen, onOpenChange }) => {
   );
 };
 
-export default CreateAssignmentModal;
+export default EditTitleModal;

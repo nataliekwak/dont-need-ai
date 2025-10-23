@@ -1,12 +1,66 @@
-import { Card } from "@heroui/react";
+import {
+  Button,
+  Card,
+  Listbox,
+  ListboxItem,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useDisclosure,
+} from "@heroui/react";
+import { Ellipsis, SquarePen, Trash2 } from "lucide-react";
+import { useState } from "react";
+
+import EditTitleModal from "./EditTitleModal.jsx";
+
 // This custom component takes in an assignment prop
 // and displays the assignment title inside a styled card.
 
 const AssignmentCard = ({ assignment }) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const [modalType, setModalType] = useState("");
+
   return (
-    <Card className="flex h-15 justify-center p-5 bg-content2 mt-2 mb-3">
+    <Card className="flex flex-row h-15 p-5 bg-content2 mt-2 mb-3 justify-between items-center">
       <p className="text-lg">{assignment.title}</p>
-      {/* TO DO: add a ... menu that allows the user to delete (and potentially edit) */}
+
+      {/* Opens a menu that allows the user to delete and edit the assignment */}
+      <Popover showArrow>
+        <PopoverTrigger>
+          <Button isIconOnly aria-label="More options" color="content3">
+            <Ellipsis />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <Listbox aria-label="Assignment options">
+            <ListboxItem
+              startContent={<SquarePen />}
+              showDivider
+              onAction={() => {
+                onOpen();
+                setModalType("edit");
+              }}
+            >
+              Edit title
+            </ListboxItem>
+
+            <ListboxItem
+              className="text-danger"
+              color="danger"
+              startContent={<Trash2 />}
+            >
+              Delete
+            </ListboxItem>
+          </Listbox>
+        </PopoverContent>
+      </Popover>
+
+      <EditTitleModal
+        isModalOpen={isOpen && modalType === "edit"}
+        onOpenChange={onOpenChange}
+        assignment={assignment}
+      />
     </Card>
   );
 };
