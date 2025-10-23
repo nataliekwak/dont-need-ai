@@ -12,8 +12,8 @@ import { Ellipsis, SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import EditTitleModal from "./EditTitleModal.jsx";
-import DeleteAssignmentModal from "./DeleteAssignmentModal.jsx";
+import EditTitleModal from "./modals/EditTitleModal.jsx";
+import DeleteAssignmentModal from "./modals/DeleteAssignmentModal.jsx";
 import { useAssignmentStore } from "../store/assignmentsStore.js";
 
 // This custom component takes in an assignment prop

@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 import { useState } from "react";
 
-import { useAssignmentStore } from "../store/assignmentsStore.js";
+import { useAssignmentStore } from "../../store/assignmentsStore.js";
 
 const EditTitleModal = ({ isModalOpen, onOpenChange, assignment }) => {
   const { updateAssignment, isLoading } = useAssignmentStore();

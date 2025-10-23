@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 
-import { useAssignmentStore } from "../store/assignmentsStore.js";
+import { useAssignmentStore } from "../../store/assignmentsStore.js";
 
 const DeleteAssignmentModal = ({ isModalOpen, onOpenChange, assignment }) => {
   const { deleteAssignment, isLoading } = useAssignmentStore();
