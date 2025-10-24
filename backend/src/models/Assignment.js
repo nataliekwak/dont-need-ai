@@ -9,7 +9,11 @@ const assignmentSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-    }
+    },
+    step: {
+        type: Number,
+        default: 1,
+    },
 }, { timestamps: true });
 
 export const Assignment = mongoose.model('Assignment', assignmentSchema);
