@@ -7,6 +7,7 @@ import { Button } from "@heroui/react";
 import NavBar from "../components/Navbar.jsx";
 import AssignmentNavigation from "../components/AssignmentNavigation.jsx";
 import StepProgressBar from "../components/StepProgressBar.jsx";
+import StepContent from "../components/steps/StepContent.jsx";
 
 // This page is the main container while working on
 // a specific assignment in the writing guide.
@@ -41,7 +42,7 @@ const AssignmentPage = () => {
               <StepProgressBar currentStep={assignment.step} />
             </div>
             <div className="flex flex-1 items-center justify-center">
-              <p>content</p>
+              <StepContent currentStep={assignment.step} />
             </div>
           </div>
       </div>
