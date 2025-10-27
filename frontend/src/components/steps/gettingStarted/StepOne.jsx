@@ -13,7 +13,7 @@ const StepOne = () => {
         <Button type="submit">Next</Button>
       </Form>
     </div>
-  )
+  );
 };
 
 export default StepOne;

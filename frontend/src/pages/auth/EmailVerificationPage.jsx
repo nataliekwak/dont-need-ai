@@ -11,7 +11,7 @@ import {
   Form,
 } from "@heroui/react";
 
-import NavBar from "../../components/Navbar.jsx";
+import { NavBar } from "../../components";
 import { useAuthStore } from "../../store/authStore.js";
 
 const EmailVerificationPage = () => {

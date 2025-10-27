@@ -12,8 +12,8 @@ import {
 import { MoveLeft, Lock, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { NavBar } from "../../components";
 import { useAuthStore } from "../../store/authStore.js";
-import NavBar from "../../components/Navbar.jsx";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

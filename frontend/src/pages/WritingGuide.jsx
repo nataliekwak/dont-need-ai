@@ -12,10 +12,8 @@ import { useEffect } from "react";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import { AssignmentCard, CreateAssignmentModal, NavBar } from "../components";
 import { useAssignmentStore } from "../store/assignmentsStore.js";
-import NavBar from "../components/Navbar.jsx";
-import AssignmentCard from "../components/AssignmentCard.jsx";
-import CreateAssignmentModal from "../components/modals/CreateAssignmentModal.jsx";
 
 // Displays the list of all the user's assignments and
 // gives the user the ability to create a new assignment

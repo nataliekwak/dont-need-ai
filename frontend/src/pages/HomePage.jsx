@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Link } from "@heroui/react";
 
-import NavBar from "../components/Navbar.jsx";
+import { NavBar } from "../components";
 
 function HomePage() {
   const taglines = [

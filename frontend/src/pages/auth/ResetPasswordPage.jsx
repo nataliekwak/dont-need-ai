@@ -9,11 +9,10 @@ import {
   Button,
 } from "@heroui/react";
 import { Lock } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
+import { NavBar } from "../../components";
 import { useAuthStore } from "../../store/authStore.js";
-import NavBar from "../../components/Navbar.jsx";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");

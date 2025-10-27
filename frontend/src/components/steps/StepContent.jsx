@@ -1,4 +1,4 @@
-import StepOne from './gettingStarted/StepOne.jsx';
+import { StepOne } from "./gettingStarted";
 
 const StepContent = ({ currentStep }) => {
   switch (currentStep) {

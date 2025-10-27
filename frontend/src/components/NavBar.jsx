@@ -8,10 +8,10 @@ import {
 } from "@heroui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-import Logo from '../assets/logo.png';
+import Logo from "../assets/logo.png";
 
+import { ThemeToggle } from "./index.jsx";
 import { useAuthStore } from "../store/authStore.js";
-import ThemeToggle from "./ThemeToggle.jsx";
 
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuthStore();

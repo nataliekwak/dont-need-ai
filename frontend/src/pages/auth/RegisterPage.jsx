@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardBody,
@@ -10,12 +10,10 @@ import {
   Button,
 } from "@heroui/react";
 import { Lock, Mail, MoveLeft, User } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import PasswordStrengthMeter from "../../components/PasswordStrengthMeter.jsx";
+import { NavBar, PasswordStrengthMeter } from "../../components";
 import { useAuthStore } from "../../store/authStore.js";
-import NavBar from "../../components/Navbar.jsx";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
