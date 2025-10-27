@@ -14,6 +14,9 @@ const assignmentSchema = new mongoose.Schema({
         type: Number,
         default: 1,
     },
+    prompt: {
+        type: String,
+    }
 }, { timestamps: true });
 
 export const Assignment = mongoose.model('Assignment', assignmentSchema);
