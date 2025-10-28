@@ -41,8 +41,13 @@ const AssignmentPage = () => {
           <div className="flex justify-center w-full">
             <StepProgressBar currentStep={assignment.step} />
           </div>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-1 flex-col items-center justify-center">
             <StepContent assignment={assignment} />
+
+            {/* <div className="flex self-start"> */}
+              {/* If step is 2, make back button appear */}
+              {/* {assignment.step > 1 && <Button>Back</Button>} */}
+            {/* </div> */}
           </div>
         </div>
       </div>

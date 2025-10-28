@@ -22,7 +22,7 @@ const AssignmentNavigation = ({ assignment }) => {
         aria-label="Assignment Navigation"
         variant="shadow"
         isDisabled={isDisabled}
-        className="w-80 overflow-hidden"
+        className="overflow-hidden"
       >
         <AccordionItem
           key="1"
