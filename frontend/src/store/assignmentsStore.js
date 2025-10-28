@@ -40,6 +40,7 @@ export const useAssignmentStore = create((set) => ({
         }
     },
 
+
     updateAssignment: async (assignmentId, updatedFields) => {
         set({ isLoading: true, error: null });
 
@@ -60,6 +61,10 @@ export const useAssignmentStore = create((set) => ({
                 isLoading: false,
                 error: null,
             }));
+
+            // Always fetch latest assignments from backend after update
+            const res = await axios.get(`${API_URL}/`);
+            set({ assignments: res.data });
         } catch (error) {
             set({ error: error.response.data.message || "Error updating assignment", isLoading: false });
             console.error("Error updating assignment:", error);

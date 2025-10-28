@@ -18,6 +18,7 @@ import { useAssignmentStore } from "../store/assignmentsStore";
 const AssignmentPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   // Get assignmentId from location.state
   const assignmentId = location.state?.assignment?._id;
   const assignments = useAssignmentStore((state) => state.assignments);
@@ -25,8 +26,11 @@ const AssignmentPage = () => {
     (state) => state.getAllAssignments
   );
 
-  // Find the latest assignment from the store
-  const assignment = assignments.find((a) => a._id === assignmentId);
+  // Find the latest assignment from the store, fallback to location.state if not found
+  let assignment = assignments.find((a) => a._id === assignmentId);
+  if (!assignment && location.state?.assignment) {
+    assignment = location.state.assignment;
+  }
 
   // Fetch assignments if not loaded
   React.useEffect(() => {

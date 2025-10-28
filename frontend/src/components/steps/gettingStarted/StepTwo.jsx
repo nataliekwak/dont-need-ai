@@ -10,7 +10,6 @@ const StepTwo = ({ assignment }) => {
   const isInvalid = selected === null;
 
   const onSubmit = () => {
-    // e.preventDefault();
     var startSmall = true;
 
     if (selected === "startBig") {
