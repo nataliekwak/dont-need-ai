@@ -7,8 +7,13 @@ axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
 
 export const useAssignmentStore = create((set) => ({
     assignments: [],
+    currentAssignment: null,
     error: null,
     isLoading: false,
+
+    setCurrentAssignment: (assignment) => {
+        set({ currentAssignment: assignment });
+    },
 
     getAllAssignments: async () => {
         set({ isLoading: true, error: null });
@@ -19,6 +24,19 @@ export const useAssignmentStore = create((set) => ({
         } catch (error) {
             set({ error: error.response.data.message || "Error getting all assignments", isLoading: false });
             console.error("Error fetching assignments:", error);
+        }
+    },
+
+    getAssignmentById: async (assignmentId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}`);
+            set({ currentAssignment: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting assignment", isLoading: false });
+            console.error("Error fetching assignment:", error);
+            console.log(error.response.data.message);
         }
     },
 

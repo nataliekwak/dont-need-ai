@@ -1,46 +1,34 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@heroui/react";
-
 import {
   AssignmentNavigation,
   NavBar,
   StepContent,
   StepProgressBar,
 } from "../components";
-
-// This page is the main container while working on
-// a specific assignment in the writing guide.
-
 import { useAssignmentStore } from "../store/assignmentsStore";
 
 const AssignmentPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { assignmentId } = useParams();
 
-  // Get assignmentId from location.state
-  const assignmentId = location.state?.assignment?._id;
-  const assignments = useAssignmentStore((state) => state.assignments);
-  const getAllAssignments = useAssignmentStore(
-    (state) => state.getAllAssignments
+  const currentAssignment = useAssignmentStore(
+    (state) => state.currentAssignment
+  );
+  const getAssignmentById = useAssignmentStore(
+    (state) => state.getAssignmentById
   );
 
-  // Find the latest assignment from the store, fallback to location.state if not found
-  let assignment = assignments.find((a) => a._id === assignmentId);
-  if (!assignment && location.state?.assignment) {
-    assignment = location.state.assignment;
-  }
-
-  // Fetch assignments if not loaded
+  // Fetch assignment from backend if not present
   React.useEffect(() => {
-    if (!assignments.length) {
-      getAllAssignments();
+    if (!currentAssignment && assignmentId) {
+      getAssignmentById(assignmentId);
     }
-  }, [assignments.length, getAllAssignments]);
+  }, [currentAssignment, assignmentId, getAssignmentById]);
 
-  // If assignment is not found, show loading or error
-  if (!assignment) {
+  if (!currentAssignment) {
     return <div>Loading assignment...</div>;
   }
 
@@ -61,20 +49,15 @@ const AssignmentPage = () => {
             <h1 className="font-stretch-expanded font-bold">Writing Guide</h1>
           </div>
           <div>
-            <AssignmentNavigation assignment={assignment} />
+            <AssignmentNavigation assignment={currentAssignment} />
           </div>
         </div>
         <div className="flex flex-col mt-30 w-full h-full">
           <div className="flex justify-center w-full">
-            <StepProgressBar currentStep={assignment.step} />
+            <StepProgressBar currentStep={currentAssignment.step} />
           </div>
           <div className="flex flex-col items-center justify-center mt-10 p-5">
-            <StepContent assignment={assignment} />
-
-            {/* <div className="flex self-start"> */}
-            {/* If step is 2, make back button appear */}
-            {/* {assignment.step > 1 && <Button>Back</Button>} */}
-            {/* </div> */}
+            <StepContent assignment={currentAssignment} />
           </div>
         </div>
       </div>

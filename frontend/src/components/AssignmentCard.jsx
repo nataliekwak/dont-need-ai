@@ -21,16 +21,17 @@ import { useAssignmentStore } from "../store/assignmentsStore.js";
 const AssignmentCard = ({ assignment }) => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { getAllAssignments } = useAssignmentStore();
+  const { getAllAssignments, setCurrentAssignment } = useAssignmentStore();
 
   const [modalType, setModalType] = useState("");
 
   return (
     <Card
       isPressable
-      onPress={() =>
-        navigate(`/writing-guide/${assignment._id}`, { state: { assignment } })
-      }
+      onPress={() => {
+        setCurrentAssignment(assignment);
+        navigate(`/writing-guide/${assignment._id}`);
+      }}
       className="flex flex-row h-15 p-5 bg-content2 mt-2 mb-3 justify-between items-center"
     >
       <p className="text-lg">{assignment.title}</p>
