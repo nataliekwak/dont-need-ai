@@ -1,4 +1,4 @@
-import { StepOne, StepTwo, StepThree } from "./gettingStarted";
+import { StepOne, StepTwo, StepThree, StepFour } from "./gettingStarted";
 
 const StepContent = ({ assignment }) => {
   switch (assignment.step) {
@@ -9,7 +9,9 @@ const StepContent = ({ assignment }) => {
     case 3:
       return <StepThree assignment={assignment} />;
     case 4:
-      return <div>Step 4 content goes here.</div>;
+      return <StepFour assignment={assignment} />;
+    case 5:
+      return <div>Step 5 content</div>;
 
     default:
       return <div>Error displaying content, please try again later.</div>;
