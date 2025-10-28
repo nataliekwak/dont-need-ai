@@ -1,58 +1,59 @@
-import { Button, Form } from "@heroui/react";
+import { Button, Form, Radio, RadioGroup } from "@heroui/react";
 import { useState } from "react";
-import { Plus } from "lucide-react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
 
-const goals = [
-  "Support/Critique",
-  "Explain",
-  "Summarize",
-  "Describe",
-  "Agree/Disagree",
-  "Critically analyze",
-  "Find a solution",
-];
-
 const StepThree = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
-  const [selectedGoals, setSelectedGoals] = useState([]);
 
-  const isInvalid = selectedGoals.length === 0;
-
-  const handleGoalClick = (goal) => {
-    setSelectedGoals((prev) =>
-      prev.includes(goal) ? prev.filter((g) => g !== goal) : [...prev, goal]
-    );
-  };
+  const [selected, setSelected] = useState(null);
+  const isInvalid = selected === null;
 
   const onSubmit = () => {
-    updateAssignment(assignment._id, { writingGoals: selectedGoals, step: 4 });
+    var startSmall = true;
+
+    if (selected === "startBig") {
+      startSmall = false;
+    } else {
+      startSmall = true;
+    }
+
+    // Save the preference and proceed to the next step
+    updateAssignment(assignment._id, { startSmall, step: 3 });
   };
 
   return (
-    <Form onSubmit={onSubmit} className="flex items-center">
-      <p>What is the goal of your writing?</p>
-      <div className="flex max-w-110 flex-wrap gap-2 mt-4 justify-center">
-        {goals.map((goal) => (
-          <Button
-            key={goal}
-            variant={selectedGoals.includes(goal) ? "solid" : "ghost"}
-            onPress={() => handleGoalClick(goal)}
-          >
-            {goal}
-          </Button>
-        ))}
-      </div>
-      <div className="flex self-end m-4">
-        <Button variant="ghost" startContent={<Plus />}>
-          Add a custom goal
+    <div>
+      <Form onSubmit={onSubmit}>
+        <p>To help this process work best for you...</p>
+        <p>How do you prefer to approach large tasks?</p>
+        <div>
+          <RadioGroup onValueChange={setSelected} value={selected}>
+            <Radio
+              className="hover:bg-content2 m-2 rounded-lg"
+              value="startBig"
+            >
+              Starting with the big picture, then narrowing it down.
+            </Radio>
+            <Radio
+              className="hover:bg-content2 m-2 rounded-lg"
+              value="startSmall"
+            >
+              Starting small then building up to something bigger.
+            </Radio>
+            <Radio
+              className="hover:bg-content2 m-2 rounded-lg"
+              value="noPreference"
+            >
+              I have no preference.
+            </Radio>
+          </RadioGroup>
+        </div>
+        <Button className="self-end mr-5" type="submit" isDisabled={isInvalid}>
+          Next
         </Button>
-      </div>
-      <Button className="self-end mr-5" type="submit" isDisabled={isInvalid}>
-        Next
-      </Button>
-    </Form>
+      </Form>
+    </div>
   );
 };
 
