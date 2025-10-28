@@ -29,7 +29,9 @@ const StepOne = ({ assignment }) => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
-        <Button type="submit">Next</Button>
+        <Button className="self-end mr-5" type="submit">
+          Next
+        </Button>
       </Form>
     </div>
   );
