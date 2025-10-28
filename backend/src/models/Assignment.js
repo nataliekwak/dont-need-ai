@@ -16,6 +16,22 @@ const assignmentSchema = new mongoose.Schema({
     },
     prompt: {
         type: String,
+    },
+    startSmall: {
+        type: Boolean,
+        default: true,
+    },
+    writingGoals: {
+        type: [String],
+    },
+    smallAnswers: {
+        type: [String],
+    },
+    bigAnswer: {
+        type: String,
+    },
+    topics: {
+        type: [String],
     }
 }, { timestamps: true });
 
