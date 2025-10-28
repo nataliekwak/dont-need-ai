@@ -1,9 +1,11 @@
 import { StepOne } from "./gettingStarted";
 
-const StepContent = ({ currentStep }) => {
-  switch (currentStep) {
+const StepContent = ({ assignment }) => {
+  switch (assignment.step) {
     case 1:
-      return <StepOne />;
+      return <StepOne assignment={assignment} />;
+    case 2:
+      return <div>Step Two Content</div>;
 
     default:
       return <div>Error displaying content, please try again later.</div>;

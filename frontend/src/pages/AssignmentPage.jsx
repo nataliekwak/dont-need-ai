@@ -42,7 +42,7 @@ const AssignmentPage = () => {
             <StepProgressBar currentStep={assignment.step} />
           </div>
           <div className="flex flex-1 items-center justify-center">
-            <StepContent currentStep={assignment.step} />
+            <StepContent assignment={assignment} />
           </div>
         </div>
       </div>
