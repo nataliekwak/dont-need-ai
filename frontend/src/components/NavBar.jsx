@@ -10,7 +10,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import Logo from "../assets/logo.png";
 
-import { ThemeToggle } from "./index.jsx";
+import { ThemeToggle } from "./index.js";
 import { useAuthStore } from "../store/authStore.js";
 
 const NavBar = () => {
