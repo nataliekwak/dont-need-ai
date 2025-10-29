@@ -5,6 +5,7 @@ import {
   StepFour,
   StepFive,
   StepSix,
+  StepSeven,
 } from "./gettingStarted";
 
 const StepContent = ({ assignment }) => {
@@ -21,6 +22,8 @@ const StepContent = ({ assignment }) => {
       return <StepFive assignment={assignment} />;
     case 6:
       return <StepSix assignment={assignment} />;
+    case 7:
+      return <StepSeven assignment={assignment} />;
 
     default:
       return <div>Error displaying content, please try again later.</div>;

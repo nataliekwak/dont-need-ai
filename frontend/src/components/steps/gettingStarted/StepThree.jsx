@@ -6,7 +6,13 @@ import { useAssignmentStore } from "../../../store/assignmentsStore.js";
 const StepThree = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
 
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(
+    assignment.startSmall === true
+      ? "startSmall"
+      : assignment.startSmall === false
+      ? "startBig"
+      : null
+  );
   const isInvalid = selected === null;
 
   const onSubmit = () => {
@@ -49,9 +55,18 @@ const StepThree = ({ assignment }) => {
             </Radio>
           </RadioGroup>
         </div>
-        <Button className="self-end mr-5" type="submit" isDisabled={isInvalid}>
-          Next
-        </Button>
+        <div className="flex flex-row justify-between w-full mt-4">
+          <Button onPress={() => updateAssignment(assignment._id, { step: 2 })}>
+            Back
+          </Button>
+          <Button
+            className="self-end mr-5"
+            type="submit"
+            isDisabled={isInvalid}
+          >
+            Next
+          </Button>
+        </div>
       </Form>
     </div>
   );

@@ -16,7 +16,10 @@ const goals = [
 
 const StepTwo = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
-  const [selectedGoals, setSelectedGoals] = useState([]);
+
+  const [selectedGoals, setSelectedGoals] = useState(
+    assignment.writingGoals || []
+  );
 
   const isInvalid = selectedGoals.length === 0;
 
@@ -38,6 +41,7 @@ const StepTwo = ({ assignment }) => {
           <Button
             key={goal}
             variant={selectedGoals.includes(goal) ? "solid" : "ghost"}
+            color={selectedGoals.includes(goal) ? "primary" : "default"}
             onPress={() => handleGoalClick(goal)}
           >
             {goal}
@@ -49,9 +53,14 @@ const StepTwo = ({ assignment }) => {
           Add a custom goal
         </Button>
       </div>
-      <Button className="self-end mr-5" type="submit" isDisabled={isInvalid}>
-        Next
-      </Button>
+      <div className="flex flex-row justify-between w-full mt-4">
+        <Button onPress={() => updateAssignment(assignment._id, { step: 1 })}>
+          Back
+        </Button>
+        <Button className="self-end mr-5" type="submit" isDisabled={isInvalid}>
+          Next
+        </Button>
+      </div>
     </Form>
   );
 };

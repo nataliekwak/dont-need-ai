@@ -42,6 +42,12 @@ const StepFive = ({ assignment }) => {
           Next
         </Button>
       </div>
+      <Button
+        className="self-start mt-20"
+        onPress={() => updateAssignment(assignment._id, { step: 4 })}
+      >
+        Back
+      </Button>
     </Form>
   );
 };

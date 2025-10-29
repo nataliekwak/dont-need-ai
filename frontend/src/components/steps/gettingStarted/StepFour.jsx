@@ -28,6 +28,7 @@ const StepFour = ({ assignment }) => {
   };
 
   const onSubmit = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     updateAssignment(assignment._id, {
       smallAnswers: smallAnswersList,
       step: 5,
@@ -65,13 +66,18 @@ const StepFour = ({ assignment }) => {
           </div>
         ))}
       </div>
-      <Button
-        className="self-end mr-5"
-        type="submit"
-        isDisabled={smallAnswersList.length < 5}
-      >
-        Next
-      </Button>
+      <div className="flex flex-row justify-between w-full mt-4">
+        <Button onPress={() => updateAssignment(assignment._id, { step: 3 })}>
+          Back
+        </Button>
+        <Button
+          className="self-end mr-5"
+          type="submit"
+          isDisabled={smallAnswersList.length < 5}
+        >
+          Next
+        </Button>
+      </div>
     </Form>
   );
 };
