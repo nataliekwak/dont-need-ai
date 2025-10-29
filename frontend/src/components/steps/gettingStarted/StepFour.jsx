@@ -79,9 +79,31 @@ const StepFour = ({ assignment }) => {
         </>
       )}
       <p>Focus on quantity for now, not quality.</p>
+
+      {/* Remind the user of their goals */}
+      {assignment.writingGoals.length < 2 ? (
+        <p>
+          Remember you are trying to {assignment.writingGoals[0].toUpperCase()}
+        </p>
+      ) : assignment.writingGoals.length === 2 ? (
+        <p>
+          Remember you are trying to {assignment.writingGoals[0].toUpperCase()}{" "}
+          and {assignment.writingGoals[1].toUpperCase()}.
+        </p>
+      ) : (
+        // More than 2 goals, list them with commas and 'and' before the last one
+        <p>
+          Remember you are trying to{" "}
+          {assignment.writingGoals
+            .slice(0, -1)
+            .map((goal) => goal.toUpperCase())
+            .join(", ")}
+          , and{" "}
+          {assignment.writingGoals.slice(-1).map((goal) => goal.toUpperCase())}.
+        </p>
+      )}
+
       <div className="flex flex-row align-center gap-2">
-        {/* TO DO: Add the 'Remember you are trying to EXPLAIN and DESCRIBE.' part based on writing goals */}
-        {/* and dynamic 1/5 item counter */}
         <Input
           placeholder="Enter a small answer"
           value={smallAnswer}
@@ -105,13 +127,18 @@ const StepFour = ({ assignment }) => {
         >
           Back
         </Button>
-        <Button
-          className="self-end mr-5"
-          type="submit"
-          isDisabled={smallAnswersList.length < 5}
-        >
-          Next
-        </Button>
+        <div className="flex flex-row align-center gap-4">
+          <p className={smallAnswersList.length < 5 ? "text-danger" : "text-success"}>
+            {smallAnswersList.length}/5
+          </p>
+          <Button
+            className="self-end mr-5"
+            type="submit"
+            isDisabled={smallAnswersList.length < 5}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </Form>
   );
