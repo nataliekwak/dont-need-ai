@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "@heroui/react";
+import { Button, Chip, Form, Input } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
@@ -113,10 +113,19 @@ const StepFour = ({ assignment }) => {
       </div>
       <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
         {smallAnswersList.map((answer, index) => (
-          // display a box with rounded corners and an outline
-          <div className="w-fit border rounded-lg pl-2 pr-2 p-1" key={index}>
+          <Chip
+            key={index}
+            size="md"
+            variant="bordered"
+            radius="sm"
+            onClose={() => {
+              setSmallAnswersList(
+                smallAnswersList.filter((_, i) => i !== index)
+              );
+            }}
+          >
             {answer}
-          </div>
+          </Chip>
         ))}
       </div>
       <div className="flex flex-row justify-between w-full mt-4">
@@ -128,7 +137,11 @@ const StepFour = ({ assignment }) => {
           Back
         </Button>
         <div className="flex flex-row align-center gap-4">
-          <p className={smallAnswersList.length < 5 ? "text-danger" : "text-success"}>
+          <p
+            className={
+              smallAnswersList.length < 5 ? "text-danger" : "text-success"
+            }
+          >
             {smallAnswersList.length}/5
           </p>
           <Button

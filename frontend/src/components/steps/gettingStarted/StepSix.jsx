@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "@heroui/react";
+import { Button, Chip, Form, Input } from "@heroui/react";
 import { useState } from "react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
@@ -69,9 +69,17 @@ const StepSix = ({ assignment }) => {
         </div>
         <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
           {topicsList.map((topic, index) => (
-            <div className="w-fit border rounded-lg pl-2 pr-2 p-1" key={index}>
+            <Chip
+              key={index}
+              size="lg"
+              variant="bordered"
+              radius="sm"
+              onClose={() => {
+                setTopicsList(topicsList.filter((_, i) => i !== index));
+              }}
+            >
               {topic}
-            </div>
+            </Chip>
           ))}
         </div>
       </div>

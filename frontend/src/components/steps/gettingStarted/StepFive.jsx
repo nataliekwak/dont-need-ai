@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "@heroui/react";
+import { Button, Chip, Form, Input } from "@heroui/react";
 import { useState } from "react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
@@ -6,7 +6,7 @@ import { useAssignmentStore } from "../../../store/assignmentsStore.js";
 const StepFive = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
 
-  const [bigAnswer, setBigAnswer] = useState("");
+  const [bigAnswer, setBigAnswer] = useState(assignment.bigAnswer || "");
 
   // Helper functions to handle navigation based on startSmall value
   const getNextStep = () => {
@@ -57,14 +57,14 @@ const StepFive = ({ assignment }) => {
 
       <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
         {assignment.smallAnswers.map((answer, index) => (
-          <div className="w-fit border rounded-lg pl-2 pr-2 p-1" key={index}>
+          <Chip key={index} size="sm" variant="bordered" radius="sm">
             {answer}
-          </div>
+          </Chip>
         ))}
       </div>
       <div className="flex flex-row align-center gap-2">
         <Input
-          placeholder="Enter the big answer"
+          placeholder="Enter your big answer"
           value={bigAnswer}
           onChange={(e) => setBigAnswer(e.target.value)}
         ></Input>
