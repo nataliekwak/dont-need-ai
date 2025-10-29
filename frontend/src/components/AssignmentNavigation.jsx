@@ -30,15 +30,19 @@ const AssignmentNavigation = ({ assignment }) => {
           aria-label="Assignment Prompt"
         >
           <p className="break-words whitespace-normal">{assignment.prompt}</p>
-          {/* <Listbox aria-label="Assignment Topics"> */}
-          {/* {assignment.sections.map((section) => (
-          <ListboxItem key={section.id} value={section.id}>
-            {section.title}
-          </ListboxItem>
-        ))} */}
-          {/* </Listbox> */}
         </AccordionItem>
       </Accordion>
+
+      {/* Display the assignment topics when they exist */}
+      {assignment.topics && assignment.topics.length > 0 && (
+        <Listbox aria-label="Assignment Topics">
+          {assignment.topics.map((topic) => (
+            <ListboxItem variant="bordered" key={topic} value={topic}>
+              <p className="text-xl break-words whitespace-normal">{topic}</p>
+            </ListboxItem>
+          ))}
+        </Listbox>
+      )}
     </div>
   );
 };
