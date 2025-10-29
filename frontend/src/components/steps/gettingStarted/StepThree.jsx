@@ -19,7 +19,7 @@ const StepThree = ({ assignment }) => {
     }
 
     // Save the preference and proceed to the next step
-    updateAssignment(assignment._id, { startSmall, step: 3 });
+    updateAssignment(assignment._id, { startSmall, step: 4 });
   };
 
   return (

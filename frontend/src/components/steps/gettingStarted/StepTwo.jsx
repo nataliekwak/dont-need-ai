@@ -27,7 +27,7 @@ const StepTwo = ({ assignment }) => {
   };
 
   const onSubmit = () => {
-    updateAssignment(assignment._id, { writingGoals: selectedGoals, step: 4 });
+    updateAssignment(assignment._id, { writingGoals: selectedGoals, step: 3 });
   };
 
   return (
