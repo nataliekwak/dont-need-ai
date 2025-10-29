@@ -15,6 +15,15 @@ const StepThree = ({ assignment }) => {
   );
   const isInvalid = selected === null;
 
+  // Helper functions to handle navigation based on startSmall value
+  const getNextStep = () => {
+    if (assignment.startSmall === false || selected === "startBig") {
+      return 6;
+    } else {
+      return 4;
+    }
+  };
+
   const onSubmit = () => {
     var startSmall = true;
 
@@ -25,7 +34,7 @@ const StepThree = ({ assignment }) => {
     }
 
     // Save the preference and proceed to the next step
-    updateAssignment(assignment._id, { startSmall, step: 4 });
+    updateAssignment(assignment._id, { startSmall, step: getNextStep() });
   };
 
   return (

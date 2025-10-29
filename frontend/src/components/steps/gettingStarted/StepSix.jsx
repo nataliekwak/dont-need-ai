@@ -6,9 +6,24 @@ const StepSix = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
 
   const [topic, setTopic] = useState("");
-
-  // If the assignment already has topics, initialize the topicsList with them
   const [topicsList, setTopicsList] = useState(assignment.topics || []);
+
+  // Helper functions to handle navigation based on startSmall value
+  const getNextStep = () => {
+    if (assignment.startSmall === false) {
+      return 5;
+    } else {
+      return 7;
+    }
+  };
+
+  const getPrevStep = () => {
+    if (assignment.startSmall === false) {
+      return 3;
+    } else {
+      return 5;
+    }
+  };
 
   // Handle adding the topic to the list displayed
   const handleAdd = () => {
@@ -20,16 +35,23 @@ const StepSix = ({ assignment }) => {
   const onSubmit = () => {
     updateAssignment(assignment._id, {
       topics: topicsList,
-      step: 7,
+      step: getNextStep(),
     });
   };
 
   return (
     <Form onSubmit={onSubmit} className="flex gap-5">
       <div className="flex flex-col items-center gap-2">
-        <p>
-          Finally, we have your main focus: <b>{assignment.bigAnswer}</b>
-        </p>
+        {assignment.startSmall ? (
+          <>
+            <p>
+              Finally, we have your main focus: <b>{assignment.bigAnswer}</b>
+            </p>
+          </>
+        ) : (
+          <></>
+        )}
+
         <p>
           Create the topics that will be the subjects of your body paragraphs.
         </p>
@@ -47,7 +69,6 @@ const StepSix = ({ assignment }) => {
         </div>
         <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
           {topicsList.map((topic, index) => (
-            // display a box with rounded corners and an outline
             <div className="w-fit border rounded-lg pl-2 pr-2 p-1" key={index}>
               {topic}
             </div>
@@ -55,7 +76,11 @@ const StepSix = ({ assignment }) => {
         </div>
       </div>
       <div className="flex flex-row justify-between w-full mt-4">
-        <Button onPress={() => updateAssignment(assignment._id, { step: 5 })}>
+        <Button
+          onPress={() =>
+            updateAssignment(assignment._id, { step: getPrevStep() })
+          }
+        >
           Back
         </Button>
         <Button type="submit" isDisabled={topicsList.length < 1}>

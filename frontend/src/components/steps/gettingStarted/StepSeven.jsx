@@ -5,6 +5,15 @@ import { useAssignmentStore } from "../../../store/assignmentsStore.js";
 const StepSeven = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
 
+  // Helper function to handle navigation based on startSmall value
+  const getPrevStep = () => {
+    if (assignment.startSmall === false) {
+      return 4;
+    } else {
+      return 6;
+    }
+  };
+
   return (
     <div className="flex flex-col items-center gap-5">
       <p>Are you ready to gather support?</p>
@@ -13,7 +22,9 @@ const StepSeven = ({ assignment }) => {
       </Button>
       <Button
         className="self-start mt-20"
-        onPress={() => updateAssignment(assignment._id, { step: 6 })}
+        onPress={() =>
+          updateAssignment(assignment._id, { step: getPrevStep() })
+        }
       >
         Back
       </Button>

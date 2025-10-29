@@ -20,6 +20,23 @@ const StepFour = ({ assignment }) => {
         })()
   );
 
+  // Helper functions to handle navigation based on startSmall value
+  const getNextStep = () => {
+    if (assignment.startSmall === false) {
+      return 7;
+    } else {
+      return 5;
+    }
+  };
+
+  const getPrevStep = () => {
+    if (assignment.startSmall === false) {
+      return 5;
+    } else {
+      return 3;
+    }
+  };
+
   // Handle adding the small answer to the list displayed
   const handleAdd = () => {
     console.log("Small answer added:", smallAnswer);
@@ -31,7 +48,7 @@ const StepFour = ({ assignment }) => {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     updateAssignment(assignment._id, {
       smallAnswers: smallAnswersList,
-      step: 5,
+      step: getNextStep(),
     });
   };
 
@@ -42,11 +59,25 @@ const StepFour = ({ assignment }) => {
 
   return (
     <Form onSubmit={onSubmit} className="flex items-center">
-      <p>Let's brainstorm...</p>
-      <p>
-        Off the top of your head, try to come up with as many smaller answers to
-        your prompt as possible.
-      </p>
+      {assignment.startSmall ? (
+        <>
+          <p>Let's brainstorm...</p>
+          <p>
+            Off the top of your head, try to generate as many smaller answers to
+            your prompt as you can.
+          </p>
+        </>
+      ) : (
+        <>
+          <p>Let's get specific...</p>
+          <p>
+            Off the top of your head, try to generate as many smaller ideas from
+            your big idea as you can.
+            <br />
+            {assignment.bigAnswer}
+          </p>
+        </>
+      )}
       <p>Focus on quantity for now, not quality.</p>
       <div className="flex flex-row align-center gap-2">
         {/* TO DO: Add the 'Remember you are trying to EXPLAIN and DESCRIBE.' part based on writing goals */}
@@ -67,7 +98,11 @@ const StepFour = ({ assignment }) => {
         ))}
       </div>
       <div className="flex flex-row justify-between w-full mt-4">
-        <Button onPress={() => updateAssignment(assignment._id, { step: 3 })}>
+        <Button
+          onPress={() =>
+            updateAssignment(assignment._id, { step: getPrevStep() })
+          }
+        >
           Back
         </Button>
         <Button
