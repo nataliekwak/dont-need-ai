@@ -8,10 +8,11 @@ const AssignmentNavigation = ({ assignment }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    if (assignment.prompt !== "" || assignment.prompt !== null) {
-      setIsDisabled(false);
-    } else {
+    // Disable if prompt is missing, null, or empty string
+    if (!assignment.prompt || assignment.prompt === "") {
       setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
   }, [assignment.prompt]);
 
@@ -23,6 +24,7 @@ const AssignmentNavigation = ({ assignment }) => {
         variant="shadow"
         isDisabled={isDisabled}
         className="overflow-hidden"
+        defaultExpandedKeys={["1"]}
       >
         <AccordionItem
           key="1"
