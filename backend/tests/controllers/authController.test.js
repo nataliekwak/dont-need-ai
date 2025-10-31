@@ -1,4 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { register, verifyEmail, login, logout, forgotPassword, resetPassword, checkAuth } from '../../src/controllers/authController.js';
+import * as verificationUtils from '../../src/utils/verification.js';
+import * as mailUtils from '../../src/utils/mailtrap/emails.js';
+import bcrypt from 'bcryptjs';
 
 // Mock User before importing controller
 vi.mock('../../src/models/User.js', () => {
@@ -31,11 +35,6 @@ vi.mock('bcryptjs', () => ({
     hash: vi.fn(),
     compare: vi.fn(() => true),
 }));
-
-import { register, verifyEmail, login, logout, forgotPassword, resetPassword, checkAuth } from '../../src/controllers/authController.js';
-import * as verificationUtils from '../../src/utils/verification.js';
-import * as mailUtils from '../../src/utils/mailtrap/emails.js';
-import bcrypt from 'bcryptjs';
 
 // Helper to create a mock user instance
 function createMockUser(User, overrides = {}) {

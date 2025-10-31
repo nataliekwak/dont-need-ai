@@ -6,7 +6,6 @@ import { User } from '../models/User.js';
 // Get all assignments belonging to the authenticated user
 export const getAllAssignments = async (req, res) => {
     try {
-        // TO DO: change to sort by last edited
         const assignments = await Assignment.find({ userId: req.userId }).sort({ updatedAt: -1 }); // Show last edited first
         res.status(200).json(assignments);
     } catch (error) {
@@ -97,7 +96,7 @@ export const deleteAssignment = async (req, res) => {
         const deletedAssignment = await Assignment.findByIdAndDelete(assignmentId);
 
         if (!deletedAssignment) {
-            return res.status(404).json({ message: "Assignment not found" });
+            return res.status(404).json({ error: "Assignment not found" });
         }
 
         // Remove assignment reference from User model
