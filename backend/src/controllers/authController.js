@@ -74,8 +74,8 @@ export const verifyEmail = async (req, res) => {
 
         await user.save(); // Update the values in the db
 
-        res.status(200).json({ 
-            success: true, 
+        res.status(200).json({
+            success: true,
             message: "Email verified successfully.",
             user: { ...user._doc, password: undefined }
         });
@@ -98,7 +98,7 @@ export const login = async (req, res) => {
         // Validate password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(400).json({ success: false, message: "Invalid credentials"});
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
         }
 
         generateTokenAndSetCookie(res, user._id);
@@ -124,7 +124,7 @@ export const logout = (req, res) => {
 
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
-    
+
     try {
         const user = await User.findOne({ email });
 
@@ -143,7 +143,7 @@ export const forgotPassword = async (req, res) => {
 
         // Send reset email
         await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
-    
+
         res.status(200).json({ success: true, message: "Password reset email sent." });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server error. Please try again later." });
@@ -153,7 +153,7 @@ export const forgotPassword = async (req, res) => {
 export const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
-    
+
     try {
         const user = await User.findOne({
             resetPasswordToken: token,
@@ -183,13 +183,13 @@ export const resetPassword = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
     try {
-       const user = await User.findById(req.userId).select("-password");
-       
-       if(!user) {
-        return res.status(400).json({ success: false, message: "User not found." });
-       }
+        const user = await User.findById(req.userId).select("-password");
 
-    res.status(200).json({ success: true, user: { ...user._doc, password: undefined } });
+        if (!user) {
+            return res.status(400).json({ success: false, message: "User not found." });
+        }
+
+        res.status(200).json({ success: true, user: { ...user._doc, password: undefined } });
     } catch (error) {
         console.error("Error checking authentication:", error);
         res.status(500).json({ success: false, message: "Server error. Please try again later." });
