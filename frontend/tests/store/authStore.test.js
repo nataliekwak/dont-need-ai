@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import { useAuthStore } from '../../src/store/authStore.js';
+import axios from 'axios';
 
 // Mock axios
 vi.mock('axios', () => {
@@ -11,7 +12,6 @@ vi.mock('axios', () => {
 		},
 	};
 });
-import axios from 'axios';
 
 describe('authStore', () => {
 	beforeEach(() => {
