@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardFooter,
   InputOtp,
   Form,
 } from "@heroui/react";
