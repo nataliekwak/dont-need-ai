@@ -44,6 +44,11 @@ const ResetPasswordPage = () => {
         navigate("/login");
       }, 2000);
     } catch (error) {
+      addToast({
+        title: "Error",
+        description: `Error: ${error.message}`,
+        color: "danger",
+      });
       console.error("Reset password error:", error);
     }
   };
