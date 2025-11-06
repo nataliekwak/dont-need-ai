@@ -58,42 +58,46 @@ const StepFour = ({ assignment }) => {
   }, [smallAnswersList]);
 
   return (
-    <Form onSubmit={onSubmit} className="flex items-center">
+    <Form
+      onSubmit={onSubmit}
+      className="flex items-center text-center max-w-200"
+    >
       {assignment.startSmall ? (
-        <>
-          <p>Let's brainstorm...</p>
-          <p>
+        <span className="flex flex-col px-5 max-w-150">
+          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1.5rem]">
             Off the top of your head, try to generate as many smaller answers to
             your prompt as you can.
           </p>
-        </>
+        </span>
       ) : (
-        <>
-          <p>Let's get specific...</p>
-          <p>
+        <span className="flex flex-col px-5 max-w-150">
+          <p className="text-[1rem] opacity-55">Let's get specific...</p>
+          <p className="text-[1.5rem]">
             Off the top of your head, try to generate as many smaller ideas from
             your big idea as you can.
             <br />
             {assignment.bigAnswer}
           </p>
-        </>
+        </span>
       )}
-      <p>Focus on quantity for now, not quality.</p>
 
       {/* Remind the user of their goals */}
       {assignment.writingGoals.length < 2 ? (
-        <p>
-          Remember you are trying to {assignment.writingGoals[0].toUpperCase()}
+        <p className="opacity-70 mb-2 max-w-150">
+          Focus on quantity for now, not quality. Remember you are trying to{" "}
+          {assignment.writingGoals[0].toUpperCase()}
         </p>
       ) : assignment.writingGoals.length === 2 ? (
-        <p>
-          Remember you are trying to {assignment.writingGoals[0].toUpperCase()}{" "}
-          and {assignment.writingGoals[1].toUpperCase()}.
+        <p className="opacity-70 mb-2 max-w-150">
+          Focus on quantity for now, not quality. Remember you are trying to{" "}
+          {assignment.writingGoals[0].toUpperCase()} and{" "}
+          {assignment.writingGoals[1].toUpperCase()}.
         </p>
       ) : (
         // More than 2 goals, list them with commas and 'and' before the last one
-        <p>
-          Remember you are trying to{" "}
+        <p className="opacity-70 mb-2 max-w-150">
+          Focus on quantity for now, not quality. Remember you are trying to{" "}
           {assignment.writingGoals
             .slice(0, -1)
             .map((goal) => goal.toUpperCase())
@@ -111,13 +115,14 @@ const StepFour = ({ assignment }) => {
         ></Input>
         <Button onPress={handleAdd}>Add</Button>
       </div>
-      <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
+      <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center max-w-175">
         {smallAnswersList.map((answer, index) => (
           <Chip
             key={index}
             size="md"
             variant="bordered"
             radius="sm"
+            className="py-4 px-2 whitespace-normal max-w-70 border-primary"
             onClose={() => {
               setSmallAnswersList(
                 smallAnswersList.filter((_, i) => i !== index)

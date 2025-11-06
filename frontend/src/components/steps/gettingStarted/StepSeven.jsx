@@ -15,13 +15,17 @@ const StepSeven = ({ assignment }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5">
-      <p>Are you ready to gather support?</p>
-      <Button onPress={() => updateAssignment(assignment._id, { step: 8 })}>
+    <div className="flex flex-col items-center gap-5 max-w-200 text-center pt-10">
+      <p className="text-[2rem]">Are you ready to gather support?</p>
+      <Button
+        size="lg"
+        color="primary"
+        onPress={() => updateAssignment(assignment._id, { step: 8 })}
+      >
         Next Step
       </Button>
       <Button
-        className="self-start mt-20"
+        className="self-start mt-30"
         onPress={() =>
           updateAssignment(assignment._id, { step: getPrevStep() })
         }

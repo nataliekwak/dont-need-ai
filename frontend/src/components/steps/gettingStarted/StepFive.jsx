@@ -33,31 +33,40 @@ const StepFive = ({ assignment }) => {
   };
 
   return (
-    <Form onSubmit={onSubmit} className="flex items-center">
+    <Form
+      onSubmit={onSubmit}
+      className="flex items-center text-center max-w-200"
+    >
       {assignment.startSmall ? (
-        <>
-          <p>Let's brainstorm...</p>
-          <p>
+        <span className="flex flex-col px-5 max-w-175">
+          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1.5rem]">
             Now that we have all your smaller answers, come up with one "big
             answer" that ties them all together.
           </p>
-          <p>
+          <p className="text-[1rem] opacity-80">
             This will be the <b>main focus</b> of your writing.
           </p>
-        </>
+        </span>
       ) : (
-        <>
-          <p>Let's brainstorm...</p>
-          <p>
+        <span className="flex flex-col px-5 max-w-175">
+          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1.5rem]">
             Based on your prompt and topics, come up with one "big idea"
             sentence that encapsulates the <b>main focus</b> of your writing.
           </p>
-        </>
+        </span>
       )}
 
-      <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center">
+      <div className="flex flex-wrap gap-2 mt-4 mb-4 justify-center max-w-150">
         {assignment.smallAnswers.map((answer, index) => (
-          <Chip key={index} size="sm" variant="bordered" radius="sm">
+          <Chip
+            key={index}
+            size="sm"
+            variant="bordered"
+            radius="sm"
+            className="text-[0.85rem] py-4 px-2 whitespace-normal max-w-70 border-primary"
+          >
             {answer}
           </Chip>
         ))}
@@ -68,7 +77,11 @@ const StepFive = ({ assignment }) => {
           value={bigAnswer}
           onChange={(e) => setBigAnswer(e.target.value)}
         ></Input>
-        <Button className="self-end mr-5" type="submit">
+        <Button
+          className="self-end mr-5"
+          type="submit"
+          isDisabled={bigAnswer.trim() === ""}
+        >
           Next
         </Button>
       </div>

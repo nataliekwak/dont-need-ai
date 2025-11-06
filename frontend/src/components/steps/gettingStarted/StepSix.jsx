@@ -40,26 +40,29 @@ const StepSix = ({ assignment }) => {
   };
 
   return (
-    <Form onSubmit={onSubmit} className="flex gap-5">
-      <div className="flex flex-col items-center gap-2">
+    <Form
+      onSubmit={onSubmit}
+      className="flex gap-5 text-center max-w-200 items-center"
+    >
+      <div className="flex flex-col items-center gap-2 max-w-175">
         {assignment.startSmall ? (
-          <>
-            <p>
+          <span className="flex flex-col px-5 max-w-175">
+            <p className="text-[1.2rem]">
               Finally, we have your main focus: <b>{assignment.bigAnswer}</b>
             </p>
-          </>
+          </span>
         ) : (
           <></>
         )}
 
-        <p>
+        <p className="text-[1.5rem]">
           Create the topics that will be the subjects of your body paragraphs.
         </p>
-        <p>
+        <p className="text-[1rem] opacity-55">
           Most academic essays require 2-3 body paragraphs, but add however many
           topics you need for <i>your</i> writing.
         </p>
-        <div className="flex flex-row align-center gap-2">
+        <div className="flex flex-row align-center gap-2 mt-2">
           <Input
             placeholder="Enter a topic"
             value={topic}
@@ -74,6 +77,7 @@ const StepSix = ({ assignment }) => {
               size="lg"
               variant="bordered"
               radius="sm"
+              className="text-[1rem] py-5 px-2 whitespace-normal max-w-70 border-primary"
               onClose={() => {
                 setTopicsList(topicsList.filter((_, i) => i !== index));
               }}

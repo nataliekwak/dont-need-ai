@@ -50,8 +50,8 @@ const StepTwo = ({ assignment }) => {
   };
 
   return (
-    <Form onSubmit={onSubmit} className="flex items-center">
-      <p>What is the goal of your writing?</p>
+    <Form onSubmit={onSubmit} className="flex items-center text-center">
+      <p className="text-[1.5rem]">What is the goal of your writing?</p>
       <div className="flex max-w-110 flex-wrap gap-2 mt-4 justify-center">
         {goalsList.map((goal) => (
           <Button

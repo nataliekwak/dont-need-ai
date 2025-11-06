@@ -19,8 +19,8 @@ const StepOne = ({ assignment }) => {
   };
 
   return (
-    <div>
-      <p className="mb-8">What are you writing about?</p>
+    <div className="flex flex-col text-center">
+      <p className="mb-4 text-[1.5rem]">What are you writing about?</p>
       <Form onSubmit={onSubmit}>
         <Input
           label="Enter your prompt, question, or idea."

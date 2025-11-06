@@ -31,7 +31,9 @@ const AssignmentNavigation = ({ assignment }) => {
           title={<h2 className="text-2xl">{assignment.title}</h2>}
           aria-label="Assignment Prompt"
         >
-          <p className="break-words whitespace-normal">{assignment.prompt}</p>
+          <p className="break-words whitespace-normal opacity-60">
+            {assignment.prompt}
+          </p>
         </AccordionItem>
       </Accordion>
 
