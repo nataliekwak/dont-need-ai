@@ -120,6 +120,12 @@ export const deleteEvidence = async (req, res) => {
             return res.status(404).json({ message: "Evidence not found" });
         }
 
+        // Remove evidence reference from Source model
+        await Source.findByIdAndUpdate(
+            deletedEvidence.sourceId,
+            { $pull: { evidenceIds: deletedEvidence._id } }
+        );
+
         res.status(200).json({ message: "Evidence deleted successfully." });
     } catch (error) {
         res.status(500).json({ error: "Server error" });

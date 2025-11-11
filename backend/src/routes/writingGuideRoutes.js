@@ -3,6 +3,7 @@ import { createAssignment, deleteAssignment, getAllAssignments, getAssignmentByI
 import { getAllTopics, getTopicById, createTopic, updateTopic, deleteTopic } from '../controllers/topicController.js';
 import { getAllSources, getSourceById, createSource, updateSource, deleteSource } from '../controllers/sourceController.js';
 import { getAllEvidence, getEvidenceById, createEvidence, updateEvidence, deleteEvidence } from '../controllers/evidenceController.js';
+import { getAllAnalyses, getAnalysisById, createAnalysis, updateAnalysis, deleteAnalysis } from '../controllers/analysisController.js';
 import { verifyUser } from '../utils/verification.js';
 
 const router = express.Router();
@@ -41,7 +42,7 @@ router.put('/:assignmentId/:topicId/:sourceId', verifyUser, updateSource);
 router.delete('/:assignmentId/:topicId/:sourceId', verifyUser, deleteSource);
 
 // Routes for evidence
-router.get('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, getAllSources);
+router.get('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, getAllEvidence);
 
 router.get('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, getEvidenceById);
 
@@ -50,5 +51,16 @@ router.post('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, createEvid
 router.put('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, updateEvidence);
 
 router.delete('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, deleteEvidence);
+
+// Routes for analysis
+router.get('/:assignmentId/:topicId/analyses', verifyUser, getAllAnalyses);
+
+router.get('/:assignmentId/:topicId/:analysisId', verifyUser, getAnalysisById);
+
+router.post('/:assignmentId/:topicId/analysis', verifyUser, createAnalysis);
+
+router.put('/:assignmentId/:topicId/:analysisId', verifyUser, updateAnalysis);
+
+router.delete('/:assignmentId/:topicId/:analysisId', verifyUser, deleteAnalysis);
 
 export default router;
