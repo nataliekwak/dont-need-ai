@@ -2,6 +2,17 @@ import mongoose from 'mongoose';
 import { Topic } from '../models/Topic.js';
 import { Assignment } from '../models/Assignment.js';
 
+// Get all topics for an assignment
+export const getAllTopics = async (req, res) => {
+    try {
+        const { assignmentId } = req.params;
+        const topics = await Topic.find({ assignmentId: assignmentId });
+        res.status(200).json(topics);
+    } catch (error) {
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
 // Get a topic by ID and assignment ID
 export const getTopicById = async (req, res) => {
     try {
