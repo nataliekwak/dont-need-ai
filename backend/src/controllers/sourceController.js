@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Source } from '../models/Source.js';
+import { Topic } from '../models/Topic.js';
 
 // Get all sources for a specific topic within an assignment
 export const getAllSources = async (req, res) => {
