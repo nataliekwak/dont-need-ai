@@ -38,9 +38,9 @@ const AssignmentNavigation = ({ assignment }) => {
       </Accordion>
 
       {/* Display the assignment topics when they exist */}
-      {assignment.topics && assignment.topics.length > 0 && (
+      {assignment.topicNames && assignment.topicNames.length > 0 && (
         <Listbox aria-label="Assignment Topics">
-          {assignment.topics.map((topic) => (
+          {assignment.topicNames.map((topic) => (
             <ListboxItem variant="bordered" key={topic} value={topic}>
               <p className="text-xl break-words whitespace-normal">{topic}</p>
             </ListboxItem>

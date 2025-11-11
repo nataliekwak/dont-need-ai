@@ -6,7 +6,7 @@ const StepSix = ({ assignment }) => {
   const { updateAssignment } = useAssignmentStore();
 
   const [topic, setTopic] = useState("");
-  const [topicsList, setTopicsList] = useState(assignment.topics || []);
+  const [topicsList, setTopicsList] = useState(assignment.topicNames || []);
 
   // Helper functions to handle navigation based on startSmall value
   const getNextStep = () => {

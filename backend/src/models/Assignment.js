@@ -30,7 +30,11 @@ const assignmentSchema = new mongoose.Schema({
     bigAnswer: {
         type: String,
     },
-    topics: {
+    topicIds: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Topic',
+    },
+    topicNames: {
         type: [String],
     }
 }, { timestamps: true });

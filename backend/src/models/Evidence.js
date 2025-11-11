@@ -1,0 +1,24 @@
+import mongoose from 'mongoose';
+
+const evidenceSchema = new mongoose.Schema({
+    sourceId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Source',
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['note', 'direct quote', 'paraphrase'],
+    },
+    content: {
+        type: String,
+        required: true,
+    },
+    associatedAnalysisIds: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Analysis',
+    },
+}, { timestamps: true });
+
+export const Evidence = mongoose.model('Evidence', evidenceSchema);

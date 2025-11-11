@@ -16,7 +16,7 @@ function mockAssignment(overrides = {}) {
         writingGoals: ['Goal 1'],
         smallAnswers: ['Answer 1'],
         bigAnswer: 'Big Answer',
-        topics: ['Topic 1'],
+        topicNames: ['Topic 1'],
         updatedAt: new Date(),
         ...overrides
     };
