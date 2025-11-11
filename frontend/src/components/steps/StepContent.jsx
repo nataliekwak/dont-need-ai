@@ -7,6 +7,7 @@ import {
   StepSix,
   StepSeven,
 } from "./gettingStarted";
+import { StepEight } from "./gatheringSupport";
 
 const StepContent = ({ assignment }) => {
   switch (assignment.step) {
@@ -24,6 +25,8 @@ const StepContent = ({ assignment }) => {
       return <StepSix assignment={assignment} />;
     case 7:
       return <StepSeven assignment={assignment} />;
+    case 8:
+      return <StepEight assignment={assignment} />;
 
     default:
       return <div>Error displaying content, please try again later.</div>;
