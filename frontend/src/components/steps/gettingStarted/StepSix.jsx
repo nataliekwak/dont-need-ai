@@ -33,11 +33,14 @@ const StepSix = ({ assignment }) => {
   };
 
   const onSubmit = () => {
-    // Create topic documents in the backend
+    // Create topic documents in the backend only if they don't already exist
     topicsList.forEach((topicName) => {
-      createTopic(assignment._id, { name: topicName });
+      if (!topics.find((t) => t.name === topicName)) {
+        createTopic(assignment._id, topicName);
+      }
     });
 
+    // Update assignment with new topic names and move to next step
     updateAssignment(assignment._id, {
       topicNames: topicsList,
       topicIds: topics.map((t) => t._id),

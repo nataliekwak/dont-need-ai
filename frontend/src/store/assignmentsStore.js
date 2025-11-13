@@ -111,6 +111,10 @@ export const useAssignmentStore = create((set) => ({
     topics: [],
     currentTopic: null,
 
+    setCurrentTopic: (topic) => {
+        set({ currentTopic: topic });
+    },
+
     getAllTopics: async (assignmentId) => {
         set({ isLoading: true, error: null });
 
@@ -175,7 +179,7 @@ export const useAssignmentStore = create((set) => ({
 
         try {
             await axios.delete(`${API_URL}/${assignmentId}/${topicId}`);
-            
+
             // Remove the topic from the local state
             set((state) => ({
                 topics: state.topics.filter((topic) => topic._id !== topicId),
