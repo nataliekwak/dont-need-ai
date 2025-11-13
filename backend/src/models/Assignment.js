@@ -19,7 +19,6 @@ const assignmentSchema = new mongoose.Schema({
     },
     startSmall: {
         type: Boolean,
-        default: true,
     },
     writingGoals: {
         type: [String],

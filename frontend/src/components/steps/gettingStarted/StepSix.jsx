@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
 const StepSix = ({ assignment }) => {
-  const { updateAssignment } = useAssignmentStore();
+  const { createTopic, updateAssignment, topics } = useAssignmentStore();
 
   const [topic, setTopic] = useState("");
   const [topicsList, setTopicsList] = useState(assignment.topicNames || []);
@@ -33,8 +33,14 @@ const StepSix = ({ assignment }) => {
   };
 
   const onSubmit = () => {
+    // Create topic documents in the backend
+    topicsList.forEach((topicName) => {
+      createTopic(assignment._id, { name: topicName });
+    });
+
     updateAssignment(assignment._id, {
-      topics: topicsList,
+      topicNames: topicsList,
+      topicIds: topics.map((t) => t._id),
       step: getNextStep(),
     });
   };

@@ -105,5 +105,86 @@ export const useAssignmentStore = create((set) => ({
             set({ error: error.response.data.message || "Error deleting assignment", isLoading: false });
             console.error("Error deleting assignment:", error);
         }
-    }
+    },
+
+    // Store for the assignment topics
+    topics: [],
+    currentTopic: null,
+
+    getAllTopics: async (assignmentId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/topics`);
+            set({ topics: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting all topics", isLoading: false });
+            console.error("Error fetching topics:", error);
+        }
+    },
+
+    getTopicById: async (assignmentId, topicId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}`);
+            set({ currentTopic: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting topic", isLoading: false });
+            console.error("Error fetching topic:", error);
+        }
+    },
+
+    createTopic: async (assignmentId, name) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.post(`${API_URL}/${assignmentId}/topic`, { name });
+            set((state) => ({ topics: [...state.topics, res.data], isLoading: false, error: null }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error creating topic", isLoading: false });
+            console.error("Error creating topic:", error);
+        }
+    },
+
+    updateTopic: async (assignmentId, topicId, updatedFields) => {
+        set({ isLoading: true, error: null });
+        try {
+            await axios.put(`${API_URL}/${assignmentId}/${topicId}`, updatedFields);
+
+            // Update the topic in the local state
+            set((state) => ({
+                topics: state.topics.map((topic) =>
+                    topic._id === topicId ? { ...topic, ...updatedFields } : topic
+                ),
+                isLoading: false,
+                error: null,
+            }));
+
+            // Always fetch latest topic from backend after update
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}`);
+            set({ currentTopic: res.data });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error updating topic", isLoading: false });
+            console.error("Error updating topic:", error);
+        }
+    },
+
+    deleteTopic: async (assignmentId, topicId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.delete(`${API_URL}/${assignmentId}/${topicId}`);
+            
+            // Remove the topic from the local state
+            set((state) => ({
+                topics: state.topics.filter((topic) => topic._id !== topicId),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error deleting topic", isLoading: false });
+            console.error("Error deleting topic:", error);
+        }
+    },
 }));
