@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
 const EvidenceTab = () => {
-  const { currentTopic } = useAssignmentStore();
+  const { currentAssignment, currentTopic, getAllSources, sources } = useAssignmentStore();
 
   const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(() => {
     return localStorage.getItem("isEvidenceExpanded") === "true";
@@ -16,6 +16,13 @@ const EvidenceTab = () => {
     localStorage.setItem("isEvidenceExpanded", isEvidenceExpanded);
     window.dispatchEvent(new Event("evidence-analysis-expanded"));
   }, [isEvidenceExpanded]);
+
+  // Retrieve sources for the current topic on mount or when currentTopic changes
+  useEffect(() => {
+    if (currentAssignment && currentTopic) {
+      getAllSources(currentAssignment._id, currentTopic._id);
+    }
+  }, [currentAssignment, currentTopic, getAllSources]);
 
   const collapseEvidence = () => setIsEvidenceExpanded((prev) => !prev);
 
@@ -38,10 +45,20 @@ const EvidenceTab = () => {
             {currentTopic.sourceIds.length === 0 ? (
               <p>You have no sources for '{currentTopic.name}' yet.</p>
             ) : (
-              <></>
+              <>
+                {sources.map((source) => (
+                  <div key={source._id} className="p-2 border-b border-medium">
+                    <p className="font-semibold">{source.title}</p>
+                    {source.author ? <p className="italic">{source.author}</p> : null}
+                  </div>
+                ))}
+              </>
             )}
             <Button startContent={<Plus />}>Add a source</Button>
           </div>
+        </div>
+        <div>
+
         </div>
       </div>
     </div>
