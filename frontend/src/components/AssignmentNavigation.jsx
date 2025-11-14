@@ -7,7 +7,8 @@ import { useAssignmentStore } from "../store/assignmentsStore.js";
 // prompt, and topic sections for navigation
 
 const AssignmentNavigation = ({ assignment }) => {
-  const { getAllTopics, setCurrentTopic, topics } = useAssignmentStore();
+  const { getAllTopics, setCurrentTopic, topics } =
+    useAssignmentStore();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -32,8 +33,9 @@ const AssignmentNavigation = ({ assignment }) => {
 
   // If the selected topic changes, update the current topic in the store
   useEffect(() => {
-    setCurrentTopic(selectedTopic);
-  }, [selectedTopic, setCurrentTopic]);
+    const topicObj = topics.find((t) => t._id === selectedTopic) || null;
+    setCurrentTopic(topicObj);
+  }, [selectedTopic, setCurrentTopic, topics]);
 
   useEffect(() => {
     // If topics fail to load, populate topics
@@ -44,13 +46,9 @@ const AssignmentNavigation = ({ assignment }) => {
     console.log("Topics loaded:", topics);
   }, [topics, assignment.topicNames, assignment._id, getAllTopics]);
 
-  const handleSelect = (topic) => {
+  const handleSelect = (topicId) => {
     // Set the selected topic when a topic is clicked or close the currently selected topic
-    if (selectedTopic === topic) {
-      setSelectedTopic(null);
-    } else {
-      setSelectedTopic(topic);
-    }
+    setSelectedTopic((prev) => (prev === topicId ? null : topicId));
   };
 
   return (
@@ -76,17 +74,18 @@ const AssignmentNavigation = ({ assignment }) => {
 
       {/* Display the assignment topics when they exist */}
       {topics && topics.length > 0 && (
-        <div className="border-medium rounded-small border-default-200 dark:border-default-100">
+        <div className="border-medium rounded-small border-default">
           <Listbox
             aria-label="Assignment Topics"
             variant="solid"
             color="primary"
+            selectedKeys={selectedTopic ? [selectedTopic] : []}
           >
             {topics.map((topic) => (
               <ListboxItem
                 key={topic._id}
                 value={topic._id}
-                onPress={() => handleSelect(topic)}
+                onPress={() => handleSelect(topic._id)}
               >
                 <p className="text-xl break-words whitespace-normal">
                   {topic.name}

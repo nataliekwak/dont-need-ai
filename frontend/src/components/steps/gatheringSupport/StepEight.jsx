@@ -7,7 +7,7 @@ const StepEight = ({ assignment }) => {
   const { currentTopic, updateAssignment } = useAssignmentStore();
 
   return (
-    <div className="flex flex-col items-center gap-5 max-w-200 text-center pt-10">
+    <div className="flex flex-col items-center gap-5 text-center pt-10 w-full">
       {/* If current topic is selected, show the TopicTab */}
       {currentTopic && currentTopic !== null ? (
         <TopicTab topic={currentTopic} />
@@ -17,7 +17,7 @@ const StepEight = ({ assignment }) => {
         </p>
       )}
       <Button
-        className="self-start mt-30"
+        className="self-start"
         onPress={() => updateAssignment(assignment._id, { step: 7 })}
       >
         Back
