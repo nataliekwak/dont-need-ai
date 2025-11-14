@@ -375,4 +375,86 @@ export const useAssignmentStore = create((set) => ({
             console.error("Error deleting evidence:", error);
         }
     },
+
+    // Store for the topic's analyses
+    analyses: [],
+    currentAnalysis: null,
+
+    setCurrentAnalysis: (analysis) => {
+        set({ currentAnalysis: analysis });
+    },
+
+    // Fetch all analyses for a specific topic
+    getAllAnalyses: async (assignmentId, topicId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/analyses`);
+            set({ analyses: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error fetching analyses", isLoading: false });
+            console.error("Error fetching analyses:", error);
+        }
+    },
+
+    getAnalysisById: async (assignmentId, topicId, analysisId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`);
+            set({ currentAnalysis: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error fetching analysis", isLoading: false });
+            console.error("Error fetching analysis:", error);
+        }
+    },
+
+    createAnalysis: async (assignmentId, topicId, analysisData) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/analysis`, analysisData);
+            set({ currentAnalysis: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error creating analysis", isLoading: false });
+            console.error("Error creating analysis:", error);
+        }
+    },
+
+    updateAnalysis: async (assignmentId, topicId, analysisId, updatedFields) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`, updatedFields);
+            // Update the analysis in the local state
+            set((state) => ({
+                analyses: state.analyses.map((analysis) =>
+                    analysis._id === analysisId ? { ...analysis, ...updatedFields } : analysis
+                ),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error updating analysis", isLoading: false });
+            console.error("Error updating analysis:", error);
+        }
+    },
+
+    deleteAnalysis: async (assignmentId, topicId, analysisId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`);
+
+            // Remove the analysis from the local state
+            set((state) => ({
+                analyses: state.analyses.filter((analysis) => analysis._id !== analysisId),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error deleting analysis", isLoading: false });
+            console.error("Error deleting analysis:", error);
+        }
+    },
 }));
