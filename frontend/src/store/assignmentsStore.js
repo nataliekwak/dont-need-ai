@@ -167,7 +167,7 @@ export const useAssignmentStore = create((set) => ({
 
             // Always fetch latest topic from backend after update
             const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}`);
-            set({ currentTopic: res.data });
+            set({ currentTopic: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error updating topic", isLoading: false });
             console.error("Error updating topic:", error);
@@ -189,6 +189,91 @@ export const useAssignmentStore = create((set) => ({
         } catch (error) {
             set({ error: error.response.data.message || "Error deleting topic", isLoading: false });
             console.error("Error deleting topic:", error);
+        }
+    },
+
+    // Store for the topic's sources
+    sources: [],
+    currentSource: null,
+
+    setCurrentSource: (source) => {
+        set({ currentSource: source });
+    },
+
+    // Fetch all sources for a given topic within an assignment
+    getAllSources: async (assignmentId, topicId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/sources`);
+            set({ sources: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting all sources", isLoading: false });
+            console.error("Error fetching sources:", error);
+        }
+    },
+
+    getSourceById: async (assignmentId, topicId, sourceId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            set({ currentSource: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting source", isLoading: false });
+            console.error("Error fetching source:", error);
+        }
+    },
+
+    createSource: async (assignmentId, topicId, sourceData) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/source`, sourceData);
+            set((state) => ({ sources: [...state.sources, res.data], isLoading: false, error: null }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error creating source", isLoading: false });
+            console.error("Error creating source:", error);
+        }
+    },
+
+    updateSource: async (assignmentId, topicId, sourceId, updatedFields) => {
+        set({ isLoading: true, error: null });
+        try {
+            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`, updatedFields);
+
+            // Update the source in the local state
+            set((state) => ({
+                sources: state.sources.map((source) =>
+                    source._id === sourceId ? { ...source, ...updatedFields } : source
+                ),
+                isLoading: false,
+                error: null,
+            }));
+
+            // Always fetch latest source from backend after update
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            set({ currentSource: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error updating source", isLoading: false });
+            console.error("Error updating source:", error);
+        }
+    },
+
+    deleteSource: async (assignmentId, topicId, sourceId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            // Remove the source from the local state
+            set((state) => ({
+                sources: state.sources.filter((source) => source._id !== sourceId),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error deleting source", isLoading: false });
+            console.error("Error deleting source:", error);
         }
     },
 }));
