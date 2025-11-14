@@ -2,7 +2,7 @@ import express from 'express';
 import { createAssignment, deleteAssignment, getAllAssignments, getAssignmentById, updateAssignment } from '../controllers/writingGuideController.js';
 import { getAllTopics, getTopicById, createTopic, updateTopic, deleteTopic } from '../controllers/topicController.js';
 import { getAllSources, getSourceById, createSource, updateSource, deleteSource } from '../controllers/sourceController.js';
-import { getAllEvidence, getEvidenceById, createEvidence, updateEvidence, deleteEvidence } from '../controllers/evidenceController.js';
+import { getAllEvidenceBySource, getAllEvidenceByTopic, getEvidenceById, createEvidence, updateEvidence, deleteEvidence } from '../controllers/evidenceController.js';
 import { getAllAnalyses, getAnalysisById, createAnalysis, updateAnalysis, deleteAnalysis } from '../controllers/analysisController.js';
 import { verifyUser } from '../utils/verification.js';
 
@@ -42,7 +42,9 @@ router.put('/:assignmentId/:topicId/:sourceId', verifyUser, updateSource);
 router.delete('/:assignmentId/:topicId/:sourceId', verifyUser, deleteSource);
 
 // Routes for evidence
-router.get('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, getAllEvidence);
+router.get('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, getAllEvidenceBySource);
+
+router.get('/:assignmentId/:topicId/evidence', verifyUser, getAllEvidenceByTopic);
 
 router.get('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, getEvidenceById);
 

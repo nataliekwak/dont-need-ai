@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const evidenceSchema = new mongoose.Schema({
+    topicId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Topic',
+        required: true,
+    },
     sourceId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Source',

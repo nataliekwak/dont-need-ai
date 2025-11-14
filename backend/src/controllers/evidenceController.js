@@ -3,7 +3,7 @@ import { Evidence } from '../models/Evidence.js';
 import { Source } from '../models/Source.js';
 
 // Get all evidence for a specific source within a topic and assignment
-export const getAllEvidence = async (req, res) => {
+export const getAllEvidenceBySource = async (req, res) => {
     try {
         const { assignmentId, topicId, sourceId } = req.params;
 
@@ -24,6 +24,25 @@ export const getAllEvidence = async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 };
+
+export const getAllEvidenceByTopic = async (req, res) => {
+    try {
+        const { assignmentId, topicId } = req.params;
+
+        // Validate ids
+        if (!Mongoose.isValidObjectId(assignmentId)) {
+            return res.status(400).json({ error: "Invalid assignment ID" });
+        }
+        if (!Mongoose.isValidObjectId(topicId)) {
+            return res.status(400).json({ error: "Invalid topic ID" });
+        }
+
+        const evidenceList = await Evidence.find({ topicId: topicId });
+        res.status(200).json(evidenceList);
+    } catch (error) {
+        res.status(500).json({ error: "Server error" });
+    }
+}
 
 // Get an evidence by ID within a specific source, topic, and assignment
 export const getEvidenceById = async (req, res) => {
@@ -60,6 +79,7 @@ export const getEvidenceById = async (req, res) => {
 export const createEvidence = async (req, res) => {
     try {
         const newEvidence = new Evidence({
+            topicId: req.params.topicId,
             sourceId: req.params.sourceId,
             type: req.body.type,
             content: req.body.content,

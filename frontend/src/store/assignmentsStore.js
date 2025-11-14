@@ -276,4 +276,103 @@ export const useAssignmentStore = create((set) => ({
             console.error("Error deleting source:", error);
         }
     },
+
+    // Store for the topic's evidence
+    evidence: [],
+    currentEvidence: null,
+
+    setCurrentEvidence: (evidence) => {
+        set({ currentEvidence: evidence });
+    },
+
+    // Fetch all evidence for a specific source within a topic and assignment
+    getAllEvidenceBySource: async (assignmentId, topicId, sourceId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/evidence`);
+            set({ evidence: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting all evidence", isLoading: false });
+            console.error("Error fetching evidence:", error);
+        }
+    },
+
+    // Fetch all evidence for a specific topic within an assignment
+    getAllEvidenceByTopic: async (assignmentId, topicId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/evidence`);
+            set({ evidence: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting all evidence", isLoading: false });
+            console.error("Error fetching evidence:", error);
+        }
+    },
+
+    getEvidenceById: async (assignmentId, topicId, sourceId, evidenceId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+            set({ currentEvidence: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error getting evidence", isLoading: false });
+            console.error("Error fetching evidence:", error);
+        }
+    },
+
+    createEvidence: async (assignmentId, topicId, sourceId, evidenceData) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/evidence`, evidenceData);
+            set((state) => ({ evidence: [...state.evidence, res.data], isLoading: false, error: null }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error creating evidence", isLoading: false });
+            console.error("Error creating evidence:", error);
+        }
+    },
+
+    updateEvidence: async (assignmentId, topicId, sourceId, evidenceId, updatedFields) => {
+        set({ isLoading: true, error: null });
+        try {
+            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`, updatedFields);
+
+            // Update the evidence in the local state
+            set((state) => ({
+                evidence: state.evidence.map((evidence) =>
+                    evidence._id === evidenceId ? { ...evidence, ...updatedFields } : evidence
+                ),
+                isLoading: false,
+                error: null,
+            }));
+
+            // Always fetch latest evidence from backend after update
+            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+            set({ currentEvidence: res.data, isLoading: false, error: null });
+        } catch (error) {
+            set({ error: error.response.data.message || "Error updating evidence", isLoading: false });
+            console.error("Error updating evidence:", error);
+        }
+    },
+
+    deleteEvidence: async (assignmentId, topicId, sourceId, evidenceId) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+
+            // Remove the evidence from the local state
+            set((state) => ({
+                evidence: state.evidence.filter((evidence) => evidence._id !== evidenceId),
+                isLoading: false,
+                error: null,
+            }));
+        } catch (error) {
+            set({ error: error.response.data.message || "Error deleting evidence", isLoading: false });
+            console.error("Error deleting evidence:", error);
+        }
+    },
 }));
