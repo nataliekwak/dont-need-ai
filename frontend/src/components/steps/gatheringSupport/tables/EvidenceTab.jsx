@@ -1,11 +1,14 @@
-import { Button, Divider } from "@heroui/react";
+import { Button, Divider, useDisclosure } from "@heroui/react";
 import { Minus, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 
+import { AddSourceModal } from "../../../modals";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
 const EvidenceTab = () => {
-  const { currentAssignment, currentTopic, getAllSources, sources } = useAssignmentStore();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { currentAssignment, currentTopic, getAllSources, sources } =
+    useAssignmentStore();
 
   const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(() => {
     return localStorage.getItem("isEvidenceExpanded") === "true";
@@ -19,9 +22,7 @@ const EvidenceTab = () => {
 
   // Retrieve sources for the current topic on mount or when currentTopic changes
   useEffect(() => {
-    if (currentAssignment && currentTopic) {
-      getAllSources(currentAssignment._id, currentTopic._id);
-    }
+    getAllSources(currentAssignment._id, currentTopic._id);
   }, [currentAssignment, currentTopic, getAllSources]);
 
   const collapseEvidence = () => setIsEvidenceExpanded((prev) => !prev);
@@ -49,17 +50,31 @@ const EvidenceTab = () => {
                 {sources.map((source) => (
                   <div key={source._id} className="p-2 border-b border-medium">
                     <p className="font-semibold">{source.title}</p>
-                    {source.author ? <p className="italic">{source.author}</p> : null}
+                    {source.author ? (
+                      <p className="italic">{source.author}</p>
+                    ) : null}
                   </div>
                 ))}
               </>
             )}
-            <Button startContent={<Plus />}>Add a source</Button>
+            <Button startContent={<Plus />} onPress={onOpen}>
+              Add a source
+            </Button>
+
+            {/* Custom modal component to add a source*/}
+            <AddSourceModal
+              isModalOpen={isOpen}
+              onOpenChange={(open, reason) => {
+                onOpenChange();
+                // If the modal was closed after a successful add, refresh sources
+                if (!open && reason === "add") {
+                  getAllSources(currentAssignment._id, currentTopic._id);
+                }
+              }}
+            />
           </div>
         </div>
-        <div>
-
-        </div>
+        <div></div>
       </div>
     </div>
   );
