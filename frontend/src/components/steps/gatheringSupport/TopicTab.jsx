@@ -1,10 +1,31 @@
-import { Button, Card, CardBody, CardHeader, Divider } from "@heroui/react";
-import { Plus } from "lucide-react";
+import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
+import { useEffect, useState } from "react";
+
+import { EvidenceAndAnalysis, EvidenceTab, AnalysisTab } from "./tables";
 
 // import { useAssignmentStore } from "../../../store/assignmentsStore";
 
 const TopicTab = () => {
   // const { currentTopic } = useAssignmentStore();
+
+  const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(false);
+  const [isAnalysisExpanded, setIsAnalysisExpanded] = useState(false);
+
+  // Retrieve the expanded states from localStorage and update on custom event
+  useEffect(() => {
+    const updateExpanded = () => {
+      setIsEvidenceExpanded(
+        localStorage.getItem("isEvidenceExpanded") === "true"
+      );
+      setIsAnalysisExpanded(
+        localStorage.getItem("isAnalysisExpanded") === "true"
+      );
+    };
+    updateExpanded();
+    window.addEventListener("evidence-analysis-expanded", updateExpanded);
+    return () =>
+      window.removeEventListener("evidence-analysis-expanded", updateExpanded);
+  }, []);
 
   return (
     <Card className="w-full flex flex-col min-h-100 border-primary border-small">
@@ -13,32 +34,13 @@ const TopicTab = () => {
       </CardHeader>
       {/* Display the evidence and analysis for this topic side-by-side */}
       <CardBody>
-        {/* Box for the overall table */}
-        <div className="h-full flex flex-row justify-evenly border-medium border-default rounded-small">
-          {/* Box for the evidence column */}
-          <div className="flex flex-col w-full">
-            <div className="flex flex-row w-full justify-center">
-              <h3>Evidence</h3>
-              <Button isIconOnly variant="light">
-                <Plus />
-              </Button>
-            </div>
-            <Divider className=" h-[2px]" />
-          </div>
-
-          <Divider orientation="vertical" className="w-[2px]" />
-
-          {/* Box for the analysis column */}
-          <div className="flex flex-col w-full">
-            <div className="flex flex-row w-full justify-center">
-              <h3>Analysis</h3>
-              <Button isIconOnly variant="light">
-                <Plus />
-              </Button>
-            </div>
-            <Divider className="h-[2px]" />
-          </div>
-        </div>
+        {isEvidenceExpanded ? (
+          <EvidenceTab />
+        ) : isAnalysisExpanded ? (
+          <AnalysisTab />
+        ) : (
+          <EvidenceAndAnalysis />
+        )}
       </CardBody>
     </Card>
   );

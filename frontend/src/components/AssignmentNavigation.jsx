@@ -7,8 +7,7 @@ import { useAssignmentStore } from "../store/assignmentsStore.js";
 // prompt, and topic sections for navigation
 
 const AssignmentNavigation = ({ assignment }) => {
-  const { getAllTopics, setCurrentTopic, topics } =
-    useAssignmentStore();
+  const { getAllTopics, setCurrentTopic, topics } = useAssignmentStore();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -31,10 +30,24 @@ const AssignmentNavigation = ({ assignment }) => {
   //   }
   // }, [assignment.step, topics]);
 
+  // On mount, restore selected topic from localStorage
+  useEffect(() => {
+    const savedTopicId = localStorage.getItem("selectedTopicId");
+    if (savedTopicId && topics.some((t) => t._id === savedTopicId)) {
+      setSelectedTopic(savedTopicId);
+      setCurrentTopic(topics.find((t) => t._id === savedTopicId));
+    }
+  }, [topics, setCurrentTopic]);
+
   // If the selected topic changes, update the current topic in the store
   useEffect(() => {
     const topicObj = topics.find((t) => t._id === selectedTopic) || null;
     setCurrentTopic(topicObj);
+
+    // Save selected topic to localStorage
+    if (topicObj) {
+      localStorage.setItem("selectedTopicId", topicObj._id);
+    }
   }, [selectedTopic, setCurrentTopic, topics]);
 
   useEffect(() => {
