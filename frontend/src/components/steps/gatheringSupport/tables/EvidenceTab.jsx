@@ -3,12 +3,19 @@ import { Minus, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 
 import { AddSourceModal } from "../../../modals";
+import SourceEvidenceList from "./SourceEvidenceList.jsx";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
 const EvidenceTab = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { currentAssignment, currentTopic, getAllSources, sources } =
-    useAssignmentStore();
+  const {
+    currentAssignment,
+    currentTopic,
+    currentSource,
+    getAllSources,
+    sources,
+    setCurrentSource,
+  } = useAssignmentStore();
 
   const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(() => {
     return localStorage.getItem("isEvidenceExpanded") === "true";
@@ -25,7 +32,28 @@ const EvidenceTab = () => {
     getAllSources(currentAssignment._id, currentTopic._id);
   }, [currentAssignment, currentTopic, getAllSources]);
 
+  // Restore selected source from localStorage on mount or when sources change
+  useEffect(() => {
+    const savedSourceId = localStorage.getItem("selectedSourceId");
+    if (savedSourceId && sources && sources.length > 0) {
+      const found = sources.find((s) => s._id === savedSourceId);
+      if (found) setCurrentSource(found);
+    }
+  }, [sources, setCurrentSource]);
+
   const collapseEvidence = () => setIsEvidenceExpanded((prev) => !prev);
+
+  // Handle clicking on a source to set it as the current source
+  // If the same source is clicked again, deselect it
+  const handleSourceClick = (source) => {
+    if (currentSource && currentSource._id === source._id) {
+      setCurrentSource(null);
+      localStorage.removeItem("selectedSourceId");
+    } else {
+      setCurrentSource(source);
+      localStorage.setItem("selectedSourceId", source._id);
+    }
+  };
 
   return (
     <div className="h-full flex flex-col border-medium border-default rounded-small">
@@ -48,11 +76,26 @@ const EvidenceTab = () => {
             ) : (
               <>
                 {sources.map((source) => (
-                  <div key={source._id} className="p-2 border-b border-medium">
-                    <p className="font-semibold">{source.title}</p>
-                    {source.author ? (
-                      <p className="italic">{source.author}</p>
-                    ) : null}
+                  <div key={source._id}>
+                    <Button
+                      variant="light"
+                      color="default"
+                      radius="sm"
+                      onPress={() => handleSourceClick(source)}
+                      className={
+                        currentSource && currentSource._id === source._id
+                          ? "bg-primary-100"
+                          : ""
+                      }
+                    >
+                      <div className="flex flex-col">
+                        <p className="font-semibold">{source.title}</p>
+                        {source.author ? (
+                          <p className="italic">{source.author}</p>
+                        ) : null}
+                      </div>
+                    </Button>
+                    <Divider />
                   </div>
                 ))}
               </>
@@ -74,7 +117,9 @@ const EvidenceTab = () => {
             />
           </div>
         </div>
-        <div></div>
+
+        {/* Evidence box for when a source is opened */}
+        {currentSource && <SourceEvidenceList />}
       </div>
     </div>
   );

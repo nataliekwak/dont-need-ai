@@ -14,7 +14,7 @@ const evidenceSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['note', 'direct quote', 'paraphrase'],
+        enum: ['Note', 'Direct Quote', 'Paraphrase'],
     },
     content: {
         type: String,

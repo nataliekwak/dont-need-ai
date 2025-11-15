@@ -35,11 +35,23 @@ const EvidenceAndAnalysis = () => {
 
   // Retrieve evidence and analyses for the current topic on mount or when currentTopic changes
   useEffect(() => {
-    if (currentAssignment && currentTopic) {
+    if (
+      currentAssignment &&
+      currentTopic &&
+      !isEvidenceExpanded &&
+      !isAnalysisExpanded
+    ) {
       getAllEvidenceByTopic(currentAssignment._id, currentTopic._id);
       getAllAnalyses(currentAssignment._id, currentTopic._id);
     }
-  }, [currentAssignment, currentTopic, getAllEvidenceByTopic, getAllAnalyses]);
+  }, [
+    currentAssignment,
+    currentTopic,
+    getAllEvidenceByTopic,
+    getAllAnalyses,
+    isEvidenceExpanded,
+    isAnalysisExpanded,
+  ]);
 
   const expandEvidence = () => setIsEvidenceExpanded((prev) => !prev);
   const expandAnalysis = () => setIsAnalysisExpanded((prev) => !prev);
