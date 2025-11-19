@@ -53,9 +53,14 @@ export const getAnalysisById = async (req, res) => {
 // Create an analysis document
 export const createAnalysis = async (req, res) => {
     try {
+        const content = req.body.content;
+        if (!content || typeof content !== 'string' || content.trim() === '') {
+            return res.status(400).json({ error: "Analysis content cannot be empty" });
+        }
+
         const newAnalysis = new Analysis({
             topicId: req.params.topicId,
-            content: req.body.content,
+            content: content,
         });
 
         await newAnalysis.save();

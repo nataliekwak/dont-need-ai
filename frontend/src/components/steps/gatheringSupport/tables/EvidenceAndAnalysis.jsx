@@ -12,6 +12,8 @@ const EvidenceAndAnalysis = () => {
     evidence,
     getAllEvidenceByTopic,
     getAllAnalyses,
+    evidenceError,
+    analysisError,
   } = useAssignmentStore();
 
   const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(() => {
@@ -41,7 +43,13 @@ const EvidenceAndAnalysis = () => {
       !isEvidenceExpanded &&
       !isAnalysisExpanded
     ) {
-      getAllEvidenceByTopic(currentAssignment._id, currentTopic._id);
+      // Only call getAllEvidenceByTopic if the topic has at least one sourceId
+      if (
+        Array.isArray(currentTopic.sourceIds) &&
+        currentTopic.sourceIds.length > 0
+      ) {
+        getAllEvidenceByTopic(currentAssignment._id, currentTopic._id);
+      }
       getAllAnalyses(currentAssignment._id, currentTopic._id);
     }
   }, [
@@ -62,6 +70,9 @@ const EvidenceAndAnalysis = () => {
       <div className="h-full flex flex-row justify-evenly border-medium border-default rounded-small">
         {/* Box for the evidence column */}
         <div className="flex flex-col w-full">
+          {evidenceError && (
+            <div className="text-danger-500 text-sm mb-2">{evidenceError}</div>
+          )}
           <div className="flex flex-row w-full justify-center">
             <h3>Evidence</h3>
             <Button isIconOnly variant="light" onPress={expandEvidence}>
@@ -87,6 +98,9 @@ const EvidenceAndAnalysis = () => {
 
         {/* Box for the analysis column */}
         <div className="flex flex-col w-full">
+          {analysisError && (
+            <div className="text-danger-500 text-sm mb-2">{analysisError}</div>
+          )}
           <div className="flex flex-row w-full justify-center">
             <h3>Analysis</h3>
             <Button isIconOnly variant="light" onPress={expandAnalysis}>

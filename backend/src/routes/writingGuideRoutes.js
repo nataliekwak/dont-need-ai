@@ -22,47 +22,47 @@ router.delete('/:assignmentId', verifyUser, deleteAssignment);
 // Routes for a topic
 router.get('/:assignmentId/topics', verifyUser, getAllTopics);
 
-router.get('/:assignmentId/:topicId', verifyUser, getTopicById);
+router.get('/:assignmentId/topic/:topicId', verifyUser, getTopicById);
 
 router.post('/:assignmentId/topic', verifyUser, createTopic);
 
-router.put('/:assignmentId/:topicId', verifyUser, updateTopic);
+router.put('/:assignmentId/topic/:topicId', verifyUser, updateTopic);
 
-router.delete('/:assignmentId/:topicId', verifyUser, deleteTopic);
+router.delete('/:assignmentId/topic/:topicId', verifyUser, deleteTopic);
 
 // Routes for a source
-router.get('/:assignmentId/:topicId/sources', verifyUser, getAllSources);
+router.get('/:assignmentId/topic/:topicId/sources', verifyUser, getAllSources);
 
-router.get('/:assignmentId/:topicId/:sourceId', verifyUser, getSourceById);
+router.get('/:assignmentId/topic/:topicId/source/:sourceId', verifyUser, getSourceById);
 
-router.post('/:assignmentId/:topicId/source', verifyUser, createSource);
+router.post('/:assignmentId/topic/:topicId/source', verifyUser, createSource);
 
-router.put('/:assignmentId/:topicId/:sourceId', verifyUser, updateSource);
+router.put('/:assignmentId/topic/:topicId/source/:sourceId', verifyUser, updateSource);
 
-router.delete('/:assignmentId/:topicId/:sourceId', verifyUser, deleteSource);
+router.delete('/:assignmentId/topic/:topicId/source/:sourceId', verifyUser, deleteSource);
 
 // Routes for evidence
-router.get('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, getAllEvidenceBySource);
+router.get('/:assignmentId/topic/:topicId/source/:sourceId/evidence', verifyUser, getAllEvidenceBySource);
 
-router.get('/:assignmentId/:topicId/evidence', verifyUser, getAllEvidenceByTopic);
+router.get('/:assignmentId/topic/:topicId/evidence', verifyUser, getAllEvidenceByTopic);
 
-router.get('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, getEvidenceById);
+router.get('/:assignmentId/topic/:topicId/source/:sourceId/evidence/:evidenceId', verifyUser, getEvidenceById);
 
-router.post('/:assignmentId/:topicId/:sourceId/evidence', verifyUser, createEvidence);
+router.post('/:assignmentId/topic/:topicId/source/:sourceId/evidence', verifyUser, createEvidence);
 
-router.put('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, updateEvidence);
+router.put('/:assignmentId/topic/:topicId/source/:sourceId/evidence/:evidenceId', verifyUser, updateEvidence);
 
-router.delete('/:assignmentId/:topicId/:sourceId/:evidenceId', verifyUser, deleteEvidence);
+router.delete('/:assignmentId/topic/:topicId/source/:sourceId/evidence/:evidenceId', verifyUser, deleteEvidence);
 
 // Routes for analysis
-router.get('/:assignmentId/:topicId/analyses', verifyUser, getAllAnalyses);
+router.get('/:assignmentId/topic/:topicId/analyses', verifyUser, getAllAnalyses);
 
-router.get('/:assignmentId/:topicId/:analysisId', verifyUser, getAnalysisById);
+router.get('/:assignmentId/topic/:topicId/analysis/:analysisId', verifyUser, getAnalysisById);
 
-router.post('/:assignmentId/:topicId/analysis', verifyUser, createAnalysis);
+router.post('/:assignmentId/topic/:topicId/analysis', verifyUser, createAnalysis);
 
-router.put('/:assignmentId/:topicId/:analysisId', verifyUser, updateAnalysis);
+router.put('/:assignmentId/topic/:topicId/analysis/:analysisId', verifyUser, updateAnalysis);
 
-router.delete('/:assignmentId/:topicId/:analysisId', verifyUser, deleteAnalysis);
+router.delete('/:assignmentId/topic/:topicId/analysis/:analysisId', verifyUser, deleteAnalysis);
 
 export default router;

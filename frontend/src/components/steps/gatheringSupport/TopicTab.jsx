@@ -34,13 +34,14 @@ const TopicTab = () => {
       </CardHeader>
       {/* Display the evidence and analysis for this topic side-by-side */}
       <CardBody>
-        {isEvidenceExpanded ? (
+        {/* Only render the tab/component that is currently expanded/visible */}
+        {isEvidenceExpanded && !isAnalysisExpanded ? (
           <EvidenceTab />
-        ) : isAnalysisExpanded ? (
+        ) : !isEvidenceExpanded && isAnalysisExpanded ? (
           <AnalysisTab />
-        ) : (
+        ) : !isEvidenceExpanded && !isAnalysisExpanded ? (
           <EvidenceAndAnalysis />
-        )}
+        ) : null}
       </CardBody>
     </Card>
   );

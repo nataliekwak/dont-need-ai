@@ -44,7 +44,13 @@ const SourceEvidenceList = () => {
   // Callback to reset after evidence is created
   const handleEvidenceCreated = () => {
     setNewEvidenceType(null);
-    getAllEvidenceBySource(currentSource._id);
+    if (currentAssignment && currentTopic && currentSource) {
+      getAllEvidenceBySource(
+        currentAssignment._id,
+        currentTopic._id,
+        currentSource._id
+      );
+    }
   };
 
   return (

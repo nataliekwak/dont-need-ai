@@ -9,6 +9,8 @@ export const useAssignmentStore = create((set) => ({
     assignments: [],
     currentAssignment: null,
     error: null,
+    evidenceError: null,
+    analysisError: null,
     isLoading: false,
 
     setCurrentAssignment: (assignment) => {
@@ -131,7 +133,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}`);
             set({ currentTopic: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error getting topic", isLoading: false });
@@ -154,7 +156,7 @@ export const useAssignmentStore = create((set) => ({
     updateTopic: async (assignmentId, topicId, updatedFields) => {
         set({ isLoading: true, error: null });
         try {
-            await axios.put(`${API_URL}/${assignmentId}/${topicId}`, updatedFields);
+            await axios.put(`${API_URL}/${assignmentId}/topic/${topicId}`, updatedFields);
 
             // Update the topic in the local state
             set((state) => ({
@@ -166,7 +168,7 @@ export const useAssignmentStore = create((set) => ({
             }));
 
             // Always fetch latest topic from backend after update
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}`);
             set({ currentTopic: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error updating topic", isLoading: false });
@@ -178,7 +180,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            await axios.delete(`${API_URL}/${assignmentId}/${topicId}`);
+            await axios.delete(`${API_URL}/${assignmentId}/topic/${topicId}`);
 
             // Remove the topic from the local state
             set((state) => ({
@@ -205,7 +207,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/sources`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/sources`);
             set({ sources: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error getting all sources", isLoading: false });
@@ -217,7 +219,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`);
             set({ currentSource: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error getting source", isLoading: false });
@@ -229,7 +231,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/source`, sourceData);
+            const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/source`, sourceData);
             set((state) => ({ sources: [...state.sources, res.data], isLoading: false, error: null }));
         } catch (error) {
             set({ error: error.response.data.message || "Error creating source", isLoading: false });
@@ -240,7 +242,7 @@ export const useAssignmentStore = create((set) => ({
     updateSource: async (assignmentId, topicId, sourceId, updatedFields) => {
         set({ isLoading: true, error: null });
         try {
-            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`, updatedFields);
+            await axios.put(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`, updatedFields);
 
             // Update the source in the local state
             set((state) => ({
@@ -252,7 +254,7 @@ export const useAssignmentStore = create((set) => ({
             }));
 
             // Always fetch latest source from backend after update
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`);
             set({ currentSource: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error updating source", isLoading: false });
@@ -264,7 +266,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${sourceId}`);
+            await axios.delete(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`);
             // Remove the source from the local state
             set((state) => ({
                 sources: state.sources.filter((source) => source._id !== sourceId),
@@ -287,13 +289,17 @@ export const useAssignmentStore = create((set) => ({
 
     // Fetch all evidence for a specific source within a topic and assignment
     getAllEvidenceBySource: async (assignmentId, topicId, sourceId) => {
-        set({ isLoading: true, error: null });
+        if (!assignmentId || !topicId || !sourceId) {
+            set({ evidenceError: "Invalid assignment, topic, or source ID", isLoading: false });
+            return;
+        }
+        set({ isLoading: true, evidenceError: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/evidence`);
-            set({ evidence: res.data, isLoading: false, error: null });
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence`);
+            set({ evidence: res.data, isLoading: false, evidenceError: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting all evidence", isLoading: false });
+            set({ evidenceError: error.response?.data?.message || "Error getting all evidence", isLoading: false });
             console.error("Error fetching evidence:", error);
         }
     },
@@ -303,7 +309,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/evidence`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/evidence`);
             set({ evidence: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error getting all evidence", isLoading: false });
@@ -315,7 +321,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`);
             set({ currentEvidence: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error getting evidence", isLoading: false });
@@ -327,7 +333,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/evidence`, evidenceData);
+            const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence`, evidenceData);
             set((state) => ({ evidence: [...state.evidence, res.data], isLoading: false, error: null }));
         } catch (error) {
             set({ error: error.response.data.message || "Error creating evidence", isLoading: false });
@@ -338,7 +344,7 @@ export const useAssignmentStore = create((set) => ({
     updateEvidence: async (assignmentId, topicId, sourceId, evidenceId, updatedFields) => {
         set({ isLoading: true, error: null });
         try {
-            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`, updatedFields);
+            await axios.put(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`, updatedFields);
 
             // Update the evidence in the local state
             set((state) => ({
@@ -350,7 +356,7 @@ export const useAssignmentStore = create((set) => ({
             }));
 
             // Always fetch latest evidence from backend after update
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`);
             set({ currentEvidence: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error updating evidence", isLoading: false });
@@ -362,7 +368,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${sourceId}/${evidenceId}`);
+            await axios.delete(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`);
 
             // Remove the evidence from the local state
             set((state) => ({
@@ -386,13 +392,18 @@ export const useAssignmentStore = create((set) => ({
 
     // Fetch all analyses for a specific topic
     getAllAnalyses: async (assignmentId, topicId) => {
-        set({ isLoading: true, error: null });
+        if (!assignmentId || !topicId) {
+            set({ analysisError: "Invalid assignment or topic ID", isLoading: false });
+            return;
+        }
+
+        set({ isLoading: true, analysisError: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/analyses`);
-            set({ analyses: res.data, isLoading: false, error: null });
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/analyses`);
+            set({ analyses: res.data, isLoading: false, analysisError: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error fetching analyses", isLoading: false });
+            set({ analysisError: error.response?.data?.message || "Error fetching analyses", isLoading: false });
             console.error("Error fetching analyses:", error);
         }
     },
@@ -401,7 +412,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.get(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`);
+            const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/analysis/${analysisId}`);
             set({ currentAnalysis: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error fetching analysis", isLoading: false });
@@ -413,7 +424,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            const res = await axios.post(`${API_URL}/${assignmentId}/${topicId}/analysis`, analysisData);
+            const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/analysis`, analysisData);
             set({ currentAnalysis: res.data, isLoading: false, error: null });
         } catch (error) {
             set({ error: error.response.data.message || "Error creating analysis", isLoading: false });
@@ -425,7 +436,8 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            await axios.put(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`, updatedFields);
+            await axios.put(`${API_URL}/${assignmentId}/topic/${topicId}/analysis/${analysisId}`, updatedFields);
+
             // Update the analysis in the local state
             set((state) => ({
                 analyses: state.analyses.map((analysis) =>
@@ -444,7 +456,7 @@ export const useAssignmentStore = create((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            await axios.delete(`${API_URL}/${assignmentId}/${topicId}/${analysisId}`);
+            await axios.delete(`${API_URL}/${assignmentId}/topic/${topicId}/analysis/${analysisId}`);
 
             // Remove the analysis from the local state
             set((state) => ({
