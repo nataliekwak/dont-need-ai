@@ -10,11 +10,31 @@ const EvidenceAndAnalysis = () => {
     currentAssignment,
     currentTopic,
     evidence,
+    sources,
+    getAllSources,
     getAllEvidenceByTopic,
     getAllAnalyses,
     evidenceError,
     analysisError,
   } = useAssignmentStore();
+
+  // Fetch sources for the current topic when assignment or topic changes
+  useEffect(() => {
+    if (
+      currentAssignment &&
+      currentAssignment._id &&
+      currentTopic &&
+      currentTopic._id
+    ) {
+      getAllSources(currentAssignment._id, currentTopic._id);
+    }
+  }, [currentAssignment, currentTopic, getAllSources]);
+
+  // Map of sourceId from evidence to source object
+  const sourceMap =
+    sources && Array.isArray(sources)
+      ? Object.fromEntries(sources.map((src) => [src._id, src]))
+      : {};
 
   const [isEvidenceExpanded, setIsEvidenceExpanded] = useState(() => {
     return localStorage.getItem("isEvidenceExpanded") === "true";
@@ -88,7 +108,15 @@ const EvidenceAndAnalysis = () => {
             <>
               {/* Display evidence items here */}
               {evidence.map((item) => (
-                <div key={item._id}>{item.content}</div>
+                <div className="flex flex-col" key={item._id}>
+                  <div className="border p-2 ml-2 mr-2 mt-2 rounded">
+                    {item.content}
+                  </div>
+                  {/* Show the evidence's source name */}
+                  <div className="text-[0.7rem] italic opacity-60 mb-4 ml-2">
+                    {sourceMap[item.sourceId]?.title || "Unknown Source"}
+                  </div>
+                </div>
               ))}
             </>
           )}
@@ -115,7 +143,9 @@ const EvidenceAndAnalysis = () => {
           ) : (
             <>
               {analyses.map((item) => (
-                <div key={item._id}>{item.content}</div>
+                <div key={item._id} className="border p-2 m-2 rounded">
+                  {item.content}
+                </div>
               ))}
             </>
           )}

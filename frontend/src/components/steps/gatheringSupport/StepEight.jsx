@@ -16,12 +16,14 @@ const StepEight = ({ assignment }) => {
           Select a topic from the sidebar to begin gathering support.
         </p>
       )}
-      <Button
-        className="self-start"
-        onPress={() => updateAssignment(assignment._id, { step: 7 })}
-      >
-        Back
-      </Button>
+      <div className="flex flex-row w-full justify-between">
+        <Button onPress={() => updateAssignment(assignment._id, { step: 7 })}>
+          Back
+        </Button>
+        <Button onPress={() => updateAssignment(assignment._id, { step: 9 })}>
+          Next Step
+        </Button>
+      </div>
     </div>
   );
 };
