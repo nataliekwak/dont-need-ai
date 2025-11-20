@@ -21,15 +21,6 @@ const AssignmentNavigation = ({ assignment }) => {
     }
   }, [assignment.prompt, assignment.step]);
 
-  // Set selectedTopic only if step >= 8 and topics exist
-  // useEffect(() => {
-  //   if (assignment.step >= 8 && topics && topics.length > 0) {
-  //     setSelectedTopic((prev) => prev || topics[0]._id);
-  //   } else {
-  //     setSelectedTopic(null);
-  //   }
-  // }, [assignment.step, topics]);
-
   // On mount, restore selected topic from localStorage
   useEffect(() => {
     const savedTopicId = localStorage.getItem("selectedTopicId");

@@ -10,6 +10,10 @@ const topicSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    topicSentence: {
+        type: String,
+        default: "",
+    },
     sourceIds: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Source',
