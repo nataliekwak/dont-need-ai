@@ -63,13 +63,7 @@ const EvidenceAndAnalysis = () => {
       !isEvidenceExpanded &&
       !isAnalysisExpanded
     ) {
-      // Only call getAllEvidenceByTopic if the topic has at least one sourceId
-      if (
-        Array.isArray(currentTopic.sourceIds) &&
-        currentTopic.sourceIds.length > 0
-      ) {
-        getAllEvidenceByTopic(currentAssignment._id, currentTopic._id);
-      }
+      getAllEvidenceByTopic(currentAssignment._id, currentTopic._id);
       getAllAnalyses(currentAssignment._id, currentTopic._id);
     }
   }, [

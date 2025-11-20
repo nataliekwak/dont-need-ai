@@ -306,7 +306,8 @@ export const useAssignmentStore = create((set) => ({
 
     // Fetch all evidence for a specific topic within an assignment
     getAllEvidenceByTopic: async (assignmentId, topicId) => {
-        set({ isLoading: true, error: null });
+        // Clear evidence array before fetching new evidence
+        set({ evidence: [], isLoading: true, error: null });
 
         try {
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/evidence`);
