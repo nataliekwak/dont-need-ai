@@ -194,6 +194,24 @@ export const useAssignmentStore = create((set) => ({
         }
     },
 
+    // Move a topic up or down in the topics array
+    moveTopic: (fromIndex, toIndex) => {
+        set((state) => {
+            if (
+                fromIndex < 0 ||
+                toIndex < 0 ||
+                fromIndex >= state.topics.length ||
+                toIndex >= state.topics.length
+            ) {
+                return {};
+            }
+            const newTopics = [...state.topics];
+            const [moved] = newTopics.splice(fromIndex, 1);
+            newTopics.splice(toIndex, 0, moved);
+            return { topics: newTopics };
+        });
+    },
+
     // Store for the topic's sources
     sources: [],
     currentSource: null,

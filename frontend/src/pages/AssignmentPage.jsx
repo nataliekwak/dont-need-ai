@@ -48,9 +48,11 @@ const AssignmentPage = () => {
             </Button>
             <h1 className="font-stretch-expanded font-bold">Writing Guide</h1>
           </div>
-          <div>
-            <AssignmentNavigation assignment={currentAssignment} />
-          </div>
+          {currentAssignment.step !== 10 && currentAssignment.step !== 11 && (
+            <div>
+              <AssignmentNavigation assignment={currentAssignment} />
+            </div>
+          )}
         </div>
         <div className="flex flex-col mt-30 w-full h-full">
           <div className="flex justify-center w-full">
