@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
-const EvidenceAndAnalysis = () => {
+const EvidenceAndAnalysis = ({ isEditable }) => {
   const {
     analyses,
     currentAssignment,
@@ -87,9 +87,14 @@ const EvidenceAndAnalysis = () => {
           {evidenceError && (
             <div className="text-danger-500 text-sm mb-2">{evidenceError}</div>
           )}
-          <div className="flex flex-row w-full justify-center">
-            <h3>Evidence</h3>
-            <Button isIconOnly variant="light" onPress={expandEvidence}>
+          <div className="flex flex-row w-full justify-between items-center pl-3 pr-3">
+            <h3 className="font-semibold">Evidence</h3>
+            <Button
+              isIconOnly
+              variant="light"
+              size="sm"
+              onPress={expandEvidence}
+            >
               <Plus />
             </Button>
           </div>
@@ -97,17 +102,30 @@ const EvidenceAndAnalysis = () => {
 
           {/* If there is evidence, display it here. Otherwise, show a message */}
           {evidence && evidence.length === 0 ? (
-            <p>Click the + to begin adding evidence.</p>
+            <>
+              {isEditable ? (
+                <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
+                  Click the + to begin adding evidence.
+                </p>
+              ) : (
+                <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
+                  No evidence was added for this topic.
+                </p>
+              )}
+            </>
           ) : (
             <>
-              {/* Display evidence items here */}
               {evidence.map((item) => (
                 <div className="flex flex-col" key={item._id}>
-                  <div className="border p-2 ml-2 mr-2 mt-2 rounded">
+                  {/* Show the evidence's type */}
+                  <div className="text-[0.7rem] opacity-60 ml-2 mt-1">
+                    {item.type}
+                  </div>
+                  <div className="border p-2 ml-2 mr-2 mt-1 mb-1 rounded">
                     {item.content}
                   </div>
                   {/* Show the evidence's source name */}
-                  <div className="text-[0.7rem] italic opacity-60 mb-4 ml-2">
+                  <div className="text-[0.7rem] italic opacity-70 mb-3 ml-2">
                     {sourceMap[item.sourceId]?.title || "Unknown Source"}
                   </div>
                 </div>
@@ -123,9 +141,14 @@ const EvidenceAndAnalysis = () => {
           {analysisError && (
             <div className="text-danger-500 text-sm mb-2">{analysisError}</div>
           )}
-          <div className="flex flex-row w-full justify-center">
-            <h3>Analysis</h3>
-            <Button isIconOnly variant="light" onPress={expandAnalysis}>
+          <div className="flex flex-row w-full justify-between items-center pl-3 pr-3">
+            <h3 className="font-semibold">Analysis</h3>
+            <Button
+              isIconOnly
+              variant="light"
+              size="sm"
+              onPress={expandAnalysis}
+            >
               <Plus />
             </Button>
           </div>
@@ -133,11 +156,21 @@ const EvidenceAndAnalysis = () => {
 
           {/* If there is analysis, display it here. Otherwise, show a message */}
           {analyses && analyses.length === 0 ? (
-            <p>Click the + to begin adding analysis.</p>
+            <>
+              {isEditable ? (
+                <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
+                  Click the + to begin adding analysis.
+                </p>
+              ) : (
+                <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
+                  No analysis was added for this topic.
+                </p>
+              )}
+            </>
           ) : (
             <>
               {analyses.map((item) => (
-                <div key={item._id} className="border p-2 m-2 rounded">
+                <div key={item._id} className="border p-2 m-2 mt-3 rounded">
                   {item.content}
                 </div>
               ))}

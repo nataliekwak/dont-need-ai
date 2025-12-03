@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Input } from "@heroui/react";
+import { Card, CardBody, CardHeader, Input, Textarea } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 import {
@@ -7,9 +7,9 @@ import {
   AnalysisTab,
 } from "./steps/gatheringSupport/tables";
 
-import { useAssignmentStore } from "../store/assignmentsStore";
+import { useAssignmentStore } from "../store/assignmentsStore.js";
 
-const TopicSummary = () => {
+const TopicSummary = ({ isEditable }) => {
   const { currentTopic, updateTopic } = useAssignmentStore();
 
   const [topicSentence, setTopicSentence] = useState("");
@@ -18,8 +18,11 @@ const TopicSummary = () => {
 
   // Set initial topic sentence from currentTopic
   useEffect(() => {
+    console.log("Current Topic:", currentTopic);
     if (currentTopic && currentTopic.topicSentence) {
       setTopicSentence(currentTopic.topicSentence);
+    } else {
+      setTopicSentence("");
     }
   }, [currentTopic]);
 
@@ -40,43 +43,52 @@ const TopicSummary = () => {
   }, []);
 
   return (
-    <Card className="w-full flex flex-col min-h-100 border-primary border-small">
+    <Card className="w-full flex flex-col min-h-100 max-w-[800px] border-primary border-small">
       {/* The header contains the input for the topic's topic sentence */}
       <CardHeader className="flex flex-col self-start text-left">
-        <Input
+        <Textarea
           label="Topic Sentence"
           labelPlacement="outside-top"
           variant="bordered"
           placeholder="Enter the topic sentence for this paragraph here."
+          isReadOnly={!isEditable}
           value={topicSentence}
-          onChange={(e) => setTopicSentence(e.target.value)}
-          onClear={() => {
-            setTopicSentence("");
-            if (currentTopic) {
-              updateTopic(
-                currentTopic.assignmentId ||
-                  currentTopic.assignment_id ||
-                  currentTopic.assignment,
-                currentTopic._id,
-                { topicSentence: "" }
-              );
-            }
-          }}
-          onBlur={() => {
-            if (
-              currentTopic &&
-              topicSentence !== currentTopic.topicSentence &&
-              topicSentence.trim() !== ""
-            ) {
-              updateTopic(
-                currentTopic.assignmentId ||
-                  currentTopic.assignment_id ||
-                  currentTopic.assignment,
-                currentTopic._id,
-                { topicSentence }
-              );
-            }
-          }}
+          onValueChange={setTopicSentence}
+          onClear={
+            isEditable
+              ? () => {
+                  setTopicSentence("");
+                  if (currentTopic) {
+                    updateTopic(
+                      currentTopic.assignmentId ||
+                        currentTopic.assignment_id ||
+                        currentTopic.assignment,
+                      currentTopic._id,
+                      { topicSentence: "" }
+                    );
+                  }
+                }
+              : undefined
+          }
+          onBlur={
+            isEditable
+              ? () => {
+                  if (
+                    currentTopic &&
+                    topicSentence !== currentTopic.topicSentence &&
+                    topicSentence.trim() !== ""
+                  ) {
+                    updateTopic(
+                      currentTopic.assignmentId ||
+                        currentTopic.assignment_id ||
+                        currentTopic.assignment,
+                      currentTopic._id,
+                      { topicSentence }
+                    );
+                  }
+                }
+              : undefined
+          }
         />
       </CardHeader>
 
@@ -84,11 +96,11 @@ const TopicSummary = () => {
       <CardBody>
         {/* Only render the tab/component that is currently expanded/visible */}
         {isEvidenceExpanded && !isAnalysisExpanded ? (
-          <EvidenceTab />
+          <EvidenceTab isEditable={isEditable} />
         ) : !isEvidenceExpanded && isAnalysisExpanded ? (
-          <AnalysisTab />
+          <AnalysisTab isEditable={isEditable} />
         ) : !isEvidenceExpanded && !isAnalysisExpanded ? (
-          <EvidenceAndAnalysis />
+          <EvidenceAndAnalysis isEditable={isEditable} />
         ) : null}
       </CardBody>
     </Card>

@@ -24,7 +24,7 @@ const ClickableBox = ({
       onClick={onClick}
       className={`flex border-medium rounded-small pl-3 p-2 items-center justify-between cursor-pointer transition-colors ${
         selected
-          ? "bg-primary border-foreground hover:bg-primary-200 hover:border-foreground-500"
+          ? "bg-primary border-primary hover:bg-primary-200 hover:border-primary-200"
           : "bg-content1 hover:bg-default-200 border-default"
       }`}
     >

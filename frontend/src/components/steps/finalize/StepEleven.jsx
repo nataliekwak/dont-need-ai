@@ -4,15 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import ClickableBox from "../../ClickableBox.jsx";
+import TopicSummary from "../../TopicSummary.jsx";
 import { useAssignmentStore } from "../../../store/assignmentsStore";
 
 const StepEleven = ({ assignment }) => {
   const navigate = useNavigate();
 
-  const { getAllTopics, topics, updateAssignment } = useAssignmentStore();
+  const {
+    getAllTopics,
+    setCurrentSource,
+    setCurrentTopic,
+    topics,
+    updateAssignment,
+  } = useAssignmentStore();
 
   const [expandedTopic, setExpandedTopic] = useState(null);
-  // const expandedTopic = null;
 
   useEffect(() => {
     // If there are no topics, fetch them
@@ -20,6 +26,12 @@ const StepEleven = ({ assignment }) => {
       getAllTopics(assignment._id);
     }
   }, [assignment, topics, getAllTopics]);
+
+  // When the assignment topics change, reset the expanded topic and current topic
+  useEffect(() => {
+    setExpandedTopic(null);
+    setCurrentTopic(null);
+  }, [topics, setCurrentTopic]);
 
   return (
     <div className="flex flex-col w-full items-center">
@@ -73,18 +85,21 @@ const StepEleven = ({ assignment }) => {
                 text={topic.name}
                 selected={expandedTopic === topic}
                 showExpansionArrow={true}
-                onClick={() =>
-                  setExpandedTopic(topic === expandedTopic ? null : topic)
-                }
+                onClick={() => {
+                  setExpandedTopic(topic === expandedTopic ? null : topic);
+                  setCurrentTopic(topic === expandedTopic ? null : topic);
+                }}
               />
             ))}
           </div>
         </div>
 
-        {/* If there is a topic selected, show its contents (sources, evidence, and analysis).
+        {/* If there is a topic selected, show its uneditable TopicSummary.
         Otherwise, prompt the user to select a topic.*/}
         {expandedTopic ? (
-          <p>{expandedTopic.name}</p>
+          <div className="flex pt-3 pb-3">
+            <TopicSummary isEditable={false} />
+          </div>
         ) : (
           <div className="flex max-w-50 m-5 pt-12 text-[1rem] font-light text-center">
             <p>
@@ -95,10 +110,24 @@ const StepEleven = ({ assignment }) => {
         )}
       </div>
       <div className="flex flex-row justify-between w-full mt-8">
-        <Button onPress={() => updateAssignment(assignment._id, { step: 10 })}>
+        <Button
+          onPress={() => {
+            updateAssignment(assignment._id, { step: 10 });
+            setCurrentTopic(null);
+            setCurrentSource(null);
+          }}
+        >
           Back
         </Button>
-        <Button onPress={() => navigate("/writing-guide")}>Done</Button>
+        <Button
+          onPress={() => {
+            navigate("/writing-guide");
+            setCurrentTopic(null);
+            setCurrentSource(null);
+          }}
+        >
+          Done
+        </Button>
       </div>
     </div>
   );

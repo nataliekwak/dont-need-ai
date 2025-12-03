@@ -46,8 +46,6 @@ const AssignmentNavigation = ({ assignment }) => {
     if (topics.length === 0 && assignment.topicNames) {
       getAllTopics(assignment._id);
     }
-
-    console.log("Topics loaded:", topics);
   }, [topics, assignment.topicNames, assignment._id, getAllTopics]);
 
   const handleSelect = (topicId) => {
