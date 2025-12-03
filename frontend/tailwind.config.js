@@ -16,32 +16,32 @@ export default {
                 light: {
                     colors: {
                         default: {
-                            50: "#fafafa",
-                            100: "#f2f2f3",
-                            200: "#ebebec",
-                            300: "#e3e3e6",
-                            400: "#dcdcdf",
-                            500: "#d4d4d8",
-                            600: "#afafb2",
-                            700: "#8a8a8c",
-                            800: "#656567",
-                            900: "#404041",
-                            foreground: "#000",
-                            DEFAULT: "#d4d4d8"
+                            50: "#edeef0",
+                            100: "#d5d5da",
+                            200: "#bcbdc5",
+                            300: "#a3a4af",
+                            400: "#8b8c9a",
+                            500: "#727384",
+                            600: "#5e5f6d",
+                            700: "#4a4b56",
+                            800: "#36373f",
+                            900: "#222328",
+                            foreground: "#fff",
+                            DEFAULT: "#727384"
                         },
                         primary: {
-                            50: "#eee4f8",
-                            100: "#d7bfef",
-                            200: "#bf99e5",
-                            300: "#a773db",
-                            400: "#904ed2",
-                            500: "#7828c8",
-                            600: "#6321a5",
-                            700: "#4e1a82",
-                            800: "#39135f",
-                            900: "#240c3c",
+                            50: "#f2e9fc",
+                            100: "#e0c9f7",
+                            200: "#ceaaf3",
+                            300: "#bc8bee",
+                            400: "#aa6bea",
+                            500: "#984ce5",
+                            600: "#7d3fbd",
+                            700: "#633195",
+                            800: "#48246d",
+                            900: "#2e1745",
                             foreground: "#fff",
-                            DEFAULT: "#7828c8"
+                            DEFAULT: "#984ce5"
                         },
                         secondary: {
                             50: "#dfedfd",
@@ -117,39 +117,39 @@ export default {
                             DEFAULT: "#d4d4d8",
                             foreground: "#000"
                         },
-                        focus: "#006FEE",
+                        focus: "#984CE5",
                         overlay: "#000000"
                     }
                 },
                 dark: {
                     colors: {
                         default: {
-                            50: "#0d0d0e",
-                            100: "#19191c",
-                            200: "#26262a",
-                            300: "#323238",
-                            400: "#3f3f46",
-                            500: "#65656b",
-                            600: "#8c8c90",
-                            700: "#b2b2b5",
-                            800: "#d9d9da",
+                            50: "#17171a",
+                            100: "#2e2e35",
+                            200: "#44454f",
+                            300: "#5b5c6a",
+                            400: "#727384",
+                            500: "#8e8f9d",
+                            600: "#aaabb5",
+                            700: "#c7c7ce",
+                            800: "#e3e3e6",
                             900: "#ffffff",
                             foreground: "#fff",
-                            DEFAULT: "#3f3f46"
+                            DEFAULT: "#727384"
                         },
                         primary: {
-                            50: "#240c3c",
-                            100: "#39135f",
-                            200: "#4e1a82",
-                            300: "#6321a5",
-                            400: "#7828c8",
-                            500: "#904ed2",
-                            600: "#a773db",
-                            700: "#bf99e5",
-                            800: "#d7bfef",
-                            900: "#eee4f8",
+                            50: "#2e1745",
+                            100: "#48246d",
+                            200: "#633195",
+                            300: "#7d3fbd",
+                            400: "#984ce5",
+                            500: "#aa6bea",
+                            600: "#bc8bee",
+                            700: "#ceaaf3",
+                            800: "#e0c9f7",
+                            900: "#f2e9fc",
                             foreground: "#fff",
-                            DEFAULT: "#7828c8"
+                            DEFAULT: "#984ce5"
                         },
                         secondary: {
                             50: "#002147",
@@ -210,22 +210,22 @@ export default {
                         background: "#000000",
                         foreground: "#ffffff",
                         content1: {
-                            DEFAULT: "#18181b",
-                            foreground: "#fff"
+                            DEFAULT: "#838383",
+                            foreground: "#000"
                         },
                         content2: {
-                            DEFAULT: "#27272a",
-                            foreground: "#fff"
+                            DEFAULT: "#6F7874",
+                            foreground: "#000"
                         },
                         content3: {
-                            DEFAULT: "#3f3f46",
+                            DEFAULT: "#727384",
                             foreground: "#fff"
                         },
                         content4: {
                             DEFAULT: "#52525b",
                             foreground: "#fff"
                         },
-                        focus: "#006FEE",
+                        focus: "#984CE5",
                         overlay: "#ffffff"
                     }
                 }
@@ -237,4 +237,3 @@ export default {
         }),
     ],
 }
-
