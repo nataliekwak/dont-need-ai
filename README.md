@@ -8,3 +8,6 @@ Senior project of Kwak Labs
 - npm run dev
 
 ## Run the Frontend Locally
+- cd frontend
+- npm install
+- npm run dev
