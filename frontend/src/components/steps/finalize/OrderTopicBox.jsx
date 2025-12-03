@@ -19,23 +19,28 @@ const OrderTopicBox = ({ topicName, isTopic, orderIndex }) => {
   };
 
   return (
-    <div className="flex border-default border-medium rounded-small p-3 mb-3">
+    <div className="flex border-foreground border-medium rounded-small pl-3 p-2 items-center justify-between">
       {topicName}
 
       {/* Arrow and order number */}
       {isTopic && (
-        <div className="flex flex-col">
+        <div className="flex flex-col self-end">
           <Button
             isIconOnly
             isDisabled={orderIndex === 0}
             onPress={handleMoveUp}
+            variant="ghost"
+            size="sm"
           >
             <ChevronUp />
           </Button>
+          <div>{orderIndex + 1}</div>
           <Button
             isIconOnly
             isDisabled={orderIndex === topics.length - 1}
             onPress={handleMoveDown}
+            variant="ghost"
+            size="sm"
           >
             <ChevronDown />
           </Button>
