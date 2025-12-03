@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import { AddSourceModal } from "../../../modals";
 import SourceEvidenceList from "./SourceEvidenceList.jsx";
+import ClickableBox from "../../../ClickableBox.jsx";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
 const EvidenceTab = () => {
@@ -57,45 +58,39 @@ const EvidenceTab = () => {
 
   return (
     <div className="h-full flex flex-col border-medium border-default rounded-small">
-      <div className="flex flex-row w-full p-3">
-        <h3>Evidence</h3>
-        <Button isIconOnly variant="light" onPress={collapseEvidence}>
+      <div className="flex flex-row w-full items-center p-3">
+        <h3 className="font-semibold text-[1.3rem] ml-1 mr-4">Evidence</h3>
+        <Button isIconOnly variant="light" size="sm" onPress={collapseEvidence}>
           <Minus />
         </Button>
       </div>
 
-      <div className="flex flex-row h-[90%] m-4">
+      <div className="flex flex-row ml-4 mr-4 mb-4 mt-1">
         {/* Sources box */}
         <div className="flex flex-col border-small border-default rounded-small">
-          <h4>Sources</h4>
+          <h4 className="font-semibold text-center text-[1.1rem]">Sources</h4>
           <Divider />
-          <div>
+          <div className="flex flex-col gap-2 p-2 max-h-96 overflow-y-auto">
             {/* List of sources will go here */}
             {currentTopic.sourceIds.length === 0 ? (
-              <p>You have no sources for '{currentTopic.name}' yet.</p>
+              <p className="font-light text-center">
+                You have no sources for '{currentTopic.name}' yet.
+              </p>
             ) : (
               <>
                 {sources.map((source) => (
                   <div key={source._id}>
-                    <Button
-                      variant="light"
-                      color="default"
-                      radius="sm"
-                      onPress={() => handleSourceClick(source)}
-                      className={
+                    <ClickableBox
+                      text={source.title}
+                      subtext={source.author}
+                      selected={
                         currentSource && currentSource._id === source._id
-                          ? "bg-primary-100"
-                          : ""
                       }
-                    >
-                      <div className="flex flex-col">
-                        <p className="font-semibold">{source.title}</p>
-                        {source.author ? (
-                          <p className="italic">{source.author}</p>
-                        ) : null}
-                      </div>
-                    </Button>
-                    <Divider />
+                      onClick={() => handleSourceClick(source)}
+                      variant="darker-ghost"
+                      scale="small"
+                    />
+                    <Divider className="mt-2" />
                   </div>
                 ))}
               </>

@@ -21,6 +21,7 @@ const SourceEvidenceList = () => {
     currentAssignment,
     currentTopic,
     currentSource,
+    setCurrentSource,
   } = useAssignmentStore();
 
   const [newEvidenceType, setNewEvidenceType] = useState(null);
@@ -33,8 +34,17 @@ const SourceEvidenceList = () => {
         currentTopic._id,
         currentSource._id
       );
+    } else {
+      // If no source is selected, clear evidence
+      setCurrentSource(null);
     }
-  }, [currentSource, getAllEvidenceBySource, currentAssignment, currentTopic]);
+  }, [
+    currentSource,
+    getAllEvidenceBySource,
+    currentAssignment,
+    currentTopic,
+    setCurrentSource,
+  ]);
 
   // Function to handle adding new evidence
   const handleAddEvidence = (type) => {
