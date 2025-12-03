@@ -7,7 +7,7 @@ import SourceEvidenceList from "./SourceEvidenceList.jsx";
 import ClickableBox from "../../../ClickableBox.jsx";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
-const EvidenceTab = () => {
+const EvidenceTab = ({ isEditable }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {
     currentAssignment,
@@ -67,12 +67,14 @@ const EvidenceTab = () => {
 
       <div className="flex flex-row ml-4 mr-4 mb-4 mt-1 justify-between h-full">
         {/* Sources box */}
-        <div className="flex flex-col border-small border-default rounded-small min-w-fit w-[25%]">
+        <div className="flex flex-col border-small border-default rounded-small min-w-[30%]">
           <h4 className="font-semibold text-center text-[1.1rem]">Sources</h4>
           <Divider />
           <div className="flex flex-col gap-2 p-2 max-h-96 overflow-y-auto">
             {/* List of sources will go here */}
-            {currentTopic.sourceIds.length === 0 ? (
+            {!currentTopic ||
+            !currentTopic.sourceIds ||
+            currentTopic.sourceIds.length === 0 ? (
               <p className="font-light text-center">
                 You have no sources for '{currentTopic.name}' yet.
               </p>
@@ -95,9 +97,12 @@ const EvidenceTab = () => {
                 ))}
               </>
             )}
-            <Button startContent={<Plus />} onPress={onOpen}>
-              Add a source
-            </Button>
+
+            {isEditable && (
+              <Button startContent={<Plus />} onPress={onOpen}>
+                Add a source
+              </Button>
+            )}
 
             {/* Custom modal component to add a source*/}
             <AddSourceModal
@@ -115,7 +120,7 @@ const EvidenceTab = () => {
 
         {/* Evidence box for when a source is opened */}
         <div className="flex flex-col items-center justify-center flex-1 h-full">
-          {currentSource && <SourceEvidenceList />}
+          {currentSource && <SourceEvidenceList isEditable={isEditable} />}
         </div>
       </div>
     </div>

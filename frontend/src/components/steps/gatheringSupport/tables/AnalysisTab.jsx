@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 import AddAnalysisBox from "./AddAnalysisBox";
 
-const AnalysisTab = () => {
+const AnalysisTab = ({ isEditable }) => {
   const { analyses, currentAssignment, currentTopic, getAllAnalyses } =
     useAssignmentStore();
 
@@ -44,7 +44,7 @@ const AnalysisTab = () => {
 
       <div className="flex flex-col ml-4 mr-4 mb-4 justify-center h-full">
         <div className="flex self-end mb-2">
-          {analyses && analyses.length > 0 ? (
+          {analyses && analyses.length > 0 && isEditable ? (
             <Button
               variant="flat"
               color="secondary"
@@ -61,6 +61,7 @@ const AnalysisTab = () => {
             <>
               {addingAnalysis && (
                 <AddAnalysisBox
+                  isEditable={isEditable}
                   initialIsEditing={true}
                   onCreate={() => {
                     setAddingAnalysis(false);
@@ -92,9 +93,10 @@ const AnalysisTab = () => {
               <p className="font-light text-center">
                 What does the evidence tell you?
               </p>
-              {addingAnalysis ? (
+              {addingAnalysis && isEditable ? (
                 <>
                   <AddAnalysisBox
+                    isEditable={isEditable}
                     initialIsEditing={true}
                     onCreate={() => {
                       setAddingAnalysis(false);
@@ -111,7 +113,7 @@ const AnalysisTab = () => {
                     Add Analysis
                   </Button>
                 </>
-              ) : (
+              ) : isEditable ? (
                 <Button
                   variant="flat"
                   color="secondary"
@@ -120,7 +122,7 @@ const AnalysisTab = () => {
                 >
                   Add Analysis
                 </Button>
-              )}
+              ) : null}
             </div>
           )}
         </div>

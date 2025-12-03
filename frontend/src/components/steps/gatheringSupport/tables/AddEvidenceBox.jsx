@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAssignmentStore } from "../../../../store/assignmentsStore";
 
 const AddEvidenceBox = ({
+  isEditable,
   initialIsEditing,
   newEvidenceType,
   existingEvidence = null,
@@ -30,6 +31,8 @@ const AddEvidenceBox = ({
     : newEvidenceType;
 
   const handleClick = async () => {
+    if (!isEditable) return;
+
     if (!existingEvidence) {
       // Creating new evidence
       await createEvidence(
@@ -62,6 +65,8 @@ const AddEvidenceBox = ({
   };
 
   const handleDelete = async () => {
+    if (!isEditable) return;
+
     if (existingEvidence) {
       await deleteEvidence(
         currentAssignment._id,
@@ -83,24 +88,26 @@ const AddEvidenceBox = ({
         labelPlacement="outside"
         variant="bordered"
         placeholder={`Enter ${evidenceType.toLowerCase()} here`}
-        isReadOnly={!isEditing}
+        isReadOnly={!isEditing || !isEditable}
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <div className="flex flex-col gap-2 pt-4 ml-2">
-        <Button variant="light" size="sm" isIconOnly onPress={handleClick}>
-          {isEditing ? <Check /> : <SquarePen />}
-        </Button>
-        <Button
-          variant="light"
-          size="sm"
-          className="hover:text-danger"
-          isIconOnly
-          onPress={handleDelete}
-        >
-          <Trash2 />
-        </Button>
-      </div>
+      {isEditable && (
+        <div className="flex flex-col gap-2 pt-4 ml-2">
+          <Button variant="light" size="sm" isIconOnly onPress={handleClick}>
+            {isEditing ? <Check /> : <SquarePen />}
+          </Button>
+          <Button
+            variant="light"
+            size="sm"
+            className="hover:text-danger"
+            isIconOnly
+            onPress={handleDelete}
+          >
+            <Trash2 />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

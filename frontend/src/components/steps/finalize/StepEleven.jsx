@@ -33,9 +33,13 @@ const StepEleven = ({ assignment }) => {
     setCurrentTopic(null);
   }, [topics, setCurrentTopic]);
 
+  const mainContainerClass = expandedTopic
+    ? "flex flex-row w-full h-full items-stretch"
+    : "flex flex-row w-full items-center justify-center";
+
   return (
     <div className="flex flex-col w-full items-center">
-      <div className="flex text-center w-full justify-center mb-3">
+      <div className="flex text-center w-full justify-center mb-5">
         <h3 className="text-[1.5rem] font-semibold">
           Congratulations, you're ready to write!
           <Tooltip
@@ -56,8 +60,13 @@ const StepEleven = ({ assignment }) => {
         </h3>
       </div>
 
-      <div className="flex flex-row max-w-full items-center">
-        <div className="flex flex-col m-5 max-w-60">
+      <div className={mainContainerClass}>
+        <div
+          className={`flex flex-col m-5 max-w-60 min-w-40 w-full ${
+            expandedTopic ? "" : "items-center justify-center"
+          }`}
+          style={{ maxWidth: "15rem" }}
+        >
           {/* Title Accordion */}
           <Accordion
             key="title"
@@ -96,18 +105,24 @@ const StepEleven = ({ assignment }) => {
 
         {/* If there is a topic selected, show its uneditable TopicSummary.
         Otherwise, prompt the user to select a topic.*/}
-        {expandedTopic ? (
-          <div className="flex pt-3 pb-3">
+        <div
+          className={
+            expandedTopic
+              ? "flex flex-1 h-full items-center justify-center mt-5"
+              : "flex items-center justify-center"
+          }
+        >
+          {expandedTopic ? (
             <TopicSummary isEditable={false} />
-          </div>
-        ) : (
-          <div className="flex max-w-50 m-5 pt-12 text-[1rem] font-light text-center">
-            <p>
-              Select a topic on the left to review any sources, evidence, and
-              analysis you gathered.
-            </p>
-          </div>
-        )}
+          ) : (
+            <div className="flex max-w-50 m-5 pt-12 text-[1rem] font-light text-center">
+              <p>
+                Select a topic on the left to review the sources, evidence, and
+                analysis you gathered.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
       <div className="flex flex-row justify-between w-full mt-8">
         <Button

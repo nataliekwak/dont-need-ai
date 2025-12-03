@@ -43,7 +43,12 @@ const TopicSummary = ({ isEditable }) => {
   }, []);
 
   return (
-    <Card className="w-full flex flex-col min-h-100 max-w-[800px] border-primary border-medium">
+    <Card
+      className={`
+        flex flex-col min-h-100 border-primary border-medium
+        ${!isEditable ? "h-full w-full" : "max-w-[800px]"}
+      `}
+    >
       {/* The header contains the input for the topic's topic sentence */}
       <CardHeader className="flex flex-col self-start text-left">
         <Textarea

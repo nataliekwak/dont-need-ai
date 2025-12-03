@@ -8,7 +8,8 @@ import { useAssignmentStore } from "../store/assignmentsStore.js";
 // prompt, and topic sections for navigation
 
 const AssignmentNavigation = ({ assignment }) => {
-  const { getAllTopics, setCurrentTopic, topics } = useAssignmentStore();
+  const { currentTopic, getAllTopics, setCurrentTopic, topics } =
+    useAssignmentStore();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -48,6 +49,11 @@ const AssignmentNavigation = ({ assignment }) => {
       getAllTopics(assignment._id);
     }
   }, [topics, assignment.topicNames, assignment._id, getAllTopics]);
+
+  // Make sure to always have the most recent currentTopic
+  useEffect(() => {
+    setSelectedTopic(currentTopic ? currentTopic._id : null);
+  }, [currentTopic]);
 
   const handleSelect = (topicId) => {
     // Set the selected topic when a topic is clicked or close the currently selected topic
