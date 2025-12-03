@@ -1,6 +1,7 @@
 import { Accordion, AccordionItem, Listbox, ListboxItem } from "@heroui/react";
 import { useEffect, useState } from "react";
 
+import ClickableBox from "./ClickableBox.jsx";
 import { useAssignmentStore } from "../store/assignmentsStore.js";
 
 // The sidebar shown on the assignment page that displays the assignment title,
@@ -76,25 +77,19 @@ const AssignmentNavigation = ({ assignment }) => {
 
       {/* Display the assignment topics when they exist */}
       {topics && topics.length > 0 && (
-        <div className="border-medium rounded-small border-default">
-          <Listbox
-            aria-label="Assignment Topics"
-            variant="solid"
-            color="primary"
-            selectedKeys={selectedTopic ? [selectedTopic] : []}
-          >
-            {topics.map((topic) => (
-              <ListboxItem
-                key={topic._id}
-                value={topic._id}
-                onPress={() => handleSelect(topic._id)}
-              >
-                <p className="text-xl break-words whitespace-normal">
-                  {topic.name}
-                </p>
-              </ListboxItem>
-            ))}
-          </Listbox>
+        <div
+          aria-label="Assignment Topics"
+          className="flex flex-col gap-3 max-w-55 border-medium rounded-small border-default p-3"
+        >
+          {topics.map((topic) => (
+            <ClickableBox
+              key={topic._id}
+              text={topic.name}
+              variant="ghost"
+              selected={selectedTopic === topic._id}
+              onClick={() => handleSelect(topic._id)}
+            />
+          ))}
         </div>
       )}
     </div>
