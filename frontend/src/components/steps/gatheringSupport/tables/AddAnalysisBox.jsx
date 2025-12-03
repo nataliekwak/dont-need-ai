@@ -61,21 +61,25 @@ const AddAnalysisBox = ({
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row justify-center items-center mb-4 mt-2">
       <Textarea
-        label="Analysis"
-        labelPlacement="outside"
         variant="bordered"
-        placeholder="Enter your analysis here"
+        placeholder="Enter analysis here"
         isReadOnly={!isEditing}
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <div className="flex flex-col">
-        <Button variant="light" isIconOnly onPress={handleClick}>
+      <div className="flex flex-col gap-2 ml-2">
+        <Button variant="light" size="sm" isIconOnly onPress={handleClick}>
           {isEditing ? <Check /> : <SquarePen />}
         </Button>
-        <Button variant="light" isIconOnly onPress={handleDelete}>
+        <Button
+          variant="light"
+          size="sm"
+          className="hover:text-danger"
+          isIconOnly
+          onPress={handleDelete}
+        >
           <Trash2 />
         </Button>
       </div>

@@ -20,11 +20,6 @@ const AnalysisTab = () => {
     window.dispatchEvent(new Event("evidence-analysis-expanded"));
   }, [isAnalysisExpanded]);
 
-  // Refresh analyses after add/update/delete
-  //   const refreshAnalyses = () => {
-  //     getAllAnalyses(currentAssignment._id, currentTopic._id);
-  //   };
-
   useEffect(() => {
     if (
       currentAssignment &&
@@ -40,55 +35,31 @@ const AnalysisTab = () => {
 
   return (
     <div className="h-full flex flex-col border-medium border-default rounded-small">
-      <div className="flex flex-row w-full p-3">
-        <h3>Analysis</h3>
-        <Button isIconOnly variant="light" onPress={collapseAnalysis}>
+      <div className="flex flex-row w-full items-center pt-3 pr-3 pl-3">
+        <h3 className="font-semibold text-[1.3rem] ml-1 mr-4">Analysis</h3>
+        <Button isIconOnly variant="light" size="sm" onPress={collapseAnalysis}>
           <Minus />
         </Button>
       </div>
 
-      <div className="">
-        {analyses && analyses.length > 0 ? (
-          <>
-            {analyses.map((analysis) => (
-              <AddAnalysisBox
-                key={analysis._id}
-                initialIsEditing={false}
-                existingAnalysis={analysis}
-                onUpdate={getAllAnalyses.bind(
-                  null,
-                  currentAssignment._id,
-                  currentTopic._id
-                )}
-                onDelete={getAllAnalyses.bind(
-                  null,
-                  currentAssignment._id,
-                  currentTopic._id
-                )}
-              />
-            ))}
-            {addingAnalysis && (
-              <AddAnalysisBox
-                initialIsEditing={true}
-                onCreate={() => {
-                  setAddingAnalysis(false);
-                  getAllAnalyses(currentAssignment._id, currentTopic._id);
-                }}
-                onDelete={() => setAddingAnalysis(false)}
-              />
-            )}
+      <div className="flex flex-col ml-4 mr-4 mb-4 justify-center h-full">
+        <div className="flex self-end mb-2">
+          {analyses && analyses.length > 0 ? (
             <Button
-              startContent={<Plus />}
+              variant="flat"
+              color="secondary"
+              endContent={<Plus size={18} />}
+              className="font-semibold w-fit p-0"
               onPress={() => setAddingAnalysis(true)}
             >
-              Add Analysis
+              Add
             </Button>
-          </>
-        ) : (
-          <>
-            <p>What does the evidence tell you?</p>
-            {addingAnalysis ? (
-              <>
+          ) : null}
+        </div>
+        <div>
+          {analyses && analyses.length > 0 ? (
+            <>
+              {addingAnalysis && (
                 <AddAnalysisBox
                   initialIsEditing={true}
                   onCreate={() => {
@@ -97,23 +68,62 @@ const AnalysisTab = () => {
                   }}
                   onDelete={() => setAddingAnalysis(false)}
                 />
+              )}
+              {analyses.map((analysis) => (
+                <AddAnalysisBox
+                  key={analysis._id}
+                  initialIsEditing={false}
+                  existingAnalysis={analysis}
+                  onUpdate={getAllAnalyses.bind(
+                    null,
+                    currentAssignment._id,
+                    currentTopic._id
+                  )}
+                  onDelete={getAllAnalyses.bind(
+                    null,
+                    currentAssignment._id,
+                    currentTopic._id
+                  )}
+                />
+              ))}
+            </>
+          ) : (
+            <div className="flex flex-col items-center gap-3">
+              <p className="font-light text-center">
+                What does the evidence tell you?
+              </p>
+              {addingAnalysis ? (
+                <>
+                  <AddAnalysisBox
+                    initialIsEditing={true}
+                    onCreate={() => {
+                      setAddingAnalysis(false);
+                      getAllAnalyses(currentAssignment._id, currentTopic._id);
+                    }}
+                    onDelete={() => setAddingAnalysis(false)}
+                  />
+                  <Button
+                    variant="flat"
+                    color="secondary"
+                    startContent={<Plus />}
+                    onPress={() => setAddingAnalysis(true)}
+                  >
+                    Add Analysis
+                  </Button>
+                </>
+              ) : (
                 <Button
+                  variant="flat"
+                  color="secondary"
                   startContent={<Plus />}
                   onPress={() => setAddingAnalysis(true)}
                 >
                   Add Analysis
                 </Button>
-              </>
-            ) : (
-              <Button
-                startContent={<Plus />}
-                onPress={() => setAddingAnalysis(true)}
-              >
-                Add Analysis
-              </Button>
-            )}
-          </>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
