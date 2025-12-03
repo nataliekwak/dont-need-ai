@@ -13,8 +13,8 @@ const StepEight = ({ assignment }) => {
       {currentTopic && currentTopic !== null ? (
         <TopicSummary isEditable={true} />
       ) : (
-        <div className="flex max-w-50 m-5 pt-12 text-[1rem] font-light text-center">
-          <p className="text-[1.5rem] opacity-70 max-w-90">
+        <div className="flex max-w-80 m-5 mb-20 text-center">
+          <p className="text-[1.4rem] font-light">
             Select a topic from the sidebar to begin gathering support.
           </p>
         </div>

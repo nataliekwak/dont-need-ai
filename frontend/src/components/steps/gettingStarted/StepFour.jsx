@@ -64,7 +64,7 @@ const StepFour = ({ assignment }) => {
     >
       {assignment.startSmall ? (
         <span className="flex flex-col px-5 max-w-150">
-          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1rem] font-light">Let's brainstorm...</p>
           <p className="text-[1.5rem]">
             Off the top of your head, try to generate as many smaller answers to
             your prompt as you can.
@@ -72,7 +72,7 @@ const StepFour = ({ assignment }) => {
         </span>
       ) : (
         <span className="flex flex-col px-5 max-w-150">
-          <p className="text-[1rem] opacity-55">Let's get specific...</p>
+          <p className="text-[1rem] font-light">Let's get specific...</p>
           <p className="text-[1.5rem]">
             Off the top of your head, try to generate as many smaller ideas from
             your big idea as you can.
@@ -84,19 +84,19 @@ const StepFour = ({ assignment }) => {
 
       {/* Remind the user of their goals */}
       {assignment.writingGoals.length < 2 ? (
-        <p className="opacity-70 mb-2 max-w-150">
+        <p className="font-light mb-2 max-w-150">
           Focus on quantity for now, not quality. Remember you are trying to{" "}
           {assignment.writingGoals[0].toUpperCase()}
         </p>
       ) : assignment.writingGoals.length === 2 ? (
-        <p className="opacity-70 mb-2 max-w-150">
+        <p className="font-light mb-2 max-w-150">
           Focus on quantity for now, not quality. Remember you are trying to{" "}
           {assignment.writingGoals[0].toUpperCase()} and{" "}
           {assignment.writingGoals[1].toUpperCase()}.
         </p>
       ) : (
         // More than 2 goals, list them with commas and 'and' before the last one
-        <p className="opacity-70 mb-2 max-w-150">
+        <p className="font-light mb-2 max-w-150">
           Focus on quantity for now, not quality. Remember you are trying to{" "}
           {assignment.writingGoals
             .slice(0, -1)

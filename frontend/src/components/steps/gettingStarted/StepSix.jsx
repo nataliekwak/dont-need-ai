@@ -67,7 +67,7 @@ const StepSix = ({ assignment }) => {
         <p className="text-[1.5rem]">
           Create the topics that will be the subjects of your body paragraphs.
         </p>
-        <p className="text-[1rem] opacity-55">
+        <p className="text-[1rem] font-light">
           Most academic essays require 2-3 body paragraphs, but add however many
           topics you need for <i>your</i> writing.
         </p>

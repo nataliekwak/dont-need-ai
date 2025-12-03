@@ -118,14 +118,14 @@ const EvidenceAndAnalysis = ({ isEditable }) => {
               {evidence.map((item) => (
                 <div className="flex flex-col" key={item._id}>
                   {/* Show the evidence's type */}
-                  <div className="text-[0.7rem] opacity-60 ml-2 mt-1">
+                  <div className="text-[0.7rem] font-extralight ml-2 mt-1">
                     {item.type}
                   </div>
                   <div className="border p-2 ml-2 mr-2 mt-1 mb-1 rounded">
                     {item.content}
                   </div>
                   {/* Show the evidence's source name */}
-                  <div className="text-[0.7rem] italic opacity-70 mb-3 ml-2">
+                  <div className="text-[0.7rem] italic font-light mb-3 ml-2">
                     {sourceMap[item.sourceId]?.title || "Unknown Source"}
                   </div>
                 </div>

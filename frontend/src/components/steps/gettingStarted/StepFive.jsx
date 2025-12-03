@@ -1,4 +1,4 @@
-import { Button, Chip, Form, Input } from "@heroui/react";
+import { Button, Chip, Form, Textarea } from "@heroui/react";
 import { useState } from "react";
 
 import { useAssignmentStore } from "../../../store/assignmentsStore.js";
@@ -39,18 +39,18 @@ const StepFive = ({ assignment }) => {
     >
       {assignment.startSmall ? (
         <span className="flex flex-col px-5 max-w-175">
-          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1rem] font-light">Let's brainstorm...</p>
           <p className="text-[1.5rem]">
             Now that we have all your smaller answers, come up with one "big
             answer" that ties them all together.
           </p>
-          <p className="text-[1rem] opacity-80">
+          <p className="text-[1rem] font-light italic">
             This will be the <b>main focus</b> of your writing.
           </p>
         </span>
       ) : (
         <span className="flex flex-col px-5 max-w-175">
-          <p className="text-[1rem] opacity-55">Let's brainstorm...</p>
+          <p className="text-[1rem] font-light">Let's brainstorm...</p>
           <p className="text-[1.5rem]">
             Based on your prompt and topics, come up with one "big idea"
             sentence that encapsulates the <b>main focus</b> of your writing.
@@ -72,11 +72,11 @@ const StepFive = ({ assignment }) => {
         ))}
       </div>
       <div className="flex flex-row align-center gap-2">
-        <Input
+        <Textarea
           placeholder="Enter your big answer"
           value={bigAnswer}
-          onChange={(e) => setBigAnswer(e.target.value)}
-        ></Input>
+          onValueChange={setBigAnswer}
+        />
         <Button
           className="self-end mr-5"
           type="submit"

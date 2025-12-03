@@ -42,7 +42,7 @@ const StepThree = ({ assignment }) => {
       onSubmit={onSubmit}
       className="flex flex-col text-center items-center justify-center"
     >
-      <p className="text-[1rem] opacity-55">
+      <p className="text-[1rem] font-light">
         To help this process work best for you...
       </p>
       <p className="text-[1.5rem]">
