@@ -44,9 +44,9 @@ const StepEleven = ({ assignment }) => {
         </h3>
       </div>
 
-      <div className="flex flex-col m-5">
-        {/* Title box */}
-        <div className="flex max-w-60">
+      <div className="flex flex-row max-w-full items-center">
+        <div className="flex flex-col m-5 max-w-60">
+          {/* Title Accordion */}
           <Accordion
             key="title"
             aria-label="Assignment Navigation"
@@ -64,22 +64,35 @@ const StepEleven = ({ assignment }) => {
               </p>
             </AccordionItem>
           </Accordion>
+
+          {/* List of assignment topics/sections */}
+          <div className="flex flex-col gap-3 mt-5">
+            {topics.map((topic, index) => (
+              <ClickableBox
+                key={index}
+                text={topic.name}
+                selected={expandedTopic === topic}
+                showExpansionArrow={true}
+                onClick={() =>
+                  setExpandedTopic(topic === expandedTopic ? null : topic)
+                }
+              />
+            ))}
+          </div>
         </div>
 
-        {/* List of assignment topics/sections */}
-        <div className="flex flex-col gap-3 mt-5">
-          {topics.map((topic, index) => (
-            <ClickableBox
-              key={index}
-              text={topic.name}
-              selected={expandedTopic === topic}
-              showExpansionArrow={true}
-              onClick={() =>
-                setExpandedTopic(topic === expandedTopic ? null : topic)
-              }
-            />
-          ))}
-        </div>
+        {/* If there is a topic selected, show its contents (sources, evidence, and analysis).
+        Otherwise, prompt the user to select a topic.*/}
+        {expandedTopic ? (
+          <p>{expandedTopic.name}</p>
+        ) : (
+          <div className="flex max-w-50 m-5 pt-12 text-[1rem] font-light text-center">
+            <p>
+              Select a topic on the left to review any sources, evidence, and
+              analysis you gathered.
+            </p>
+          </div>
+        )}
       </div>
       <div className="flex flex-row justify-between w-full mt-8">
         <Button onPress={() => updateAssignment(assignment._id, { step: 10 })}>

@@ -35,7 +35,11 @@ const AssignmentPage = () => {
   return (
     <div className="min-h-screen w-full flex overflow-hidden">
       <NavBar />
-      <div className="flex flex-row w-full">
+      <div
+        className={`flex ${
+          currentAssignment.step === 10 || currentAssignment.step === 11 ? "flex-col" : "flex-row"
+        } w-full`}
+      >
         <div className="min-w-fit flex flex-col self-start mt-25 ml-10 gap-5">
           <div className="flex flex-row items-center">
             <Button
@@ -54,7 +58,11 @@ const AssignmentPage = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col mt-30 w-full h-full">
+        <div
+          className={`flex flex-col w-full h-full ${
+            currentAssignment.step !== 10 && currentAssignment.step !== 11 ? "mt-30" : "mt-3"
+          } pb-10`}
+        >
           <div className="flex justify-center w-full">
             <StepProgressBar currentStep={currentAssignment.step} />
           </div>
