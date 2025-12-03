@@ -65,9 +65,9 @@ const EvidenceTab = () => {
         </Button>
       </div>
 
-      <div className="flex flex-row ml-4 mr-4 mb-4 mt-1">
+      <div className="flex flex-row ml-4 mr-4 mb-4 mt-1 justify-between h-full">
         {/* Sources box */}
-        <div className="flex flex-col border-small border-default rounded-small">
+        <div className="flex flex-col border-small border-default rounded-small min-w-fit w-[25%]">
           <h4 className="font-semibold text-center text-[1.1rem]">Sources</h4>
           <Divider />
           <div className="flex flex-col gap-2 p-2 max-h-96 overflow-y-auto">
@@ -114,7 +114,9 @@ const EvidenceTab = () => {
         </div>
 
         {/* Evidence box for when a source is opened */}
-        {currentSource && <SourceEvidenceList />}
+        <div className="flex flex-col items-center justify-center flex-1 h-full">
+          {currentSource && <SourceEvidenceList />}
+        </div>
       </div>
     </div>
   );

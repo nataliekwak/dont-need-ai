@@ -64,46 +64,56 @@ const SourceEvidenceList = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      {/* Options to add evidence */}
-      <Popover>
-        <PopoverTrigger>
-          <Button variant="light" isIconOnly>
-            <Plus />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <Listbox aria-label="Evidence Types">
-            <ListboxItem
-              key="direct-quote"
-              onPress={() => handleAddEvidence("Direct Quote")}
+    <div className="flex flex-col w-full h-full">
+      <div className="flex self-end mb-2">
+        {/* Options to add evidence */}
+        <Popover>
+          <PopoverTrigger>
+            <Button
+              variant="flat"
+              color="secondary"
+              endContent={<Plus size={18} />}
+              className="font-semibold w-fit p-0"
             >
-              Direct Quote
-            </ListboxItem>
-            <ListboxItem
-              key="paraphrase"
-              onPress={() => handleAddEvidence("Paraphrase")}
+              Add
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Listbox
+              aria-label="Evidence Types"
+              className="border-small rounded-small border-secondary"
             >
-              Paraphrase
-            </ListboxItem>
-            <ListboxItem key="note" onPress={() => handleAddEvidence("Note")}>
-              Note
-            </ListboxItem>
-          </Listbox>
-        </PopoverContent>
-      </Popover>
+              <ListboxItem
+                key="direct-quote"
+                onPress={() => handleAddEvidence("Direct Quote")}
+              >
+                Direct Quote
+              </ListboxItem>
+              <ListboxItem
+                key="paraphrase"
+                onPress={() => handleAddEvidence("Paraphrase")}
+              >
+                Paraphrase
+              </ListboxItem>
+              <ListboxItem key="note" onPress={() => handleAddEvidence("Note")}>
+                Note
+              </ListboxItem>
+            </Listbox>
+          </PopoverContent>
+        </Popover>
+      </div>
 
-      {/* Render AddEvidenceBox for new evidence */}
-      {newEvidenceType && (
-        <AddEvidenceBox
-          initialIsEditing={true}
-          newEvidenceType={newEvidenceType}
-          onCreate={handleEvidenceCreated}
-          onDelete={() => setNewEvidenceType(null)}
-        />
-      )}
+      <div className="flex flex-col ml-5 max-w-[500px] justify-center">
+        {/* Render AddEvidenceBox for new evidence */}
+        {newEvidenceType && (
+          <AddEvidenceBox
+            initialIsEditing={true}
+            newEvidenceType={newEvidenceType}
+            onCreate={handleEvidenceCreated}
+            onDelete={() => setNewEvidenceType(null)}
+          />
+        )}
 
-      <div>
         {/* List of existing evidence for the selected source */}
         {evidence.map((ev) => (
           <AddEvidenceBox
