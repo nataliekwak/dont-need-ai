@@ -1,8 +1,9 @@
 import { Accordion, AccordionItem, Button, Tooltip } from "@heroui/react";
 import { CircleQuestionMark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import ClickableBox from "../../ClickableBox.jsx";
 import { useAssignmentStore } from "../../../store/assignmentsStore";
 
 const StepEleven = ({ assignment }) => {
@@ -10,7 +11,7 @@ const StepEleven = ({ assignment }) => {
 
   const { getAllTopics, topics, updateAssignment } = useAssignmentStore();
 
-  // const [expandedTopic, setExpandedTopic] = useState(null);
+  const [expandedTopic, setExpandedTopic] = useState(null);
   // const expandedTopic = null;
 
   useEffect(() => {
@@ -43,7 +44,6 @@ const StepEleven = ({ assignment }) => {
         </h3>
       </div>
 
-      
       <div className="flex flex-col m-5">
         {/* Title box */}
         <div className="flex max-w-60">
@@ -68,18 +68,24 @@ const StepEleven = ({ assignment }) => {
 
         {/* List of assignment topics/sections */}
         <div className="flex flex-col gap-3 mt-5">
-            {topics.map((topic, index) => (
-              <div key={index} className="flex border-foreground border-medium rounded-small pl-3 p-2 items-center justify-between">
-                <h4 className="text-xl font-medium">{topic.name}</h4>
-            </div>
-            ))}
+          {topics.map((topic, index) => (
+            <ClickableBox
+              key={index}
+              text={topic.name}
+              selected={expandedTopic === topic}
+              showExpansionArrow={true}
+              onClick={() =>
+                setExpandedTopic(topic === expandedTopic ? null : topic)
+              }
+            />
+          ))}
         </div>
       </div>
       <div className="flex flex-row justify-between w-full mt-8">
         <Button onPress={() => updateAssignment(assignment._id, { step: 10 })}>
           Back
         </Button>
-        <Button onPress={() => navigate("/writing-guide")}>Next</Button>
+        <Button onPress={() => navigate("/writing-guide")}>Done</Button>
       </div>
     </div>
   );

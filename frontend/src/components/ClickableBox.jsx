@@ -1,0 +1,40 @@
+import { useEffect, useState } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+
+// ClickableBox is a custom, reusable component that I
+// created to represent a box that can be clicked on and
+// display various styles and content based on props.
+
+const ClickableBox = ({
+  text,
+  onClick,
+  showExpansionArrow = false,
+  selected = false,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(null);
+
+  useEffect(() => {
+    if (showExpansionArrow) {
+      setIsExpanded(selected);
+    }
+  }, [selected, showExpansionArrow]);
+
+  return (
+    <div
+      onClick={onClick}
+      className={`flex border-medium rounded-small pl-3 p-2 items-center justify-between cursor-pointer transition-colors ${
+        selected
+          ? "bg-primary border-foreground hover:bg-primary-200 hover:border-foreground-500"
+          : "bg-content1 hover:bg-default-200 border-default"
+      }`}
+    >
+      {/* Show the main text passed into the component */}
+      <p>{text}</p>
+
+      {/* If the expansion arrow should be shown, display properly when selected/deselected */}
+      {showExpansionArrow && (isExpanded ? <ChevronLeft /> : <ChevronRight />)}
+    </div>
+  );
+};
+
+export default ClickableBox;
