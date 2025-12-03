@@ -8,7 +8,7 @@ const StepEight = ({ assignment }) => {
     useAssignmentStore();
 
   return (
-    <div className="flex flex-col items-center gap-5 text-center w-full">
+    <div className="flex flex-col items-center gap-5 text-center w-full max-w-[900px]">
       {/* If current topic is selected, show the editable version of TopicSummary */}
       {currentTopic && currentTopic !== null ? (
         <TopicSummary isEditable={true} />

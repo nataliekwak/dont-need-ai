@@ -102,7 +102,7 @@ const EvidenceAndAnalysis = ({ isEditable }) => {
 
           {/* If there is evidence, display it here. Otherwise, show a message */}
           {evidence && evidence.length === 0 ? (
-            <>
+            <div className="flex justify-center">
               {isEditable ? (
                 <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
                   Click the + to begin adding evidence.
@@ -112,7 +112,7 @@ const EvidenceAndAnalysis = ({ isEditable }) => {
                   No evidence was added for this topic.
                 </p>
               )}
-            </>
+            </div>
           ) : (
             <>
               {evidence.map((item) => (
@@ -156,7 +156,7 @@ const EvidenceAndAnalysis = ({ isEditable }) => {
 
           {/* If there is analysis, display it here. Otherwise, show a message */}
           {analyses && analyses.length === 0 ? (
-            <>
+            <div className="flex justify-center">
               {isEditable ? (
                 <p className="mt-5 pl-3 pr-3 text-center max-w-50 text-wrap font-light">
                   Click the + to begin adding analysis.
@@ -166,7 +166,7 @@ const EvidenceAndAnalysis = ({ isEditable }) => {
                   No analysis was added for this topic.
                 </p>
               )}
-            </>
+            </div>
           ) : (
             <>
               {analyses.map((item) => (
