@@ -58,7 +58,11 @@ const AssignmentPage = () => {
           <div className="flex justify-center w-full">
             <StepProgressBar currentStep={currentAssignment.step} />
           </div>
-          <div className="flex flex-col items-center justify-center mt-7 p-5">
+          <div
+            className={`flex flex-col items-center justify-center ${
+              currentAssignment.step !== 11 ? "mt-7" : ""
+            } p-5`}
+          >
             <StepContent assignment={currentAssignment} />
           </div>
         </div>
