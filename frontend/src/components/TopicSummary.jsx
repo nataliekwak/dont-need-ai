@@ -1,11 +1,15 @@
 import { Card, CardBody, CardHeader, Input } from "@heroui/react";
 import { useEffect, useState } from "react";
 
-import { EvidenceAndAnalysis, EvidenceTab, AnalysisTab } from "./tables";
+import {
+  EvidenceAndAnalysis,
+  EvidenceTab,
+  AnalysisTab,
+} from "./steps/gatheringSupport/tables";
 
-import { useAssignmentStore } from "../../../store/assignmentsStore";
+import { useAssignmentStore } from "../store/assignmentsStore";
 
-const TopicTab = () => {
+const TopicSummary = () => {
   const { currentTopic, updateTopic } = useAssignmentStore();
 
   const [topicSentence, setTopicSentence] = useState("");
@@ -91,4 +95,4 @@ const TopicTab = () => {
   );
 };
 
-export default TopicTab;
+export default TopicSummary;
