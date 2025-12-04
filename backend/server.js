@@ -11,8 +11,19 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const allowedOrigins = [process.env.FRONTEND_URL, 'https://www.dontneedai.com'];
 
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Enable CORS
+// Enable CORS
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
 
 // Trust proxy for secure cookies behind a proxy (like Render)
 app.set('trust proxy', 1);

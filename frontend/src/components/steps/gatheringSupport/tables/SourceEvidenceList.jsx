@@ -126,6 +126,7 @@ const SourceEvidenceList = ({ isEditable }) => {
         {evidence.map((ev) => (
           <AddEvidenceBox
             key={ev._id}
+            isEditable={isEditable}
             initialIsEditing={false}
             existingEvidence={ev}
             onUpdate={getAllEvidenceBySource.bind(

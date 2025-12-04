@@ -18,7 +18,6 @@ const TopicSummary = ({ isEditable }) => {
 
   // Set initial topic sentence from currentTopic
   useEffect(() => {
-    console.log("Current Topic:", currentTopic);
     if (currentTopic && currentTopic.topicSentence) {
       setTopicSentence(currentTopic.topicSentence);
     } else {

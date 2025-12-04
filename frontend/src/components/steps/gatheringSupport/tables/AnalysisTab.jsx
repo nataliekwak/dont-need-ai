@@ -73,6 +73,7 @@ const AnalysisTab = ({ isEditable }) => {
               {analyses.map((analysis) => (
                 <AddAnalysisBox
                   key={analysis._id}
+                  isEditable={isEditable}
                   initialIsEditing={false}
                   existingAnalysis={analysis}
                   onUpdate={getAllAnalyses.bind(
