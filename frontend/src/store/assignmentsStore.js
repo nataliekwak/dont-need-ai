@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = "http://localhost:5001/api/writing-guide";
+const API_URL =  import.meta.env.MODE === "development" ? "http://localhost:5001/api/writing-guide" : "/api/writing-guide";
 
 axios.defaults.withCredentials = true; // Ensure cookies are sent with requests
 
