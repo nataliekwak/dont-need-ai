@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import path from 'path';
 
 import authRoutes from './src/routes/authRoutes.js';
 import writingGuideRoutes from './src/routes/writingGuideRoutes.js';
@@ -12,7 +11,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-// const __dirname = path.resolve();
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Enable CORS
 
