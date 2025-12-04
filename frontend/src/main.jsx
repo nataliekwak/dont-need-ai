@@ -12,9 +12,9 @@ createRoot(document.getElementById("root")).render(
     <HeroUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
         <ToastProvider />
+        <Analytics />
         <BrowserRouter>
           <App />
-          <Analytics />
         </BrowserRouter>
       </NextThemesProvider>
     </HeroUIProvider>
