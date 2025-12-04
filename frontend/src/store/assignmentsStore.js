@@ -26,7 +26,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/`);
             set({ assignments: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting all assignments", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting all assignments", isLoading: false });
             console.error("Error fetching assignments:", error);
         }
     },
@@ -38,9 +38,9 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}`);
             set({ currentAssignment: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting assignment", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting assignment", isLoading: false });
             console.error("Error fetching assignment:", error);
-            console.log(error.response.data.message);
+            console.log(error.response?.data?.message);
         }
     },
 
@@ -57,7 +57,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.post(`${API_URL}/`, { title });
             set((state) => ({ assignments: [...state.assignments, res.data], isLoading: false, error: null }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error creating assignment", isLoading: false });
+            set({ error: error.response?.data?.message || "Error creating assignment", isLoading: false });
             console.error("Error creating assignment:", error);
         }
     },
@@ -88,7 +88,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}`);
             set({ currentAssignment: res.data });
         } catch (error) {
-            set({ error: error.response.data.message || "Error updating assignment", isLoading: false });
+            set({ error: error.response?.data?.message || "Error updating assignment", isLoading: false });
             console.error("Error updating assignment:", error);
         }
     },
@@ -106,7 +106,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error deleting assignment", isLoading: false });
+            set({ error: error.response?.data?.message || "Error deleting assignment", isLoading: false });
             console.error("Error deleting assignment:", error);
         }
     },
@@ -126,7 +126,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topics`);
             set({ topics: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting all topics", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting all topics", isLoading: false });
             console.error("Error fetching topics:", error);
         }
     },
@@ -138,7 +138,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}`);
             set({ currentTopic: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting topic", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting topic", isLoading: false });
             console.error("Error fetching topic:", error);
         }
     },
@@ -150,7 +150,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.post(`${API_URL}/${assignmentId}/topic`, { name });
             set((state) => ({ topics: [...state.topics, res.data], isLoading: false, error: null }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error creating topic", isLoading: false });
+            set({ error: error.response?.data?.message || "Error creating topic", isLoading: false });
             console.error("Error creating topic:", error);
         }
     },
@@ -173,7 +173,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}`);
             set({ currentTopic: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error updating topic", isLoading: false });
+            set({ error: error.response?.data?.message || "Error updating topic", isLoading: false });
             console.error("Error updating topic:", error);
         }
     },
@@ -191,7 +191,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error deleting topic", isLoading: false });
+            set({ error: error.response?.data?.message || "Error deleting topic", isLoading: false });
             console.error("Error deleting topic:", error);
         }
     },
@@ -230,7 +230,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/sources`);
             set({ sources: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting all sources", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting all sources", isLoading: false });
             console.error("Error fetching sources:", error);
         }
     },
@@ -242,7 +242,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`);
             set({ currentSource: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting source", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting source", isLoading: false });
             console.error("Error fetching source:", error);
         }
     },
@@ -254,7 +254,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/source`, sourceData);
             set((state) => ({ sources: [...state.sources, res.data], isLoading: false, error: null }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error creating source", isLoading: false });
+            set({ error: error.response?.data?.message || "Error creating source", isLoading: false });
             console.error("Error creating source:", error);
         }
     },
@@ -277,7 +277,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}`);
             set({ currentSource: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error updating source", isLoading: false });
+            set({ error: error.response?.data?.message || "Error updating source", isLoading: false });
             console.error("Error updating source:", error);
         }
     },
@@ -294,7 +294,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error deleting source", isLoading: false });
+            set({ error: error.response?.data?.message || "Error deleting source", isLoading: false });
             console.error("Error deleting source:", error);
         }
     },
@@ -333,7 +333,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/evidence`);
             set({ evidence: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting all evidence", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting all evidence", isLoading: false });
             console.error("Error fetching evidence:", error);
         }
     },
@@ -345,7 +345,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`);
             set({ currentEvidence: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error getting evidence", isLoading: false });
+            set({ error: error.response?.data?.message || "Error getting evidence", isLoading: false });
             console.error("Error fetching evidence:", error);
         }
     },
@@ -357,7 +357,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence`, evidenceData);
             set((state) => ({ evidence: [...state.evidence, res.data], isLoading: false, error: null }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error creating evidence", isLoading: false });
+            set({ error: error.response?.data?.message || "Error creating evidence", isLoading: false });
             console.error("Error creating evidence:", error);
         }
     },
@@ -380,7 +380,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/source/${sourceId}/evidence/${evidenceId}`);
             set({ currentEvidence: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error updating evidence", isLoading: false });
+            set({ error: error.response?.data?.message || "Error updating evidence", isLoading: false });
             console.error("Error updating evidence:", error);
         }
     },
@@ -398,7 +398,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error deleting evidence", isLoading: false });
+            set({ error: error.response?.data?.message || "Error deleting evidence", isLoading: false });
             console.error("Error deleting evidence:", error);
         }
     },
@@ -436,7 +436,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.get(`${API_URL}/${assignmentId}/topic/${topicId}/analysis/${analysisId}`);
             set({ currentAnalysis: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error fetching analysis", isLoading: false });
+            set({ error: error.response?.data?.message || "Error fetching analysis", isLoading: false });
             console.error("Error fetching analysis:", error);
         }
     },
@@ -448,7 +448,7 @@ export const useAssignmentStore = create((set) => ({
             const res = await axios.post(`${API_URL}/${assignmentId}/topic/${topicId}/analysis`, analysisData);
             set({ currentAnalysis: res.data, isLoading: false, error: null });
         } catch (error) {
-            set({ error: error.response.data.message || "Error creating analysis", isLoading: false });
+            set({ error: error.response?.data?.message || "Error creating analysis", isLoading: false });
             console.error("Error creating analysis:", error);
         }
     },
@@ -468,7 +468,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error updating analysis", isLoading: false });
+            set({ error: error.response?.data?.message || "Error updating analysis", isLoading: false });
             console.error("Error updating analysis:", error);
         }
     },
@@ -486,7 +486,7 @@ export const useAssignmentStore = create((set) => ({
                 error: null,
             }));
         } catch (error) {
-            set({ error: error.response.data.message || "Error deleting analysis", isLoading: false });
+            set({ error: error.response?.data?.message || "Error deleting analysis", isLoading: false });
             console.error("Error deleting analysis:", error);
         }
     },

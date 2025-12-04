@@ -16,8 +16,8 @@ import { useAuthStore } from "../store/authStore.js";
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuthStore();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
   };
 
   return (

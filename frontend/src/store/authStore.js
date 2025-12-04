@@ -33,7 +33,7 @@ export const useAuthStore = create((set) => ({
             const res = await axios.post(`${API_URL}/register`, { name, email, password });
             set({ user: res.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
-            set({ error: error.response.data.message || "Error signing up", isLoading: false });
+            set({ error: error.response?.data?.message || "Error signing up", isLoading: false });
             throw error;
         }
     },
@@ -50,7 +50,7 @@ export const useAuthStore = create((set) => ({
                 isLoading: false,
             });
         } catch (error) {
-            set({ error: error.response.data.message || "Error logging in", isLoading: false });
+            set({ error: error.response?.data?.message || "Error logging in", isLoading: false });
             throw error;
         }
     },
@@ -62,7 +62,7 @@ export const useAuthStore = create((set) => ({
             await axios.post(`${API_URL}/logout`);
             set({ user: null, isAuthenticated: false, error: null, isLoading: false });
         } catch (error) {
-            set({ error: error.response.data.message || "Error logging out", isLoading: false });
+            set({ error: error.response?.data?.message || "Error logging out", isLoading: false });
             throw error;
         }
     },
@@ -75,7 +75,7 @@ export const useAuthStore = create((set) => ({
             set({ user: res.data.user, isAuthenticated: true, isLoading: false });
             return res.data;
         } catch (error) {
-            set({ error: error.response.data.message || "Error verifying email", isLoading: false });
+            set({ error: error.response?.data?.message || "Error verifying email", isLoading: false });
             throw error;
         }
     },
@@ -87,7 +87,7 @@ export const useAuthStore = create((set) => ({
             const res = await axios.post(`${API_URL}/forgot-password`, { email });
             set({ message: res.data.message, isLoading: false });
         } catch (error) {
-            set({ isLoading: false, error: error.response.data.message || "Error sending reset email" });
+            set({ isLoading: false, error: error.response?.data?.message || "Error sending reset email" });
             throw error;
         }
     },
@@ -99,7 +99,7 @@ export const useAuthStore = create((set) => ({
             const res = await axios.post(`${API_URL}/reset-password/${token}`, { password });
             set({ message: res.data.message, isLoading: false });
         } catch (error) {
-            set({ isLoading: false, error: error.response.data.message || "Error resetting password" });
+            set({ isLoading: false, error: error.response?.data?.message || "Error resetting password" });
             throw error;
         }
     }
