@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 // const __dirname = path.resolve();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true})); // Enable CORS
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Enable CORS
 
 app.use(express.json()); // Middleware to parse JSON request bodies
 
