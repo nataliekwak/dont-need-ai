@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@heroui/react";
@@ -22,7 +22,7 @@ const AssignmentPage = () => {
   );
 
   // Fetch assignment from backend if not present
-  React.useEffect(() => {
+  useEffect(() => {
     if (!currentAssignment && assignmentId) {
       getAssignmentById(assignmentId);
     }
@@ -37,7 +37,9 @@ const AssignmentPage = () => {
       <NavBar />
       <div
         className={`flex ${
-          currentAssignment.step === 10 || currentAssignment.step === 11 ? "flex-col" : "flex-row"
+          currentAssignment.step === 10 || currentAssignment.step === 11
+            ? "flex-col"
+            : "flex-row"
         } w-full`}
       >
         <div className="min-w-fit flex flex-col self-start mt-25 ml-10 gap-5">
@@ -60,7 +62,9 @@ const AssignmentPage = () => {
         </div>
         <div
           className={`flex flex-col w-full h-full ${
-            currentAssignment.step !== 10 && currentAssignment.step !== 11 ? "mt-30" : "mt-3"
+            currentAssignment.step !== 10 && currentAssignment.step !== 11
+              ? "mt-30"
+              : "mt-3"
           } pb-10`}
         >
           <div className="flex justify-center w-full">

@@ -24,7 +24,9 @@ const StepThree = ({ assignment }) => {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
+
     var startSmall = true;
 
     if (selected === "startBig") {

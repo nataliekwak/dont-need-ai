@@ -39,12 +39,13 @@ const StepFour = ({ assignment }) => {
 
   // Handle adding the small answer to the list displayed
   const handleAdd = () => {
-    console.log("Small answer added:", smallAnswer);
     setSmallAnswersList([...smallAnswersList, smallAnswer]);
     setSmallAnswer("");
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
+
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     updateAssignment(assignment._id, {
       smallAnswers: smallAnswersList,

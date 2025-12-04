@@ -45,7 +45,8 @@ const StepTwo = ({ assignment }) => {
     );
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
     updateAssignment(assignment._id, { writingGoals: selectedGoals, step: 3 });
   };
 

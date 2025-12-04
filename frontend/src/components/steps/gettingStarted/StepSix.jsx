@@ -27,12 +27,13 @@ const StepSix = ({ assignment }) => {
 
   // Handle adding the topic to the list displayed
   const handleAdd = () => {
-    console.log("Topic added:", topic);
     setTopicsList([...topicsList, topic]);
     setTopic("");
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
+
     // Create topic documents in the backend only if they don't already exist
     topicsList.forEach((topicName) => {
       if (!topics.find((t) => t.name === topicName)) {

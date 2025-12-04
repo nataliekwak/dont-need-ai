@@ -25,7 +25,9 @@ const StepFive = ({ assignment }) => {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
+
     updateAssignment(assignment._id, {
       bigAnswer,
       step: getNextStep(),

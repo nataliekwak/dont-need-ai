@@ -48,7 +48,8 @@ const AssignmentNavigation = ({ assignment }) => {
     if (topics.length === 0 && assignment.topicNames) {
       getAllTopics(assignment._id);
     }
-  }, [topics, assignment.topicNames, assignment._id, getAllTopics]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assignment._id, assignment.topicNames, topics.length]);
 
   // Make sure to always have the most recent currentTopic
   useEffect(() => {
