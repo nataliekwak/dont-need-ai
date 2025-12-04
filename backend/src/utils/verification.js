@@ -11,8 +11,8 @@ export const generateTokenAndSetCookie = (res, userId) => {
 
     res.cookie('authToken', token, {
         httpOnly: true, // Prevent XSS attacks
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        sameSite: 'Strict', // CSRF protection
+        secure: true, // Always use secure cookies in production (HTTPS)
+        sameSite: 'none', // Required for cross-site cookies
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 

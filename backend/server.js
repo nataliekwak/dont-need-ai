@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 5001;
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Enable CORS
 
+// Trust proxy for secure cookies behind a proxy (like Render)
+app.set('trust proxy', 1);
+
 app.use(express.json()); // Middleware to parse JSON request bodies
 
 app.use(cookieParser()); // Middleware to parse cookies
