@@ -4,9 +4,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
 
-import authRoutes from './routes/authRoutes.js';
-import writingGuideRoutes from './routes/writingGuideRoutes.js';
-import { connectDB } from './db/connectDB.js';
+import authRoutes from './src/routes/authRoutes.js';
+import writingGuideRoutes from './src/routes/writingGuideRoutes.js';
+import { connectDB } from './src/db/connectDB.js';
 
 dotenv.config();
 
@@ -27,10 +27,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/writing-guide', writingGuideRoutes);
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
     app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../../frontend", "dist", "index.html"));
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
     });
 }
 
